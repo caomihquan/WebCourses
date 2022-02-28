@@ -15,9 +15,31 @@ namespace Model.DAO
         {
             db = new WebDbContext();
         }
+        public Category CategoryCourses(long? id)
+        {
+            return db.Categories.Where(x=>x.ID == id).SingleOrDefault();
+        }
+
         public Category ViewDetail(long id)
         {
-            return db.Categories.Find(id);
+            var model = db.Categories.Find(id);
+            return model;
+        }
+
+        public Category ViewDetailout(long id)
+        {
+            var model = db.Categories.Find(id);
+            model.ViewCount++;
+            db.SaveChanges();
+            return model;
+        }
+        public List<Category> ListPopularSubjects(int top)
+        {
+            return db.Categories.Where(x => x.Status == true).OrderByDescending(x => x.ViewCount).Take(top).ToList();
+        }
+        public List<Category> ListAll()
+        {
+            return db.Categories.ToList();
         }
 
         public long Insert(Category entity)

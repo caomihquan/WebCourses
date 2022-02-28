@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using Model.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,25 @@ namespace Model.DAO
         {
             db = new WebDbContext();
         }
+        public List<Cours> ListAll()
+        {
+            return db.Courses.ToList();
+        }
+        public List<Cours> countcourse(long top)
+        {
+            return db.Courses.Where(x => x.CategoryID == top).ToList();
+        }
+
+        public List<Cours> ListFeatureCourses(int top)
+        {
+            return db.Courses.Where(x => x.Status == true).OrderByDescending(x => x.ViewCount).Take(top).ToList();
+        }
         public Cours ViewDetail(long id)
         {
             return db.Courses.Find(id);
         }
+
+
 
         public long Insert(Cours entity)
         {

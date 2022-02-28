@@ -14,9 +14,23 @@ namespace WebCourses
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Course",
+                url: "khoa-hoc",
+                defaults: new { controller = "KhoaHoc", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
+                name: "Course Overview",
+                url: "tong-quan/{metatitle}-{id}",
+                defaults: new { controller = "KhoaHoc", action = "OverView", id = UrlParameter.Optional },
+                namespaces: new[] { "WebBacklink.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
             );
         }
     }

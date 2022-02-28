@@ -1,0 +1,23 @@
+﻿@model List<Model.EF.Blog>
+<aside class="posts p-4">
+    <h3 class="aside-title">Recent Posts</h3>
+    <div class="posts-grids">
+        @foreach (var item in Model)
+        {
+            <div class="posts-grid-inner">
+                <div class="posts-grid-left pr-0">
+                    <a href="blog-single.html">
+                        <img src="@item.Image" alt=" " class="img-fluid img-curve">
+                    </a>
+                </div>
+                <div class="posts-grid-right">
+                    <h4>
+                        <a href="blog-single.html" class="text-bl">@item.Name</a>
+                    </h4>
+                    <span> <span class="fa fa-clock-o"></span>@item.CreatedDate</span>
+                </div>
+            </div>
+        }
+
+    </div>
+</aside>

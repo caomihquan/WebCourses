@@ -20,6 +20,10 @@ namespace Model.DAO
         {
             return db.Blogs.Find(id);
         }
+        public List<Blog> RecentBlog(int id)
+        {
+            return db.Blogs.OrderByDescending(x=>x.CreatedDate).Take(id).ToList();
+        }
 
         public long Insert(Blog blog)
         {

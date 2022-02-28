@@ -154,6 +154,7 @@
     <Compile Include="Common\HasCredentialAttribute.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2978,6 +2979,51 @@
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Assets\Admin\vendor\undraw_profile.svg" />
+    <Content Include="Assets\Outsite\css\style-starter.css" />
+    <Content Include="Assets\Outsite\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\Outsite\images\about.jpg" />
+    <Content Include="Assets\Outsite\images\avatar1.jpg" />
+    <Content Include="Assets\Outsite\images\avatar4.jpg" />
+    <Content Include="Assets\Outsite\images\b1.jpg" />
+    <Content Include="Assets\Outsite\images\b2.jpg" />
+    <Content Include="Assets\Outsite\images\b3.jpg" />
+    <Content Include="Assets\Outsite\images\b4.jpg" />
+    <Content Include="Assets\Outsite\images\b5.jpg" />
+    <Content Include="Assets\Outsite\images\b6.jpg" />
+    <Content Include="Assets\Outsite\images\b7.jpg" />
+    <Content Include="Assets\Outsite\images\banner.jpg" />
+    <Content Include="Assets\Outsite\images\check.png" />
+    <Content Include="Assets\Outsite\images\join.jpg" />
+    <Content Include="Assets\Outsite\images\logo1.png" />
+    <Content Include="Assets\Outsite\images\logo2.png" />
+    <Content Include="Assets\Outsite\images\logo3.png" />
+    <Content Include="Assets\Outsite\images\logo4.png" />
+    <Content Include="Assets\Outsite\images\s1.jpg" />
+    <Content Include="Assets\Outsite\images\s1.png" />
+    <Content Include="Assets\Outsite\images\s2.jpg" />
+    <Content Include="Assets\Outsite\images\s2.png" />
+    <Content Include="Assets\Outsite\images\s3.jpg" />
+    <Content Include="Assets\Outsite\images\s3.png" />
+    <Content Include="Assets\Outsite\images\s4.jpg" />
+    <Content Include="Assets\Outsite\images\s5.jpg" />
+    <Content Include="Assets\Outsite\images\s6.jpg" />
+    <Content Include="Assets\Outsite\images\stat.jpg" />
+    <Content Include="Assets\Outsite\images\team1.jpg" />
+    <Content Include="Assets\Outsite\images\team2.jpg" />
+    <Content Include="Assets\Outsite\images\team3.jpg" />
+    <Content Include="Assets\Outsite\images\team4.jpg" />
+    <Content Include="Assets\Outsite\images\undraw_back_to_school_inwc.svg" />
+    <Content Include="Assets\Outsite\images\undraw_experts3_3njd.svg" />
+    <Content Include="Assets\Outsite\images\undraw_studying_s3l7.svg" />
+    <Content Include="Assets\Outsite\js\bootstrap.min.js" />
+    <Content Include="Assets\Outsite\js\easyResponsiveTabs.js" />
+    <Content Include="Assets\Outsite\js\jquery-1.9.1.min.js" />
+    <Content Include="Assets\Outsite\js\jquery-3.4.1.slim.min.js" />
+    <Content Include="Assets\Outsite\js\jquery.countup.js" />
+    <Content Include="Assets\Outsite\js\jquery.magnific-popup.min.js" />
+    <Content Include="Assets\Outsite\js\jquery.waypoints.min.js" />
+    <Content Include="Assets\Outsite\js\owl.carousel.js" />
+    <Content Include="Assets\Outsite\js\tabui.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -3232,6 +3278,11 @@
     <Content Include="Areas\Admin\Views\Blog\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Blog\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Blog\Edit.cshtml" />
+    <Content Include="Assets\Outsite\fonts\fontawesome-webfont.eot" />
+    <Content Include="Assets\Outsite\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\Outsite\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\Outsite\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\Outsite\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3253,11 +3304,14 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Shared\header.cshtml" />
+    <Content Include="Views\Shared\footer.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\KhoaHoc\Index.cshtml" />
+    <Content Include="Views\Shared\Category.cshtml" />
+    <Content Include="Views\KhoaHoc\RecentBlog.cshtml" />
+    <Content Include="Views\KhoaHoc\OverView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3287,6 +3341,9 @@
       <Project>{061c3a74-d039-4550-be79-84462d0c5f24}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

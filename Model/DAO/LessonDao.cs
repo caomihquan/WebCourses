@@ -60,7 +60,10 @@ namespace Model.DAO
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
 
-
+        public List<Lesson>countlessson(long top)
+        {
+            return db.Lessons.Where(x => x.CourseID == top).ToList();
+        }
         public bool Delete(int id)
         {
             try

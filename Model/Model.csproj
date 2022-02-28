@@ -65,7 +65,9 @@
     <Compile Include="DAO\CourseDao.cs" />
     <Compile Include="DAO\CredentialDao.cs" />
     <Compile Include="DAO\GroupUserDao.cs" />
+    <Compile Include="DAO\JoinedCoursesDao.cs" />
     <Compile Include="DAO\LessonDao.cs" />
+    <Compile Include="DAO\MenuDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Blog.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="EF\UserGroup.cs" />
     <Compile Include="EF\WebDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CourseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

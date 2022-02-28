@@ -1,31 +1,295 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var subject = (List<Model.EF.Category>)ViewBag.PopularSubject;
+    var Courses = (List<Model.EF.Cours>)ViewBag.FeaterCourses;
+    
 }
+@section jsFooter{
+}
+<div class="w3l-index1">
+    <div class="content">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 content-left">
+                    <h3>
+                        Học Tập Trong Thời Đại Công Nghệ
+                    </h3>
+                    <p class="mt-3 mb-lg-5 mb-4">Chào Mừng Bạn Đến Với Web Học Trực Tuyến Của Chúng Tôi</p>
+                    <form class="form-inline search-course d-flex">
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+                        <a href="/khoa-hoc" class="btn btn-primary theme-button mb-2">Bắt Đầu</a>
+                    </form>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
     </div>
 </div>
+<!-- //index-block1 -->
+<!-- index-block2 -->
+<section class="w3l-index2 py-5">
+    <div class="container py-md-3">
+        <div class="header-section text-center mx-auto">
+            <h3>Why Study with Us? </h3>
+            <p class="my-3">
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                Nulla mollis dapibus nunc, ut rhoncus
+                turpis sodales quis. Integer sit amet mattis quam.
+            </p>
+        </div>
+        <div class="row bottom_grids pt-md-3 text-center">
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="s-block">
+                    <a href="blog-single.html" class="d-block p-lg-4 p-3">
+                        <img src="/Assets/Outsite/images/s1.png" alt="" class="img-fluid img-curve" />
+                        <h3 class="my-3">Learn anything</h3>
+                        <p class="">Literacy is popularly understood as an ability to read, write and use numeracy in at least one method of writing. Build an online presence with this professional bootstrap 4 template.</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="s-block">
+                    <a href="blog-single.html" class="d-block p-lg-4 p-3">
+                        <img src="/Assets/Outsite/images/s3.png" alt="" class="img-fluid img-curve" />
+                        <h3 class="my-3">Learn with experts</h3>
+                        <p class="">Literacy is popularly understood as an ability to read, write and use numeracy in at least one method of writing. Build an online presence with this professional bootstrap 4 template.</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="s-block">
+                    <a href="blog-single.html" class="d-block p-lg-4 p-3">
+                        <img src="/Assets/Outsite/images/s2.png" alt="" class="img-fluid img-curve" />
+                        <h3 class="my-3">Flexible learning</h3>
+                        <p class="">Literacy is popularly understood as an ability to read, write and use numeracy in at least one method of writing. Build an online presence with this professional bootstrap 4 template.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /index-block2 -->
+<!-- index-block2 -->
+<section class="w3l-index3 py-5">
+    <div class="container py-md-3">
+        <div class="header-section text-center mx-auto">
+            <h3>Chủ Đề Phổ Biến</h3>
+            <p class="my-3">
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                Nulla mollis dapibus nunc, ut rhoncus
+                turpis sodales quis. Integer sit amet mattis quam.
+            </p>
+        </div>
+        <div class="row pt-md-3">
+            <div class="col-lg-9 col-md-10 mx-auto">
+                <div class="accordion" id="accordionExample">
+                    @foreach (var item in subject)
+                    {
+                        var count = new Model.DAO.CourseDao().countcourse(item.ID);
+                        var counts = (List<Model.EF.Cours>)count;
+                        <div class="subject-card mt-4">
+                            <div class="subject-card-header p-0" id="headingOne">
+                                <a href="#" class="card__title p-3 p-lg-4 collapsed d-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                   aria-controls="collapseOne">
+                                    <div class="row">
+                                        <div class="col-md-5 subject-img">
+                                            <img src="@item.Image" class="img-fluid img-curve" alt="" />
+                                        </div>
+                                        <div class="col-md-7 subject-content mt-md-0 mt-4">
+                                            <h3>@item.Name</h3>
+                                            <p>
+                                                @item.Description
+                                            </p>
+                                            <span class="course-number"><span class="fa fa-graduation-cap" aria-hidden="true"></span> @counts.Count() Khóa Học</span>
+                                            
+                                        </div>
+                                    </div>
+                                    <span class="collapsed">
+                                       Xem Tất Cả
+                                    </span>                            
+                                </a>
+                            </div>                          
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /index-block2 -->
+<section class="w3l-testimonials" id="testimonials">
+    <div class="testimonials py-5">
+        <div class="container py-lg-3">
+            <div class="header-section text-center mx-auto">
+                <h3>Câu Nói Truyền Cảm Hứng</h3>
+
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-9 col-md-10 mx-auto">
+                    <div class="owl-testimonials owl-carousel owl-theme">
+                        <div class="item">
+                            <div class="slider-info mt-lg-4 mt-3">
+                                <div class="message">
+                                    <span class="fa fa-quote-left" aria-hidden="true"></span>
+                                    <p>Không có giới hạn cho qui trình học, cách để học. Thực sự một khi con người đã có được húng thú để tìm những con đường mới để kết cấu nên tri thức, họ sẽ không bao giờ sợ bị buồn chán.</p>
+                                    <div class="name mt-4">
+                                        <h4>Isabella Mia</h4>
+                                        <p>- United States</p>
+                                    </div>
+                                </div>
+                                <div class="img-circle">
+                                    <img src="/Assets/Outsite/images/team3.jpg" class="img-fluid testimonial-img" alt="client image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="slider-info mt-lg-4 mt-3">
+                                <div class="message">
+                                    <span class="fa fa-quote-left" aria-hidden="true"></span>
+                                    <p>Mỗi ngày bạn chỉ cần cố gắng 1% thôi, 365 ngày sau bạn đã trở thành một phiên bản tốt hơn 37 lần hiện tại rồi. Vì vậy hãy không ngừng cố gắng ngay từ hôm nay</p>
+                                    <div class="name mt-4">
+                                        <h4>Benjamin Lucas</h4>
+                                        <p>- Sweden</p>
+
+                                    </div>
+                                </div>
+                                <div class="img-circle">
+                                    <img src="/Assets/Outsite/images/team4.jpg" class="img-fluid testimonial-img" alt="client image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="slider-info mt-lg-4 mt-3">
+                                <div class="message">
+                                    <span class="fa fa-quote-left" aria-hidden="true"></span>
+                                    <p>Mục tiêu của giáo dục không phải là dạy cách kiếm sống hay cung cấp công cụ để đạt được sự giàu có, mà đó phải là con đường dẫn lối tâm hồn con người vươn đến cái chân và thực hành cái thiện.</p>
+                                    <div class="name mt-4">
+                                        <h4>Oliver Bradley</h4>
+                                        <p>- United Kingdom</p>
+                                    </div>
+                                </div>
+                                <div class="img-circle">
+                                    <img src="/Assets/Outsite/images/team1.jpg" class="img-fluid testimonial-img" alt="client image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="slider-info mt-lg-4 mt-3">
+                                <div class="message">
+                                    <span class="fa fa-quote-left" aria-hidden="true"></span>
+                                    <p>Thất học ở thế kỷ 21 sẽ không phải là những người không thể đọc và viết, thay vì thế, là những người không thể học hỏi, gạt bỏ, và học lại.</p>
+                                    <div class="name mt-4">
+                                        <h4>William James</h4>
+                                        <p>- United States</p>
+                                    </div>
+                                </div>
+                                <div class="img-circle">
+                                    <img src="/Assets/Outsite/images/team2.jpg" class="img-fluid testimonial-img" alt="client image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- stats -->
+<section class="w3l-stats pb-5 pt-4" id="stats">
+    <div class="gallery-inner container pb-lg-3">
+        <div class="row mt-4">
+            <div class="col-lg-9 col-md-10 mx-auto">
+                <div class="row stats-con align-items-stretch">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="stats_info counter_grid">
+                            <p class="counter">@ViewBag.TotalMember</p>
+                            <h4>Students</h4>
+                            <p>Tổng Thành Viên Của Website</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="stats_info counter_grid">
+                            <p class="counter">@ViewBag.TotalSubjects</p>
+                            <h4>Chủ Đề</h4>
+                            <p>Tổng Chủ Đề Của Website</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="stats_info counter_grid">
+                            <p class="counter">@ViewBag.TotalCourses</p>
+                            <h4>Khóa Học</h4>
+                            <p>Tổng Khóa Học Của Website</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //stats -->
+<!-- logos Section -->
+<!-- //logos Section -->
+<section class="w3l-index5 py-5 text-center">
+    <div class="container py-lg-5">
+        <div class="row">
+            <div class="col-lg-9 col-md-10 mx-auto">
+                <div class="header-section white join mb-5">
+                    <h3>Tìm Khóa Học Tập Phù Hợp Cho Bạn</h3>
+                    <p class="my-3">Tìm mục tiêu của bạn với các chương trình của chúng tôi, khám phá các tùy chọn của bạn và vạch ra con đường dẫn đến thành công.</p>
+                </div>
+                <a href="/dang-nhap" class="btn btn-light theme-button">Tham Gia</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- courses Section -->
+<section class="w3l-courses py-5">
+    <div class="container py-lg-3">
+        <div class="header-section mb-5 text-center mx-auto">
+            <h3>Khóa Học Nổi Bật</h3>
+        </div>
+        <div class="owl-courses owl-carousel owl-theme">
+            @foreach (var item in Courses)
+            {
+                var countlesson=new Model.DAO.LessonDao().countlessson(item.ID);
+                var countlesson1 = (List<Model.EF.Lesson>)countlesson;
+                var count = new Model.DAO.JoinedCoursesDao().countlessson(item.ID);
+                var counts = (List<Model.EF.JoinedCours>)count;
+                var cateogry= new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
+                var url = "/tong-quan/" + item.MetaTitle + "-" + item.ID;
+            <div class="item">
+                <div class="course-grid">
+                    <div class="course-img">
+                        <a href="@url">
+                            <img src="@item.Image" alt=" " class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="course-cont">
+                        <span class="subject red">@cateogry.Name</span>
+                        <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
+                        <ul class="admin-post">
+                            <li>
+                                <span class="fa fa-file-code-o"></span>@countlesson1.Count() Bài Học
+                            </li>
+                            <li>
+                                <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                            </li>
+                        </ul>
+                        <a href="courses-single.html" class="blog-btn mt-3">Tham Gia Khóa Học<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+        </div>
+</section>
+<!-- //courses Section -->
+<!-- subscribe section -->
+<!-- //subscribe -->
+<!-- getstarted -->
+
