@@ -25,6 +25,7 @@ namespace Model.EF
         public string MoreFiles { get; set; }
 
         public long? CourseID { get; set; }
+        public int? DisplayOrder { get; set; }
 
         [Column(TypeName = "ntext")]
         public string HomeWork { get; set; }

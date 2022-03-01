@@ -1,4 +1,8 @@
 ﻿@model List<Model.EF.Menu>
+    @{ 
+        var login = (List<Model.EF.Menu>)ViewBag.Login;
+        var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
+    }
 <section class="w3l-header">
     <header id="site-header" class="fixed-top">
         <div class="container">
@@ -26,13 +30,28 @@
 
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul class="navbar-nav ml-auto">
-                        @foreach(var item in Model)
-                            {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@item.Link" target="@item.Target">@item.Name</a>
-                        </li>
+                        @foreach (var item in Model)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@item.Link" target="@item.Target">@item.Name</a>
+                            </li>
                         }
-                        
+                        @if (session == null)
+                        {
+                            foreach (var item in login)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@item.Link" target="@item.Target">@item.Name</a>
+                                </li>
+                            }
+            }
+            else
+            {
+                    <li class="nav-item">
+                            <a class="" href="/dang-xuat"><i class="fas fa-power-off"></i>@session.UserName</a>
+                            <a class="nav-link" href="/dang-xuat"><i class="fas fa-power-off"></i> Đăng Xuất</a>
+                    </li>
+            }                    
                     </ul>
                 </div>
                 <!-- toggle switch for light and dark theme -->

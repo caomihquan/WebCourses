@@ -1,0 +1,57 @@
+﻿@model WebCourses.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">Đăng Nhập</h2>
+        </div>
+        <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Đăng Nhập</span>
+    </div>
+</nav>
+<!-- /contact breadcrumbs -->
+<!-- contact-form -->
+
+<section class="w3l-account py-5">
+    <!-- login -->
+    <div class="container py-lg-3">
+        <div class="literacy-login">
+            <div class="literacy-login-info">
+                <h2>Login to your Account</h2>
+                @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <label></label>
+                    <div class="input-group">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-6" })
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.UserName)
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.UserName)
+                    <div class="input-group">
+                        @Html.PasswordFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="login-check">
+                        <label class="checkbox"><input type="checkbox" name="checkbox"> Remember me</label>
+                        <a class="forgot" href="forgot-password.html">Forgot password?</a>
+                    </div>
+                    <button class="btn btn-primary theme-button btn-login" type="submit">Login</button>
+                }
+                <p class="account1">Dont have an account yet? <a href="signup.html">Get it now</a></p>
+                <a href="/User/LoginFacebook">Đăng Nhập Với Facbook</a>
+                <form action="@Url.Action("LoginWithGooglePlus", "User")" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

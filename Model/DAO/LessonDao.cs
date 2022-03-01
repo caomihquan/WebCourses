@@ -20,6 +20,11 @@ namespace Model.DAO
             return db.Lessons.Find(id);
         }
 
+        public List<Lesson> ListLessonByID(long id)
+        {
+            return db.Lessons.Where(x=>x.Status==true &&x.CourseID==id).OrderBy(x=>x.DisplayOrder).ToList();
+        }
+
         public long Insert(Lesson entity)
         {
             db.Lessons.Add(entity);

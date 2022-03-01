@@ -27,6 +27,7 @@ namespace WebCourses.Controllers
         public ActionResult header()
         {
             var model = new MenuDao().ListByGroupId(1);
+            ViewBag.Login = new MenuDao().ListByGroupId(2);
             return PartialView(model);
         }
 

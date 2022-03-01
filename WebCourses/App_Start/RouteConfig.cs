@@ -23,7 +23,19 @@ namespace WebCourses
                 name: "Course Overview",
                 url: "tong-quan/{metatitle}-{id}",
                 defaults: new { controller = "KhoaHoc", action = "OverView", id = UrlParameter.Optional },
-                namespaces: new[] { "WebBacklink.Controllers" }
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
+                name: "Login",
+                url: "dang-nhap",
+                defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
+                name: "Logout",
+                url: "dang-xuat",
+                defaults: new { controller = "User", action = "Logout", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
             );
 
             routes.MapRoute(

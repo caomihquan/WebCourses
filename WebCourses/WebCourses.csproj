@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ASPSnippets.GoogleAPI">
+      <HintPath>..\..\..\..\Downloads\Google_Login\Bin\ASPSnippets.GoogleAPI.dll</HintPath>
+    </Reference>
     <Reference Include="CKFinder">
       <HintPath>..\..\..\..\Downloads\ckfinder\bin\Release\CKFinder.dll</HintPath>
     </Reference>
@@ -54,6 +57,9 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
@@ -155,9 +161,11 @@
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GoogleProfile.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,6 +176,10 @@
     <Content Include="Assets\Admin\js\demo\chart-bar-demo.js" />
     <Content Include="Assets\Admin\js\demo\chart-pie-demo.js" />
     <Content Include="Assets\Admin\js\demo\datatables-demo.js" />
+    <Content Include="Assets\Admin\js\jquery.min.js" />
+    <Content Include="Assets\Admin\js\jquery.rateyo.js" />
+    <Content Include="Assets\Admin\js\jquery.rateyo.min.css" />
+    <Content Include="Assets\Admin\js\jquery.rateyo.min.js" />
     <Content Include="Assets\Admin\js\plugins\ckeditor\adapters\jquery.js" />
     <Content Include="Assets\Admin\js\plugins\ckeditor\build-config.js" />
     <Content Include="Assets\Admin\js\plugins\ckeditor\ckeditor.js" />
@@ -3312,6 +3324,7 @@
     <Content Include="Views\Shared\Category.cshtml" />
     <Content Include="Views\KhoaHoc\RecentBlog.cshtml" />
     <Content Include="Views\KhoaHoc\OverView.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
