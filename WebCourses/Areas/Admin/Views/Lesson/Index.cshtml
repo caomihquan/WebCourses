@@ -45,14 +45,14 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>MetaTitle</th>
+                                <th>Tên</th>
+                                <th>Thứ Tự</th>
                                 <th>ParentID</th>
-                                <th>CourseID</th>
+                                <th>ID Khóa Học</th>
                                 <th>Video</th>
                                 <th>Ngày Tạo</th>
-                                <th>ViewCount</th>
-                                <th>Status</th>
+                                <th>Lượt Xem</th>
+                                <th>Trạng Thái</th>
                                 <th>#</th>
                             </tr>
                         </thead>
@@ -62,7 +62,7 @@
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
                                     <td>@item.Name</td>
-                                    <td>@item.MetaTitle</td>
+                                    <td>@item.DisplayOrder</td>
                                     <td>@item.ParentsID</td>
                                     <td>@item.CourseID</td>
                                     <td>@item.Video</td>

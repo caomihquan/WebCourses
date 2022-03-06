@@ -26,5 +26,21 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.ID;
         }
+
+        public bool Delete(long id)
+        {
+            try
+            {
+                var reviewcourse = db.ReviewCourses.Find(id);
+                db.ReviewCourses.Remove(reviewcourse);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
     }
 }

@@ -26,13 +26,14 @@
                         {
                             var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
                             var countlesson1 = (List<Model.EF.Lesson>)countlesson;
-                            var count = new Model.DAO.JoinedCoursesDao().countlessson(item.ID);
+                            var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.ID);
                             var counts = (List<Model.EF.JoinedCours>)count;
                             var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
+                            var url = "/tong-quan/" + item.MetaTitle + "-" + item.ID;
                             <div class=" col-md-6">
                                 <div class="course-grid">
                                     <div class="course-img">
-                                        <a href="courses-single.html">
+                                        <a href="@url">
                                             <img src="@item.Image" alt=" " class="img-fluid">
                                             <div class="price blue">
                                                 <h4>@item.LevelCourse</h4>
@@ -51,7 +52,7 @@
                                             </li>
                                         </ul>
 
-                                        <a href="courses-single.html" class="blog-btn mt-3"><div class="btnkhoahoc">Tham Gia Khóa Học</div>  <span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
+                                        <a href="@url" class="blog-btn mt-3"><div class="btnkhoahoc">Tham Gia Khóa Học</div>  <span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
 
                                     </div>
                                 </div>

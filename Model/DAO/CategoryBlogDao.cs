@@ -1,4 +1,5 @@
-﻿using Model.EF;
+﻿using Common;
+using Model.EF;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,10 @@ namespace Model.DAO
         public long Insert(CategoryBlog entity)
         {
             db.CategoryBlogs.Add(entity);
+            if (string.IsNullOrEmpty(entity.MetaTitle))
+            {
+                entity.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+            }
             entity.CreatedDate = DateTime.Now;
             db.SaveChanges();
             return entity.ID;
@@ -33,7 +38,14 @@ namespace Model.DAO
             {
                 var categoryblog = db.CategoryBlogs.Find(entity.ID);
                 categoryblog.Name = entity.Name;
+                if (string.IsNullOrEmpty(entity.MetaTitle))
+                {
+                    categoryblog.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+                }
+                else
+                {
                 categoryblog.MetaTitle = entity.MetaTitle;
+                }
                 categoryblog.ParentsID = entity.ParentsID;
                 categoryblog.DisplayOrder = entity.DisplayOrder;
                 categoryblog.SeoTitle = entity.SeoTitle;

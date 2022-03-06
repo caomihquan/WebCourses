@@ -22,13 +22,25 @@ namespace WebCourses.Controllers
         }
 
 
+
         public ActionResult OverView(long id)
         {
+            var session = (User)Session[CommonConstants.USER_SESSION];
             var course = new CourseDao().ViewDetail(id);
             ViewBag.Cateogry = new CategoryDao().ViewDetail(course.CategoryID.Value);
             ViewBag.Lessons = new LessonDao().ListLessonByID(id);
             ViewBag.Course = course;
+            ViewBag.CourseJoined = new JoinedCoursesDao().countUserJoined(id);
             ViewBag.Review = new ReviewCourseDao().ListReview(id);
+            if (session == null)
+            {
+
+            }
+            else
+            {
+            ViewBag.CheckCourse = new JoinedCoursesDao().CheckCourse(session.ID,course.ID);
+                
+            }
             var review = new ReviewCourse()
             {
                 CourseID = course.ID
@@ -37,18 +49,24 @@ namespace WebCourses.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendReview(ReviewCourse review, float rating)
+        public ActionResult SendReview(ReviewCourse review, float rating=0)
         {
 
             var dao = new ReviewCourseDao();
-            var session = (UserLogin)Session[CommonConstants.USER_SESSION];
+            var session = (User)Session[CommonConstants.USER_SESSION];
             review.CreatedDate = DateTime.Now;
             review.Rating = rating;
-            /*            review.UserID = session.ID;
-                        review.CreatedBy = session.UserName;*/
+            review.UserID = session.ID;
+            review.CreatedBy = session.UserName;
             review.Status = true;
-            dao.Insert(review);
-            return RedirectToAction("OverView", "KhoaHoc", new { id = review.CourseID });
+            var result=dao.Insert(review);
+            if(result > 0)
+            {
+                return RedirectToAction("OverView", "KhoaHoc", new { id = review.CourseID });
+            }
+            return View(review);
+
+            
         }
 
         [ChildActionOnly]
@@ -63,5 +81,21 @@ namespace WebCourses.Controllers
             var model = new BlogDao().RecentBlog(3);
             return PartialView(model);
         }
+
+        [HttpDelete]
+        public ActionResult Delete(long id)
+        {
+            var result = new ReviewCourseDao().Delete(id);
+            if (result)
+                {
+                    return RedirectToAction("Detail", "Product");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Cập nhật Sản Phẩm Không thành công");
+                }
+            return View("Index");
+        }
+
     }
 }

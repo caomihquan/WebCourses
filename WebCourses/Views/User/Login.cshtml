@@ -43,13 +43,15 @@
                     </div>
                     <button class="btn btn-primary theme-button btn-login" type="submit">Login</button>
                 }
-                <p class="account1">Dont have an account yet? <a href="signup.html">Get it now</a></p>
-                <a href="/User/LoginFacebook">Đăng Nhập Với Facbook</a>
-                <form action="@Url.Action("LoginWithGooglePlus", "User")" method="post">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>
+                <p class="account1">Bạn Chưa Có Tài Khoản? <a href="/dang-ky">Đăng Ký Ngay</a></p>
+                <div class="login-register-social">
+                    <a href="/User/LoginFacebook" class="btn btn-primary"><i class="fab fa-facebook"></i> Đăng Nhập Với Facbook</a>
+                    <form action="@Url.Action("LoginWithGooglePlus", "User")" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>
 
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

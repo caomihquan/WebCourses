@@ -1,0 +1,284 @@
+﻿@model Model.EF.ReviewLesson 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lesson =(List<Model.EF.Lesson>)ViewBag.Lesson;
+    var progress =(List<Model.EF.ProgressLesson>)ViewBag.ProgressLesson;
+    var baihoc = ViewBag.BaiHoc;
+    var review = (List<Model.EF.ReviewLesson>)ViewBag.Review;
+    var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
+    
+}
+@section jsFooter{
+    <script>
+
+        const tabs = document.querySelectorAll('.tab-item')
+        const panes = document.querySelectorAll('.tab-pane')
+        const tabActive = document.querySelector('.tab-item.active');
+        const line = document.querySelector('.tabs .line')
+        const displaynone = document.querySelector('.close-course')
+        const lesson = document.querySelector('.posts.p-4')
+        const video = document.querySelector('.w3l-courses.blog-posts.col-lg-8.pr-lg-0')
+        const appearlesson = document.querySelector('.appear-course')
+        line.style.left = tabActive.offsetLeft + 'px';
+        line.style.width = tabActive.offsetWidth + 'px';
+
+        tabs.forEach((tab, index) => {
+
+            const pane = panes[index]
+            tab.onclick = function () {
+
+                document.querySelector('.tab-item.active').classList.remove('active')
+                document.querySelector('.tab-pane.active').classList.remove('active')
+
+                line.style.left = this.offsetLeft + 'px';
+                line.style.width = this.offsetWidth + 'px';
+
+                pane.classList.add('active')
+                this.classList.add('active')
+            }
+        });
+
+        displaynone.onclick = () => {
+            lesson.classList.add('display-none')
+            video.classList.toggle('col-lg-8')
+            video.classList.toggle('col-lg-12')
+            appearlesson.style.display = "flex"
+
+            document.querySelector('.btn-appear').style.display = "flex"
+
+        }
+        appearlesson.onclick = () => {
+            lesson.classList.remove('display-none')
+            video.classList.toggle('col-lg-8')
+            video.classList.toggle('col-lg-12')
+            appearlesson.style.display = "none"
+
+            document.querySelector('.btn-appear').style.display = "none"
+        }
+    </script>
+}
+    <nav id="breadcrumbs" class="breadcrumbs">
+        <div class="container page-wrapper text-center">
+            <div class="header-section">
+                <h2 class="mb-2">@ViewBag.Course.Name</h2>
+
+            </div>
+            <ul class="admin-post mb-0">
+                <li>
+                    <span class="fa fa-book"></span>@baihoc.Name
+                </li>
+                <li>
+                    <span class="fa fa-eye"></span>@baihoc.ViewCount Lượt Xem Bài Học
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <section class="w3l-blog">
+
+        <div class="single blog pb-5 pt-md-4 pt-2">
+
+            <div class="container pb-lg-3">
+                <div class="row">
+                    <!-- left side blog post content -->
+                    <div class="w3l-courses blog-posts col-lg-8 pr-lg-0">
+
+                        <div class="row">
+
+                            <div class=" col-md-12">
+                                <div class="btn-appear">
+                                    <div> </div>
+                                    <span class="appear-course">Hiện Nội Dung</span>
+                                </div>
+                                <div class="course-grid">
+
+                                    <div class="course-img">
+
+                                        
+                                            @if (baihoc.Video == null || baihoc.Video == "")
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                        
+                                            if (baihoc.Video.Contains("youtube.com"))
+                                            {
+                                        <div class="iframe-container">
+                                            <iframe width="100%" height="500" src="@baihoc.Video" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                            }
+                                            else if (baihoc.Video.Contains("<iframe"))
+                                            {
+                                                @Html.Raw(baihoc.Video)
+                                            }
+                                            else if (baihoc.Video.Contains("drive.google.com"))
+                                            {
+                                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
+                                            }
+                                       
+                                            }
+
+                                        
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <!-- Tab items -->
+                                    <div class="tabs">
+                                        <div class="tab-item active">
+                                            <i class="fas fa-brain"></i>
+                                            Nội Dung
+                                        </div>
+                                        <div class="tab-item">
+                                            
+                                            <i class="fas fa-file-signature"></i>
+                                            Bài Tập
+                                        </div>
+                                        <div class="tab-item">
+                                            <i class="fas fa-comment-alt"></i>
+                                            Bình Luận
+                                        </div>
+                                        <div class="tab-item">
+                                            <i class="fas fa-file"></i>
+                                            Tệp
+                                        </div>
+                                        <div class="line"></div>
+                                    </div>
+
+                                    <!-- Tab content -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active">
+                                            @Html.Raw(baihoc.Content)
+                                        </div>
+                                        <div class="tab-pane">
+                                            @Html.Raw(baihoc.HomeWork)
+                                            
+                                        </div>
+                                        <div class="tab-pane commentoverview">
+                                            @foreach (var item in review)
+                                            {
+                                                
+                                            <div id="row_@item.ID" style="display:flex">
+                                                <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                                    <div class="comment_content">
+                                                        <h4>@item.CreatedBy </h4>
+                                                        <div>@item.Comment</div>
+                                                        <div style="font-size:12px;font-weight:300">
+                                                            Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate</span> |
+                                                            @if (item.UserID == session.ID)
+                                                            {
+
+                                                                @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
+                                                                     {
+                                                          Confirm = "Bạn có muốn xóa bản ghi này",
+                                                          OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                          HttpMethod = "Delete"
+                                                                     })
+
+                                                            }
+                                                            </div>
+                                                        
+                                                    </div>
+                                            </div>
+                                            }
+                                            @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post))
+                                            {
+                                                <div class="reviews-submit">
+                                                    <h4>Đánh Giá Của Bạn:</h4>
+                                                    @Html.AntiForgeryToken()
+
+
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    <input id="rating" type="hidden" name="rating" />
+
+                                                    <div class="input-group">
+                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 })
+                                                        @Html.HiddenFor(x => x.LessonID)
+                                                    </div>
+                                                    <div style=" text-align: right; margin-top: 16px;">
+                                                        <input type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
+                                                    </div>
+
+                                                </div>
+
+                                            }
+                                        </div>
+                                        <div class="tab-pane">
+                                            <ul>
+                                                @if (baihoc.MoreFiles == null || baihoc.MoreFiles=="")
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    string[] tags = baihoc.MoreFiles.Substring(1).Split(',');
+                                                    foreach (var item in tags)
+                                                    {
+                                                        <li style="list-style:none"><i class="far fa-file"></i> <a href="@item" target="_blank">@item.Substring(11)</a></li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- pagination -->
+
+                    </div>
+                    <!-- left side blog post content -->
+                    <!-- right side bar -->
+
+                    <div class="right-side-bar col-lg-4 pl-lg-5">
+
+                        <aside class="posts p-4 sidebar-lesson">
+                            <span class="close-course">Ẩn Nội Dung</span>
+                            <h3 class="content__courses">Tất Cả Bài học</h3>
+                            @{
+                                var sobaidahoc = (float)progress.Count();
+                                var tongso = (float)lesson.Where(x => x.ParentsID != null).Count();
+                                var tiendo = (sobaidahoc / tongso) * 100 + "%";
+                            }
+                            <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
+                                Tiến Độ:
+                                <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
+                            </div>
+                            <ul class="lessons">
+                                @foreach (var li in lesson.Where(x => x.ParentsID == null))
+                                {
+                                    var child = lesson.Where(x => x.ParentsID == li.ID);
+                                    var parentClass = child.Count() > 0 ? "class=lesson_parent" : "";
+                                    var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
+                                    <li>
+                                        <a href="#link" @parentClass>@li.Name</a>
+                                        @if (child.Count() > 0)
+                                        {
+                                            foreach (var childItem in child)
+                                            {
+                                            <li title="@childItem.Name"><a href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name</a></li>
+                                        }
+                                    }
+                                        </li>
+                                    }
+                            </ul>
+                        </aside>
+
+                    </div>
+                    <!-- //right side bar -->
+                </div>
+            </div>
+        </div>
+    </section>
+

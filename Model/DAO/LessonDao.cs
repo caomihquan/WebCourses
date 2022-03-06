@@ -1,4 +1,5 @@
-﻿using Model.EF;
+﻿using Common;
+using Model.EF;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -20,14 +21,26 @@ namespace Model.DAO
             return db.Lessons.Find(id);
         }
 
+        public Lesson ViewDetailOut(long id)
+        {
+            var model = db.Lessons.Find(id);
+            model.ViewCount++;
+            db.SaveChanges();
+            return model;
+        }
+
         public List<Lesson> ListLessonByID(long id)
         {
-            return db.Lessons.Where(x=>x.Status==true &&x.CourseID==id).OrderBy(x=>x.DisplayOrder).ToList();
+            return db.Lessons.Where(x=>x.Status==true && x.CourseID == id).OrderBy(x=>x.DisplayOrder).ToList();
         }
 
         public long Insert(Lesson entity)
         {
             db.Lessons.Add(entity);
+            if (string.IsNullOrEmpty(entity.MetaTitle))
+            {
+                entity.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+            }
             entity.CreatedDate = DateTime.Now;
             db.SaveChanges();
             return entity.ID;
@@ -38,11 +51,21 @@ namespace Model.DAO
             {
                 var lesson = db.Lessons.Find(entity.ID);
                 lesson.Name = entity.Name;
+                if (string.IsNullOrEmpty(entity.MetaTitle))
+                {
+                    lesson.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+                }
+                else
+                {
                 lesson.MetaTitle = entity.MetaTitle;
+
+                }
+                lesson.MoreFiles = entity.MoreFiles;
                 lesson.ParentsID = entity.ParentsID;
                 lesson.Video = entity.Video;
                 lesson.CourseID = entity.CourseID;
                 lesson.HomeWork = entity.HomeWork;
+                lesson.DisplayOrder = entity.DisplayOrder;
                 lesson.ModifiedDate = DateTime.Now;
                 lesson.Content = entity.Content;
                 lesson.Status = entity.Status;
@@ -67,8 +90,17 @@ namespace Model.DAO
 
         public List<Lesson>countlessson(long top)
         {
-            return db.Lessons.Where(x => x.CourseID == top).ToList();
+            return db.Lessons.Where(x => x.CourseID == top && x.ParentsID != null).ToList();
         }
+
+        public bool ClearAllFile(long id)
+        {
+            var user = db.Lessons.Find(id);
+            user.MoreFiles = null;
+            db.SaveChanges();
+            return true;
+        }
+
         public bool Delete(int id)
         {
             try

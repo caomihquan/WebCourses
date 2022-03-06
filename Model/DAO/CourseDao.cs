@@ -1,4 +1,5 @@
-﻿using Model.EF;
+﻿using Common;
+using Model.EF;
 using Model.ViewModel;
 using PagedList;
 using System;
@@ -39,6 +40,10 @@ namespace Model.DAO
         public long Insert(Cours entity)
         {
             db.Courses.Add(entity);
+            if (string.IsNullOrEmpty(entity.MetaTitle))
+            {
+                entity.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+            }
             entity.CreatedDate = DateTime.Now;
             db.SaveChanges();
             return entity.ID;
@@ -49,7 +54,15 @@ namespace Model.DAO
             {
                 var courses = db.Courses.Find(entity.ID);
                 courses.Name = entity.Name;
+                if (string.IsNullOrEmpty(entity.MetaTitle))
+                {
+                    courses.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+                }
+                else
+                {
                 courses.MetaTitle = entity.MetaTitle;
+
+                }
                 courses.Image = entity.Image;
                 courses.Description = entity.Description;
                 courses.CategoryID = entity.CategoryID;

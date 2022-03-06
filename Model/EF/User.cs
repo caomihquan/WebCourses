@@ -1,4 +1,4 @@
-﻿namespace Model.EF
+namespace Model.EF
 {
     using System;
     using System.Collections.Generic;
@@ -15,11 +15,9 @@
         public string UserName { get; set; }
 
         [StringLength(32)]
-        
         public string ConfirmPassword { get; set; }
 
         [StringLength(32)]
-        
         public string Password { get; set; }
 
         [StringLength(20)]
@@ -42,7 +40,6 @@
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? ModifiedDate { get; set; }
 
         [StringLength(50)]

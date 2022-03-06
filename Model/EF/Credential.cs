@@ -16,7 +16,7 @@ namespace Model.EF
 
         [Key]
         [Column(Order = 1)]
-        [MaxLength(50)]
+        [StringLength(50)]
         public string RoleID { get; set; }
     }
 }

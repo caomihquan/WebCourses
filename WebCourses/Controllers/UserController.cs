@@ -12,6 +12,7 @@ using WebCourses.Models;
 using ASPSnippets.GoogleAPI;
 using System.Web.Script.Serialization;
 using System.Net;
+using BotDetect.Web.Mvc;
 
 namespace WebCourses.Controllers
 {
@@ -19,6 +20,10 @@ namespace WebCourses.Controllers
     {
         // GET: User
         public ActionResult Login()
+        {
+            return View();
+        }
+        public ActionResult Register()
         {
             return View();
         }
@@ -128,16 +133,17 @@ namespace WebCourses.Controllers
                 user.Name = firstname + " " + middlename + " " + lastname;
                 user.CreatedDate = DateTime.Now;
                 var resultInsert = new UserDao().InsertForFacebook(user);
-                if (resultInsert > 0)
+                if (resultInsert)
                 {
+                    var nguoidung = new UserDao().GetByID(user.UserName);
                     var userSession = new User();
-                    userSession.UserName = user.UserName;
-                    userSession.ID = user.ID;
-                    userSession.Password = user.Password;
-                    userSession.Name = user.Name;
-                    userSession.Phone = user.Phone;
-                    userSession.Email = user.Email;
-                    userSession.Address = user.Address;
+                    userSession.UserName = nguoidung.UserName;
+                    userSession.ID = nguoidung.ID;
+                    userSession.Password = nguoidung.Password;
+                    userSession.Name = nguoidung.Name;
+                    userSession.Phone = nguoidung.Phone;
+                    userSession.Email = nguoidung.Email;
+                    userSession.Address = nguoidung.Address;
                     Session.Add(CommonConstants.USER_SESSION, userSession);                   
                 }
             }
@@ -182,13 +188,15 @@ namespace WebCourses.Controllers
                 var resultInsert = new UserDao().InsertForGoogle(khachHang);
                 if (resultInsert > 0)
                 {
+                    var nguoidung = new UserDao().GetByID(khachHang.UserName);
                     var userSession = new User();
-                    userSession.UserName = khachHang.UserName;
-                    userSession.ID = khachHang.ID;
-                    userSession.Name = khachHang.Name;
-                    userSession.Phone = khachHang.Phone;
-                    userSession.Email = khachHang.Email;
-                    userSession.Address = khachHang.Address;
+                    userSession.UserName = nguoidung.UserName;
+                    userSession.ID = nguoidung.ID;
+                    userSession.Password = nguoidung.Password;
+                    userSession.Name = nguoidung.Name;
+                    userSession.Phone = nguoidung.Phone;
+                    userSession.Email = nguoidung.Email;
+                    userSession.Address = nguoidung.Address;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
                 }
             }
@@ -200,5 +208,53 @@ namespace WebCourses.Controllers
 
         }
 
+        [HttpPost]
+        [CaptchaValidation("CaptchaCode", "registerCapcha", "Mã xác nhận không đúng!")]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var dao = new UserDao();
+                if (dao.CheckUserName(model.UserName))
+                {
+                    ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+                }
+                else if (dao.CheckEmail(model.Email))
+                {
+                    ModelState.AddModelError("", "Email đã tồn tại");
+                }
+                else
+                {
+                    var user = new User();
+                    user.UserName = model.UserName;
+                    user.Name = model.Name;
+                    user.Password = Encryptor.MD5Hash(model.Password);
+                    user.Phone = model.Phone;
+                    user.Email = model.Email;
+                    user.Address = model.Address;
+                    user.CreatedDate = DateTime.Now;
+                    user.Status = true;
+                    var result = dao.Insert(user);
+                    if (result > 0)
+                    {                      
+                        var userSession = new User();
+                        userSession.UserName = user.UserName;
+                        userSession.ID = user.ID;
+                        userSession.Password = user.Password;
+                        userSession.Name = user.Name;
+                        userSession.Phone = user.Phone;
+                        userSession.Email = user.Email;
+                        userSession.Address = user.Address;
+                        Session.Add(CommonConstants.USER_SESSION, userSession);
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Đăng ký không thành công.");
+                    }
+                }
+            }
+            return View(model);
+        }
     }
 }

@@ -35,27 +35,44 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(Lesson lesson, HttpPostedFileBase file)
+        public ActionResult Create(Lesson lesson, HttpPostedFileBase filevideo, List<HttpPostedFileBase> file)
         {
             if (ModelState.IsValid)
             {
-                if (file == null)
+                
+                if (filevideo == null)
                 {
                     lesson.Video = lesson.Video;
                 }
-                else if (CheckFileType(file.FileName))
+                else if (CheckFileTypeVideo(filevideo.FileName))
                 {
-                    string _FileName = Path.GetFileName(file.FileName);
+                    string _FileName = Path.GetFileName(filevideo.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Video"), _FileName);
                     var video = _path.Substring(49);
-                    file.SaveAs(_path);
+                    filevideo.SaveAs(_path);
                     lesson.Video = video;
                 }
                 var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
                 var dao = new LessonDao();
                 lesson.CreatedBy = session.UserName;
-                lesson.MoreFiles = "<File></File>";
                 lesson.ViewCount = 0;
+                string chuoi = "";
+                if (file[0] == null)
+                {
+                    lesson.MoreFiles = null;
+                }
+                else
+                {
+                    foreach (HttpPostedFileBase f in file)
+                    {
+                            string files = Path.GetFileName(f.FileName);
+                            string _path = Path.Combine(Server.MapPath("/Data/File"), files);
+                            var video = _path.Substring(49);
+                            f.SaveAs(_path);
+                            chuoi = chuoi + "," + video;                      
+                    }
+                    lesson.MoreFiles = chuoi;
+                }
                 long id = dao.Insert(lesson);
                 if (id > 0)
                 {
@@ -72,25 +89,44 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Edit(Lesson lesson, HttpPostedFileBase file)
+        public ActionResult Edit(Lesson lesson, HttpPostedFileBase filevideo, List<HttpPostedFileBase> file)
         {
             if (ModelState.IsValid)
             {
                 var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
-                if (file == null)
+                if (filevideo == null)
                 {
                     lesson.Video = lesson.Video;
                 }
-                else if (CheckFileType(file.FileName))
+                else if (CheckFileTypeVideo(filevideo.FileName))
                 {
-                    string _FileName = Path.GetFileName(file.FileName);
+                    string _FileName = Path.GetFileName(filevideo.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Video"), _FileName);
                     var video = _path.Substring(49);
-                    file.SaveAs(_path);
+                    filevideo.SaveAs(_path);
                     lesson.Video = video;
                 }
                 var dao = new LessonDao();
                 lesson.ModifiedBy = session.UserName;
+                string chuoi = "";
+                var list = new LessonDao().ViewDetail(lesson.ID);
+                
+                if (file[0] == null)
+                {
+                    lesson.MoreFiles = list.MoreFiles;
+                }
+                else
+                {
+                    foreach (HttpPostedFileBase f in file)
+                    {
+                            string files = Path.GetFileName(f.FileName);
+                            string _path = Path.Combine(Server.MapPath("/Data/File"), files);
+                            var video = _path.Substring(49);
+                            f.SaveAs(_path);
+                            chuoi = chuoi + "," + video;
+                    }
+                    lesson.MoreFiles = chuoi;
+                }
                 var result = dao.Update(lesson);
                 if (result)
                 {
@@ -111,7 +147,7 @@ namespace WebCourses.Areas.Admin.Controllers
             new LessonDao().Delete(id);
             return RedirectToAction("Index", "Lesson");
         }
-        bool CheckFileType(string fileName)
+        bool CheckFileTypeVideo(string fileName)
         {
 
             string ext = Path.GetExtension(fileName);
@@ -122,6 +158,16 @@ namespace WebCourses.Areas.Admin.Controllers
                 default:
                     return false;
             }
+        }
+
+        [HttpPost]
+        public JsonResult ClearFilePath(long id)
+        {
+            var result = new LessonDao().ClearAllFile(id);
+            return Json(new
+            {
+                status = result
+            });
         }
     }
 }

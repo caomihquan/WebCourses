@@ -21,10 +21,10 @@ namespace Model.EF
         [StringLength(250)]
         public string Video { get; set; }
 
-        [Column(TypeName = "xml")]
         public string MoreFiles { get; set; }
 
         public long? CourseID { get; set; }
+
         public int? DisplayOrder { get; set; }
 
         [Column(TypeName = "ntext")]

@@ -7,7 +7,7 @@
     <header id="site-header" class="fixed-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark stroke">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="/">
                     <span class="fa fa-pencil-square-o"></span> Literate
                 </a>
                 <!-- if logo is image enable this
@@ -43,13 +43,18 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="@item.Link" target="@item.Target">@item.Name</a>
                                 </li>
-                            }
+                         }
             }
             else
             {
                     <li class="nav-item">
-                            <a class="" href="/dang-xuat"><i class="fas fa-power-off"></i>@session.UserName</a>
-                            <a class="nav-link" href="/dang-xuat"><i class="fas fa-power-off"></i> Đăng Xuất</a>
+                        <a class="nav-link" href="#"><i class="fas fa-user-circle"></i> @session.UserName</a>                       
+                        <div class="logout_user">
+                            <ul>
+                                @*<li><a>Logout</a></li>*@
+                                <li><a href="/dang-xuat"><i class="fas fa-power-off"></i> Đăng Xuất</a></li>
+                            </ul>
+                        </div>
                     </li>
             }                    
                     </ul>

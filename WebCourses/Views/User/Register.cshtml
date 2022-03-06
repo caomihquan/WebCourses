@@ -1,0 +1,100 @@
+﻿@model WebCourses.Models.RegisterModel
+@using BotDetect.Web.Mvc;
+
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+      rel="stylesheet" type="text/css" />
+
+@{
+    MvcCaptcha registerCapcha = new MvcCaptcha("registerCapcha");
+    registerCapcha.UserInputID = "CaptchaCode";
+}
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">Đăng Nhập</h2>
+        </div>
+        <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Đăng Nhập</span>
+    </div>
+</nav>
+
+<section class="w3l-account py-5">
+    <!-- login -->
+    <div class="container py-lg-3">
+        <div class="literacy-login">
+            <div class="literacy-login-info">
+                <h2>Login to your Account</h2>
+                @using (Html.BeginForm("Register", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="input-group">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.UserName)
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.UserName)
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(model => model.Password)
+                    <div class="input-group">
+                        @Html.PasswordFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    @Html.LabelFor(model => model.ConfirmPassword)
+                    <div class="input-group">
+                        @Html.PasswordFor(model => model.ConfirmPassword)
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+
+                    @Html.LabelFor(model => model.Name)
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Name)
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    @Html.LabelFor(model => model.Address)
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+
+                    @Html.LabelFor(model => model.Email)
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    @Html.LabelFor(model => model.Phone)
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.Phone)
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group">
+                        @Html.Captcha(registerCapcha)
+                        @Html.TextBox("CaptchaCode")
+                    </div>
+                   
+
+
+                    <button class="btn btn-primary theme-button btn-login" type="submit">Login</button>
+                }
+                <p class="account1">Bạn Đã Có Tài Khoản? <a href="/dang-nhap">Đăng Nhập Ngay</a></p>
+                <div class="login-register-social">
+                    <a href="/User/LoginFacebook" class="btn btn-primary"><i class="fab fa-facebook"></i> Đăng Nhập Với Facbook</a>
+                    <form action="@Url.Action("LoginWithGooglePlus", "User")" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

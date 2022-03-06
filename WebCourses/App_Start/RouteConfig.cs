@@ -13,6 +13,9 @@ namespace WebCourses
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.IgnoreRoute("{*botdetect}",
+   new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
+
             routes.MapRoute(
                 name: "Course",
                 url: "khoa-hoc",
@@ -26,6 +29,12 @@ namespace WebCourses
                 namespaces: new[] { "WebCourses.Controllers" }
             );
             routes.MapRoute(
+                name: "Lessons",
+                url: "bai-hoc/{metatitle}-{id}",
+                defaults: new { controller = "Lesson", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
                 name: "Login",
                 url: "dang-nhap",
                 defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },
@@ -35,6 +44,12 @@ namespace WebCourses
                 name: "Logout",
                 url: "dang-xuat",
                 defaults: new { controller = "User", action = "Logout", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
+                name: "Register",
+                url: "dang-ky",
+                defaults: new { controller = "User", action = "Register", id = UrlParameter.Optional },
                 namespaces: new[] { "WebCourses.Controllers" }
             );
 

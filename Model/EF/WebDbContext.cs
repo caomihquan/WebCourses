@@ -25,6 +25,7 @@ namespace Model.EF
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<MenuType> MenuTypes { get; set; }
+        public virtual DbSet<ProgressLesson> ProgressLessons { get; set; }
         public virtual DbSet<ReviewBlog> ReviewBlogs { get; set; }
         public virtual DbSet<ReviewCourse> ReviewCourses { get; set; }
         public virtual DbSet<ReviewLesson> ReviewLessons { get; set; }
@@ -61,6 +62,10 @@ namespace Model.EF
 
             modelBuilder.Entity<Credential>()
                 .Property(e => e.UserGroupID)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Credential>()
+                .Property(e => e.RoleID)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Footer>()

@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var category = (Model.EF.Category)ViewBag.Cateogry;
     var lesson = (List<Model.EF.Lesson>)ViewBag.Lessons;
+    var thamgia = lesson.Where(x => x.DisplayOrder == 1 && x.CourseID== ViewBag.Course.ID);
+    var review = (List<Model.EF.ReviewCourse>)ViewBag.Review;
+    var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
+    var coursejoined = (List<Model.EF.JoinedCours>)ViewBag.CourseJoined;
+    var i = 1;
+    var a = 1;
+    var tb = 0;
 }
 @section jsFooter{
     <script>
@@ -48,6 +55,37 @@
             });
         });
     </script>
+    @foreach (var item in review)
+    {
+        <script>
+            $(function () {
+                $('.sao@(a)').rateYo({
+                    rating: @item.Rating,
+                    numStars: 5,
+                    maxValue: 5,
+                    halfStar: true,
+                    starWidth: "20px",
+                    readOnly: true
+
+                });
+            });
+        </script>
+        a++;
+    }
+
+    <script>
+            $(function () {
+                $('#trungbinh').rateYo({
+                    rating: @tb,
+                    numStars: 5,
+                    maxValue: 5,
+                    halfStar: true,
+                    starWidth: "20px",
+                    readOnly: true
+
+                });
+            });
+    </script>
 
 }
 <nav id="breadcrumbs" class="breadcrumbs">
@@ -56,11 +94,16 @@
             <h2 class="mb-2">@ViewBag.Course.Name</h2>
         </div>
         <ul class="admin-post mb-0">
+            <li>           
+                <div id="trungbinh" style="position: relative; left: 14px; bottom: 4px;"></div>
+                
+            </li>
+            <li><div>@review.Count Bình Chọn</div></li>
             <li>
-                <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span> 25 Votes
+                <span class="fa fa-users"></span>@coursejoined.Count() Thành Viên
             </li>
             <li>
-                <span class="fa fa-users"></span>20 enrolled students
+                <i class="far fa-eye"></i> @ViewBag.Course.ViewCount Lượt Xem
             </li>
 
         </ul>
@@ -79,9 +122,35 @@
                                 <p>Danh Mục: <strong>@category.Name</strong></p>
 
                             </div>
-                            <div class="btn-thamgiakhoahoc">
-                                <a href="./courses-single.html" class="btn btn-primary theme-button mt-3">Buy this course</a>
-                            </div>
+                            @if (session == null)
+                            {
+                                <div class="btn-thamgiakhoahoc">
+                                    <a href="/dang-nhap" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
+                                </div>
+                            }
+                            else
+                            {
+                                if (ViewBag.CheckCourse)
+                                {
+                                    <div class="btn-thamgiakhoahoc">
+                                        @foreach(var item in thamgia)
+                                        {
+                                        <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
+                                        }   
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="btn-thamgiakhoahoc">
+                                        @foreach(var item in thamgia)
+                                        {
+                                        <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
+                                        }                                 
+                                    </div>
+                                }
+                            }
+
+
                         </header>
                         <div class="course-content my-3">
                             <p>
@@ -134,37 +203,118 @@
                                         <aside class="posts p-4 sidebar-lesson">
                                             <h3 class="content__courses">Tất Cả Bài học</h3>
                                             <ul class="lessons">
-                                                @foreach (var li in lesson.Where(x => x.ParentsID != null))
+                                                @foreach (var li in lesson.Where(x => x.ParentsID == null))
                                                 {
+                                                    var child = lesson.Where(x => x.ParentsID == li.ID);
+                                                    var parentClass = child.Count() > 0 ? "class=lesson_parent" : "";
                                                     var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
 
-                                                    <li><a href="@url">@li.Name</a></li>
-                                                }
+                                                    <li>
+                                                        <a href="#link" @parentClass>@li.Name</a>
+                                                        @if (child.Count() > 0)
+                                                        {
+                                                            foreach (var childItem in child)
+                                                            {
+                                                                if (session != null)
+                                                                {
+
+                                                                <li title="@childItem.Name"><a href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name</a></li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li title="@childItem.Name"><a href="/dang-nhap">@childItem.Name</a></li>
+                                                            }
+                                                        }
+                                                    }
+                                                        </li>
+                                                    }
                                             </ul>
                                         </aside>
 
                                     </div>
-                                    <div class="tab-pane">
-                                        @using (Html.BeginForm("SendReview", "KhoaHoc", FormMethod.Post))
-                                        {
-                                            <div class="reviews-submit">
-                                                <h4>Give your Review:</h4>
-                                                <div id="rateYo">
+                                    <div class="tab-pane commentoverview">
 
-                                                </div>
-                                                <input id="rating" type="hidden" name="rating" />
-                                                <div class="row form">
-                                                    <div class="col-sm-12">
-                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 })
-                                                        @Html.HiddenFor(x => x.CourseID)
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <input type="submit" value="Send" class="btn" />
-                                                    </div>
-                                                </div>
+                                        @if (session == null)
+                                        {
+                                            <div>Vui Lòng Đăng Nhập Để Đánh Giá Và Bình Luận. <a href="/dang-nhap">Đăng Nhập</a></div>
+                                        }
+                                        else
+                                        {
+                                            using (Html.BeginForm("SendReview", "KhoaHoc", FormMethod.Post))
+                                            {
+                                    <div class="reviews-submit">
+                                        <h4>Đánh Giá Của Bạn:</h4>
+                                        <div id="rateYo">
+
+                                        </div>
+                                        @Html.AntiForgeryToken()
+
+                                        
+                                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                            <input id="rating" type="hidden" name="rating" />
+
+                                            <div class="input-group">
+                                                @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 })
+                                                @Html.HiddenFor(x => x.CourseID)
+                                                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+                                            </div>
+                                            <div style=" text-align: right; margin-top: 16px;">
+                                                <input type="submit" value="Gửi" class="btn btn-primary" style="width:100px;" />
                                             </div>
 
+                                        </div>
+
                                         }
+
+                                        }
+
+                                        @*average*@
+                                        @foreach (var tong in review)
+                                        {
+                                            tb = (int)tb + (int)tong.Rating;
+                                        }
+
+
+                                        @{
+                                            if (review.Count == 0)
+                                            {
+                                                tb = 0;
+                                            }
+                                            else
+                                            {
+                                                tb = (@tb / @review.Count);
+                                            }
+                                        }
+                                        <div class="tab-pane fade show active col-lg-4" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
+                                            <h1 style="color:var(--primary-color)">@tb/5 sao</h1>
+                                            <div id="trungbinh"></div>
+                                        </div>
+                                        @*comment*@
+                                        @foreach (var item in review)
+                                        {
+                                            var rating = item.Rating;
+                                    <div id="row_@item.ID" style="display:flex;">
+                                        <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                        <div class="comment_content">
+                                            <h4>@item.CreatedBy</h4>
+
+                                            <div class="sao@(i)"></div>
+                                            <div>@item.Comment</div>
+                                            <div style="font-size:12px;font-weight:300"> Đã Bình Luận Vào
+                                                <span style="font-weight:500">  @item.CreatedDate</span> | @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                                        {
+                                            Confirm = "Bạn có muốn xóa bản ghi này",
+                                            OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                            HttpMethod = "Delete"
+                                        })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                            i++;
+                                        }
+
+
                                     </div>
 
                                 </div>

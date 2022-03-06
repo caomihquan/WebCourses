@@ -69,6 +69,7 @@
     <Compile Include="DAO\LessonDao.cs" />
     <Compile Include="DAO\MenuDao.cs" />
     <Compile Include="DAO\ReviewCourseDao.cs" />
+    <Compile Include="DAO\ReviewLessonDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Blog.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="EF\Lesson.cs" />
     <Compile Include="EF\Menu.cs" />
     <Compile Include="EF\MenuType.cs" />
+    <Compile Include="EF\ProgressLesson.cs" />
     <Compile Include="EF\ReviewBlog.cs" />
     <Compile Include="EF\ReviewCourse.cs" />
     <Compile Include="EF\ReviewLesson.cs" />
