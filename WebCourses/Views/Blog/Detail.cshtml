@@ -1,0 +1,178 @@
+﻿@model Model.EF.ReviewBlog
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listTag = (List<Model.EF.Tag>)ViewBag.Tags;
+    var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
+    var listRelatedBlog = (List<Model.EF.Blog>)ViewBag.RelatedBlog;
+    var blog = ViewBag.Blog;
+    var tags = (List<Model.EF.Tag>)ViewBag.Tag;
+    var review = (List<Model.EF.ReviewBlog>)ViewBag.Review;
+
+}
+
+@section jsFooter{
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6168ecfe9afe107b"></script>
+}
+
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">@blog.Name</h2>
+        </div>
+        <ul class="admin-post mb-0">
+            <li>
+                <div id="trungbinh" style="position: relative; left: 14px; bottom: 4px;"></div>
+
+            </li>
+            <li><div><span class="fas fa-user"></span> @blog.CreatedBy</div></li>
+            <li>
+                <span class="fa fa-clock"></span>@blog.CreatedDate.ToString("dd-MM-yyyy")
+            </li>
+            <li>
+                <span class="far fa-eye"></span> @blog.ViewCount Lượt Xem
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<section class="w3l-blog">
+    <div class="single blog pb-5 pt-md-4 pt-2">
+        <div class="container pb-lg-3">
+            <div class="row">
+                <div class="blog-posts col-lg-8 pr-lg-0">
+                    <div class="blog-post-single">
+                        <div class="btom-cont1 pt-4">
+                            @Html.Raw(blog.Detail)
+                            <div class="my-5" style="display:flex">
+                                <h5>Chia Sẻ: </h5>
+                                <div class="addthis_inline_share_toolbox_fw73"></div>
+                            </div>
+
+                            @foreach (var item in listRelatedBlog)
+                            {
+                                var url = "/blog-chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                                <div class="author-cardview my-4">
+                                    <div class="row author-card author-listhny">
+                                        <div class="author-left col-sm-3 mb-sm-0 mb-4">
+                                            <a href="@url">
+                                                <img class="img-fluid img-curve" src="@item.Image" alt=" ">
+                                            </a>
+                                        </div>
+                                        <div class="author-right col-sm-9 position-relative">
+
+                                            <h4><a href="@url" class="title-team-28">@item.Name</a></h4>
+                                            <p class="para-team mb-0">
+                                                @item.Description
+                                            </p>
+
+                                            <div class="share-icons mt-4">
+                                                <a href="@url">Đọc Tiếp <i class="fas fa-arrow-right"></i></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <ul class="share-post">
+                                <li><i class="fas fa-tags"></i> Tag:</li>
+                                @foreach (var item in tags)
+                                {
+                                    <li><a href="/tag/@item.ID">@item.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="comments mt-5">
+                        <h4>Ý Kiến:</h4>
+
+                        @if (session != null)
+                        {
+                            using (Html.BeginForm("SendReview", "Blog", FormMethod.Post))
+                            {
+                                <div class="reviews-submit" style="color:var(--text-color)">
+
+                                    @Html.AntiForgeryToken()
+
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input id="rating" type="hidden" name="rating" />
+
+                                    <div class="input-group">
+                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 })
+                                        @Html.HiddenFor(x => x.BlogID)
+                                    </div>
+                                    <div style=" text-align: right; margin-top: 16px;">
+                                        <input type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
+                                    </div>
+
+                                </div>
+
+                            }
+                        }
+                        else
+                        {
+                            <div>Bạn Vui Lòng Đăng Nhập Để Đóng Góp Ý Kiến. <a href="/dang-nhap">Đăng Nhập</a></div>
+                        }
+
+                        @foreach (var item in review)
+                        {
+
+                            <div id="row_@item.ID" style="display:flex">
+                                <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                <div class="comment_content">
+                                    <h4>@item.CreatedBy </h4>
+                                    <div>@item.Comment</div>
+                                    <div style="font-size:12px;font-weight:300">
+                                        Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span> 
+                                        <div >
+                                        @if (item.UserID == session.ID)
+                                        {
+
+                                            @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
+                                                 {
+                                      Confirm = "Bạn có muốn xóa bản ghi này",
+                                      OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                      HttpMethod = "Delete"
+                                                 })
+
+                                        }
+                                        </div>  
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="right-side-bar col-lg-4 pl-lg-5">
+                    @if (session == null)
+                    {
+
+                        <aside><a href="/dang-nhap"><i class="fas fa-plus-circle"></i> Thêm Bài Viết</a></aside>
+                    }
+                    else
+                    {
+                        <aside><a href="/tao-bai-viet"><i class="fas fa-plus-circle"></i> Thêm Bài Viết</a></aside>
+
+                    }
+                    @{ Html.RenderAction("CategoryBlog", "Blog");}
+                    @{ Html.RenderAction("RecentBlog", "KhoaHoc");}
+                    <aside class="posts p-4">
+                        <h3 class="aside-title">Tag</h3>
+                        <ul class="tags-list">
+                            @foreach (var item in listTag)
+                            {
+
+                                <li><a href="#tag"> @item.Name</a></li>
+                            }
+
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

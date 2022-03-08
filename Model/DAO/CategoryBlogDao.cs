@@ -90,5 +90,18 @@ namespace Model.DAO
         {
             return db.CategoryBlogs.Where(x => x.Status == true).OrderBy(x => x.DisplayOrder).ToList();
         }
+
+        public CategoryBlog CategoryCourses(long? id)
+        {
+            return db.CategoryBlogs.Where(x => x.ID == id).SingleOrDefault();
+        }
+
+        public List<Blog> ListByCategoryBlogId(long categoryID, ref int totalRecord, int page = 1, int pageSize = 2)
+        {
+            totalRecord = db.Blogs.Where(x => x.CategoryBlogID == categoryID).Count();
+            var model = db.Blogs.Where(x => x.CategoryBlogID == categoryID &&x.Status==true).OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return model;
+
+        }
     }
 }

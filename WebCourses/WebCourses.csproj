@@ -167,6 +167,8 @@
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\HasCredentialAttribute.cs" />
     <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhoaHocController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
@@ -3002,6 +3004,8 @@
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Assets\Admin\vendor\undraw_profile.svg" />
+    <Content Include="Assets\Outsite\Common\ASPSnippets.GoogleAPI.dll" />
+    <Content Include="Assets\Outsite\Common\CKFinder.dll" />
     <Content Include="Assets\Outsite\css\style-starter.css" />
     <Content Include="Assets\Outsite\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\Outsite\images\about.jpg" />
@@ -3307,6 +3311,7 @@
     <Content Include="Assets\Outsite\fonts\fontawesome-webfont.woff" />
     <Content Include="Assets\Outsite\fonts\fontawesome-webfont.woff2" />
     <Content Include="Assets\Outsite\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Views\Blog\DuyetBlog.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3339,6 +3344,15 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Lesson\Index.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\CategoryBlog.cshtml" />
+    <Content Include="Views\Blog\Category.cshtml" />
+    <Content Include="Views\Blog\Tag.cshtml" />
+    <Content Include="Views\Blog\Create.cshtml" />
+    <Content Include="Views\Blog\SucceedCreate.cshtml" />
+    <Content Include="Views\Blog\Detail.cshtml" />
+    <Content Include="Views\Category\Category.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

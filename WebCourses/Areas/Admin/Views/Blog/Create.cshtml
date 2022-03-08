@@ -12,6 +12,7 @@
             var finder = new CKFinder();
             finder.selectActionFunction = function (url) {
                 $('#txtImage').val(url);
+                $('#imgImages').attr("src", url);
             };
             finder.popup();
         });
@@ -59,6 +60,7 @@
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
                 <a id="btnSelectImage" href="#"><i class="fas fa-images"></i> Chọn Ảnh</a>
+                <img id="imgImages" style="width: 200px; height: 200px; " />
                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
             </div>
         </div>

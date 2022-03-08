@@ -22,7 +22,7 @@ namespace Model.DAO
         }
         public List<Blog> RecentBlog(int id)
         {
-            return db.Blogs.OrderByDescending(x=>x.CreatedDate).Take(id).ToList();
+            return db.Blogs.Where(x=>x.Status==true).OrderByDescending(x=>x.CreatedDate).Take(id).ToList();
         }
 
         public long Insert(Blog blog)
@@ -33,7 +33,6 @@ namespace Model.DAO
             }
             blog.CreatedDate = DateTime.Now;
             blog.ViewCount = 0;
-            blog.Status = false;
             db.Blogs.Add(blog);
             db.SaveChanges();
 
@@ -114,7 +113,17 @@ namespace Model.DAO
         }
         public IEnumerable<Blog> ListAllPaging(string searchString, int page, int pageSize)
         {
-            IQueryable<Blog> model = db.Blogs;
+            IQueryable<Blog> model = db.Blogs.Where(x=>x.Status==true);
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.ID.ToString().Contains(searchString) || x.Name.Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+        }
+
+        public IEnumerable<Blog> ListAllPagingFalse(string searchString, int page, int pageSize)
+        {
+            IQueryable<Blog> model = db.Blogs.Where(x => x.Status == false);
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.ID.ToString().Contains(searchString) || x.Name.Contains(searchString));
@@ -165,6 +174,82 @@ namespace Model.DAO
         public bool CheckTag(string id)
         {
             return db.Tags.Count(x => x.ID == id) > 0;
+        }
+
+        public List<Tag> ListAllTag()
+        {
+            return db.Tags.Take(10).ToList();
+        }
+
+        public IEnumerable<Blog> ListAllByTag(string tag, int page, int pageSize)
+        {
+            var model = (from a in db.Blogs
+                         join b in db.BlogTags
+                         on a.ID equals b.ContentID
+                         where b.TagID == tag
+                         select new
+                         {
+                             Name = a.Name,
+                             MetaTitle = a.MetaTitle,
+                             Image = a.Image,
+                             CategoryBlogID=a.CategoryBlogID,
+                             Description = a.Description,
+                             CreatedDate = a.CreatedDate,
+                             CreatedBy = a.CreatedBy,
+                             ID = a.ID,
+                             Status=a.Status
+
+                         }).AsEnumerable().Select(x => new Blog()
+                         {
+                             Name = x.Name,
+                             MetaTitle = x.MetaTitle,
+                             Image = x.Image,
+                             CategoryBlogID=x.CategoryBlogID,
+                             Description = x.Description,
+                             CreatedDate = x.CreatedDate,
+                             CreatedBy = x.CreatedBy,
+                             ID = x.ID,
+                             Status=x.Status
+                         });
+            return model.Where(x=>x.Status==true).OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+        }
+
+        public Tag GetTag(string id)
+        {
+            return db.Tags.Find(id);
+        }
+
+
+        public Blog GetByID(long id)
+        {
+            var model = db.Blogs.Find(id);
+            model.ViewCount++;
+            db.SaveChanges();
+            return model;
+        }
+
+        public List<Blog> ListRelatedContents(long contentId, int top)
+        {
+            var content = db.Blogs.Find(contentId);
+            return db.Blogs.Where(x => x.ID != contentId && x.CategoryBlogID == content.CategoryBlogID&&x.Status==true).Take(top).ToList();
+        }
+
+        public List<Tag> ListTag(long contentId)
+        {
+            var model = (from a in db.Tags
+                         join b in db.BlogTags
+                         on a.ID equals b.TagID
+                         where b.ContentID == contentId
+                         select new
+                         {
+                             ID = b.TagID,
+                             Name = a.Name
+                         }).AsEnumerable().Select(x => new Tag()
+                         {
+                             ID = x.ID,
+                             Name = x.Name
+                         });
+            return model.ToList();
         }
     }
 }

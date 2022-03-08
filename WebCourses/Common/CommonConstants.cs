@@ -12,5 +12,6 @@ namespace WebCourses.Common
         public static string SESSION_CREDENTIALS = "SESSION_CREDENTIALS";
 
         public static string CurrentCulture { set; get; }
+
     }
 }

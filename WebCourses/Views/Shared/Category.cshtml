@@ -1,6 +1,6 @@
 ﻿@model List<Model.EF.Category>
 
-<aside class="posts p-4">
+@*<aside class="posts p-4">
     
     <h3 class="aside-title nav-bar">Danh Mục</h3>
     <ul class="category">
@@ -22,6 +22,20 @@
 
                     </ul>
                 }
+            </li>
+        }
+    </ul>
+</aside>*@
+
+<aside class="posts p-4">
+
+    <h3 class="aside-title nav-bar">Chủ Đề</h3>
+    <ul class="category">
+        @foreach (var item in Model)
+        {
+            var link = "/chu-de/" + item.MetaTitle + "-" + item.ID;
+            <li class="dropdown">
+                <a href="@link"><span class="fa fa-angle-right"></span>@item.Name </a>
             </li>
         }
     </ul>

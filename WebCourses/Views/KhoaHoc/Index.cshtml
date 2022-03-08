@@ -60,7 +60,7 @@
                         }
 
                     </div>
-                    <div class="pagination-wrapper mt-lg-5 pagination-mt">
+                    <div class="col-lg-12">
                                
                                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
                            {

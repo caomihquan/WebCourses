@@ -112,5 +112,14 @@ namespace Model.DAO
             }
 
         }
+
+
+        public List<Cours> ListByCategoryId(long categoryID, ref int totalRecord, int page = 1, int pageSize = 2)
+        {
+            totalRecord = db.Courses.Where(x => x.CategoryID == categoryID).Count();
+            var model = db.Courses.Where(x => x.CategoryID == categoryID).OrderByDescending(x => x.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return model;
+
+        }
     }
 }

@@ -1,0 +1,156 @@
+﻿@model Model.EF.Blog
+
+@{
+    ViewBag.Title = "Create";
+    var listTag = (List<Model.EF.Tag>)ViewBag.Tags;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section jsFooter{
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+                $('#imgImages').attr("src", url);
+            };
+            finder.popup();
+        });
+
+        var editor = CKEDITOR.replace('txtContent', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+
+
+    </script>
+
+}
+
+
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">Blog</h2>
+        </div>
+        <a href="/">Trang Chủ</a> » <a href="/blog" class="breadcrumb_last" aria-current="page">Blog</a> » <span class="breadcrumb_last" aria-current="page">Đăng Blog</span>
+    </div>
+</nav>
+<section class="w3l-blog">
+    <div class="single blog pb-5 pt-md-4 pt-2">
+        <div class="container pb-lg-3">
+            <div class="row">
+                <!-- left side blog post content -->
+                <div class="blog-posts col-lg-8 pr-lg-0">
+                    <div class="row">
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h4>Blog</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CategoryBlogID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.CategoryBlogID, null, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.CategoryBlogID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.HiddenFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
+                                    <img id="imgImages" style="width:100px;height:100px;" />
+                                    <a id="btnSelectImage" href="#"><i class="fas fa-images"></i> Chọn Ảnh</a>
+                                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control" }, id = "txtContent" })
+                                    @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Đăng Bài Viết" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+                    </div>
+
+                    <!-- pagination -->
+                </div>
+                <!-- left side blog post content -->
+                <!-- right side bar -->
+                <div class="right-side-bar col-lg-4 pl-lg-5">
+                   
+                    <aside>
+
+                        <h3 class="aside-title mb-3">Tìm Kiếm</h3>
+                        <form class="form-inline search-form" action="#" method="post">
+                            <input class="form-control" value="@ViewBag.SearchString" type="search" placeholder="Tìm Kiếm Blog" aria-label="email" required="" name="searchString">
+                            <button class="btn search" type="submit"><span class="fa fa-search"></span></button>
+                        </form>
+                    </aside>
+                    @{ Html.RenderAction("CategoryBlog", "Blog");}
+                    @{ Html.RenderAction("RecentBlog", "KhoaHoc");}
+                    <aside class="posts p-4">
+                        <h3 class="aside-title">Tag</h3>
+                        <ul class="tags-list">
+                            @foreach (var item in listTag)
+                            {
+
+                                <li><a href="#tag"> @item.Name</a></li>
+                            }
+
+                        </ul>
+                    </aside>
+                    @*                    <aside class="posts p-4">
+                            <h3 class="aside-title">Advertisement</h3>
+                            <a href="blog-single.html">
+                                <img src="assets/images/stat.jpg" alt=" " class="img-fluid img-curve">
+                            </a>
+                        </aside>*@
+                </div>
+                <!-- //right side bar -->
+            </div>
+        </div>
+    </div>
+</section>
+
+

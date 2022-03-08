@@ -1,0 +1,130 @@
+﻿@model List<Model.EF.Cours>
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var category = (Model.EF.Category)ViewBag.Category;
+}
+
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">Blog</h2>
+        </div>
+        <a href="/">Trang Chủ</a> » <a href="/blog" class="breadcrumb_last" aria-current="page">Blog</a> » <span class="breadcrumb_last" aria-current="page">@category.Name</span>
+    </div>
+</nav>
+
+<section class="w3l-blog">
+    <div class="single blog pb-5 pt-md-4 pt-2">
+        <div class="container pb-lg-3">
+            <div class="row">
+                <!-- left side blog post content -->
+                <div class="w3l-courses blog-posts col-lg-8 pr-lg-0">
+                    <div class="row">
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
+                                var countlesson1 = (List<Model.EF.Lesson>)countlesson;
+                                var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.ID);
+                                var counts = (List<Model.EF.JoinedCours>)count;
+                                var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
+                                var url = "/tong-quan/" + item.MetaTitle + "-" + item.ID;
+                                <div class=" col-md-6">
+                                    <div class="course-grid">
+                                        <div class="course-img">
+                                            <a href="@url">
+                                                <img src="@item.Image" alt=" " class="img-fluid">
+                                                <div class="price blue">
+                                                    <h4>@item.LevelCourse</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="course-cont">
+                                            <span class="subject green">Computer Science</span>
+                                            <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
+                                            <ul class="admin-post">
+                                                <li>
+                                                    <span class="fa fa-file-code-o"></span>@countlesson1.Count() Bài Học
+                                                </li>
+                                                <li>
+                                                    <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                                </li>
+                                            </ul>
+
+                                            <a href="@url" class="blog-btn mt-3"><div class="btnkhoahoc">Tham Gia Khóa Học</div>  <span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                            if (ViewBag.TotalPage > 1)
+                            {
+                                var pageDisplay = (int)ViewBag.MaxPage;
+                                int totalPage = (int)ViewBag.TotalPage;
+                                int currentPage = ((int)ViewBag.Page);
+
+                                var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                                var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                                var link = "/tim-kiem?keyword/" + ViewBag.Keyword;
+                                var url = "/chu-de/" + category.MetaTitle + "-" + category.ID;
+                                <div class="pagination-wrapper mt-lg-5 pagination-mt col-lg-12">
+
+                                    <ul class="page-pagination">
+
+                                        @if (currentPage > ViewBag.First)
+                                        {
+                                            <li class="page-link"><a href="@url?page=@ViewBag.First" title="Trang Đầu" class="first"><i class="fa fa-angle-double-left"></i></a></li>
+                                            <li class="page-link"><a href="@url?page=@ViewBag.Prev" title="Trang Trước" class="prev"><i class="fa fa-angle-left"></i></a></li>
+                                        }
+                                        @for (int i = startPageIndex; i <= endPageIndex; i++)
+                                        {
+                                            if (currentPage == i)
+                                            {
+                                                <li class="page-link"><a href="@url?page=@i" aria-current="page" class="current" title="Trang @i">@i</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="page-link"><a href="@url?page=@i" class="pos" title="Trang @i">@i</a></li>
+
+                                            }
+                                        }
+                                        @if (currentPage < totalPage)
+                                        {
+                                            <li class="page-link"><a href="@url?page=@ViewBag.Next" class="next" title="Trang Sau"><i class="fa fa-angle-right"></i></a></li>
+                                            <li class="page-link"><a href="@url?page=@ViewBag.Last" class="last" title="Trang Cuối"><i class="fa fa-angle-double-right"></i></a></li>
+                                        }
+                                    </ul>
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-md-12 alert alert-danger">
+                                <span>Không có bản ghi nào</span>
+                            </div>
+                        }
+
+
+                    </div>
+
+                </div>
+                <!-- left side blog post content -->
+                <!-- right side bar -->
+                <div class="right-side-bar col-lg-4 pl-lg-5">
+
+                    @{ Html.RenderAction("Category", "KhoaHoc");}
+                    @{ Html.RenderAction("RecentBlog", "KhoaHoc");}
+
+                </div>
+                <!-- //right side bar -->
+            </div>
+        </div>
+    </div>
+</section>
+

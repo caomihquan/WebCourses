@@ -99,5 +99,14 @@ namespace WebCourses.Areas.Admin.Controllers
             var dao = new CategoryBlogDao();
             ViewBag.CategoryBlogID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
+
+
+        public ActionResult DuyetBlog(string searchString, int page = 1, int pageSize = 10)
+        {
+            var dao = new BlogDao();
+            var model = dao.ListAllPagingFalse(searchString, page, pageSize);
+            ViewBag.SearchString = searchString;
+            return View(model);
+        }
     }
 }

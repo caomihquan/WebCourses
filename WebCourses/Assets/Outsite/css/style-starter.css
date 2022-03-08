@@ -12863,13 +12863,49 @@ h5.card-title {
         padding: 8px 24px;
 }
 
-@media (min-width:740px) and (max-width:1200px) {
+@media (max-width:992px) {
     .navbar-nav li:last-child:hover .logout_user {
         display: flex;
         margin:auto;
         position:relative;
     }
 
+}
+textarea:focus {
+    color: var(--text-color);
+}
+
+
+/* single blog */
+.w3l-blog ul.share-post li {
+    list-style: none;
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.w3l-blog .author-cardview {
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    background-color: var(--light-bg-color);
+    border-radius: var(--border-radius);
+}
+
+.w3l-blog .btom-cont1 {
+    border: 1px solid var(--border-color);
+    border-top: none;
+    padding: 1.5em;
+    background-color: var(--bg-color);
+    border-radius: 0 0 6px 6px;
+}
+
+.w3l-blog .comments {
+    margin-bottom: 40px;
+    background-color: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    overflow-y:scroll;
+    max-height:600px;
 }
 
 

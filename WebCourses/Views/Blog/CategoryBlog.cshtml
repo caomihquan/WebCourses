@@ -1,0 +1,11 @@
+﻿@model List<Model.EF.CategoryBlog>
+<aside class="posts p-4">
+    <h3 class="aside-title">Danh Mục Blog</h3>
+    <ul class="category">
+        @foreach (var item in Model)
+        {
+            var url = "/blog/" + item.MetaTitle + "-" + item.ID;
+            <li><a href="@url"><span class="fa fa-angle-right"></span>@item.Name </a></li>
+        }
+    </ul>
+</aside>

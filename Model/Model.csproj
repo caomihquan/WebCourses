@@ -68,6 +68,7 @@
     <Compile Include="DAO\JoinedCoursesDao.cs" />
     <Compile Include="DAO\LessonDao.cs" />
     <Compile Include="DAO\MenuDao.cs" />
+    <Compile Include="DAO\ReviewBlogDao.cs" />
     <Compile Include="DAO\ReviewCourseDao.cs" />
     <Compile Include="DAO\ReviewLessonDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
