@@ -67,9 +67,9 @@
 
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
                    {
-                       UlElementClasses = new List<string> { "page-pagination" },
-                       LiElementClasses = new List<string> { "page-numbers" },
-
+                      
+                       LiElementClasses = new List<string> { "page-item", "page-link" },
+                       
                    })
                     </div>
                 </div>

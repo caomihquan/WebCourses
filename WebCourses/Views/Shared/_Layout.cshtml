@@ -12,13 +12,45 @@ Author URL: http://w3layouts.com
     <title></title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="/Assets/Admin/js/jquery.rateyo.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <!-- Template CSS -->
     <link rel="stylesheet" href="/Assets/Outsite/css/style-starter.css">
-
+    <link href="/Assets/Outsite/css/jquery-ui.css" rel="stylesheet" />
 
 </head>
+
 <body>
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "104737215503680");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v13.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <!--header-->
     @{Html.RenderAction("header", "Home");}
     @RenderBody()
@@ -28,7 +60,7 @@ Author URL: http://w3layouts.com
     @RenderPage("footer.cshtml")
     <!-- jQuery JS -->
     <script src="/Assets/Outsite/js/jquery-1.9.1.min.js"></script>
-    @*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
+    @*    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
     <!-- Template JavaScript -->
@@ -283,6 +315,11 @@ Author URL: http://w3layouts.com
     <script src="/Assets/Admin/js/jquery.rateyo.min.js"></script>
     <script src="/Assets/Admin/js/plugins/ckfinder/ckfinder.js"></script>
     <script src="/Assets/Admin/js/plugins/ckeditor/ckeditor.js"></script>
+    <script>
+        document.querySelector(".lesson_parent").addEventListener("click", function (event) {
+            event.preventDefault()
+        });
+    </script>
     @RenderSection("jsFooter", required: false)
 </body>
 

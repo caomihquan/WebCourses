@@ -128,7 +128,7 @@ namespace WebCourses.Controllers
 
                 var user = new User();
                 user.Email = email;
-                user.UserName =firstname+lastname+id;
+                user.UserName =id;
                 user.Status = true;
                 user.Name = firstname + " " + middlename + " " + lastname;
                 user.CreatedDate = DateTime.Now;

@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var category = (Model.EF.Category)ViewBag.Cateogry;
     var lesson = (List<Model.EF.Lesson>)ViewBag.Lessons;
+    var countlesson2 = lesson.Count();
+    var countnull = lesson.Where(x => x.ParentsID == null).Count();
+    var countkhacnull = lesson.Where(x => x.ParentsID != null).Count();
     var thamgia = lesson.Where(x => x.DisplayOrder == 1 && x.CourseID== ViewBag.Course.ID);
     var review = (List<Model.EF.ReviewCourse>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
@@ -210,8 +213,16 @@
                                                     var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
 
                                                     <li>
-                                                        <a href="#link" @parentClass>@li.Name</a>
-                                                        @if (child.Count() > 0)
+                                                        @if (session != null)
+                                                        {
+                                                            <a href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name</a>
+                                                        }
+                                                        else { 
+                                                            <a href="/dang-nhap" @parentClass>@li.Name</a>
+
+                                                        }
+                                                        </li>
+                                                        if (child.Count() > 0)
                                                         {
                                                             foreach (var childItem in child)
                                                             {
@@ -224,9 +235,9 @@
                                                             {
                                                                 <li title="@childItem.Name"><a href="/dang-nhap">@childItem.Name</a></li>
                                                             }
-                                                        }
-                                                    }
-                                                        </li>
+                                                            }
+                                                         }
+                                                     
                                                     }
                                             </ul>
                                         </aside>
@@ -329,7 +340,15 @@
                     <aside>
                         <h3 class="aside-title mb-3"></h3>
                         <p><i class="fas fa-laptop-code"></i> Trình Độ @ViewBag.Course.LevelCourse</p>
-                        <p><i class="fas fa-play-circle"></i> Tổng Số @lesson.Where(x => x.ParentsID != null).Count() Bài Học</p>
+                        @if (countkhacnull == 0)
+                        {
+                            <p><i class="fas fa-play-circle"></i> Tổng Số @lesson.Count() Bài Học</p>
+                        }
+                        else if (countnull > 0)
+                        {
+                            <p><i class="fas fa-play-circle"></i> Tổng Số @(countlesson2 - countnull) Bài Học</p>
+                        }
+
                         <p><i class="fas fa-user-tie"></i> Người Tạo: @ViewBag.Course.CreatedBy</p>
                     </aside>
                     @{ Html.RenderAction("RecentBlog", "KhoaHoc");}

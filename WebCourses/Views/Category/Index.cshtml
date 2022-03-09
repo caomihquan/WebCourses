@@ -35,11 +35,11 @@
                                         </div>
                                         <div class="col-md-7 subject-content mt-md-0 mt-4">
                                             <h3>@item.Name</h3>
-                                            <p>
+                                            <p class="description_subjcect">
                                                 @item.Description
                                             </p>
                                             <span class="course-number"><span class="fa fa-graduation-cap" aria-hidden="true"></span> @counts.Count() Khóa Học</span>
-                                            <p>@Html.Raw(item.Overview)</p>
+                                            <p class="detail_subject">@Html.Raw(item.Overview)</p>
                                         </div>
                                     </div>
 
@@ -55,7 +55,7 @@
 
                 </div>
 
-                <div class="col-lg-12">
+                <div class="pagination-wrapper mt-lg-5 pagination-mt col-lg-12">
 
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
                         {

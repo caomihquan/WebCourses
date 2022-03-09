@@ -90,7 +90,7 @@ namespace Model.DAO
 
         public List<Lesson>countlessson(long top)
         {
-            return db.Lessons.Where(x => x.CourseID == top && x.ParentsID != null).ToList();
+            return db.Lessons.Where(x => x.CourseID == top).ToList();
         }
 
         public bool ClearAllFile(long id)

@@ -30,6 +30,10 @@ namespace Model.DAO
         {
             return db.Courses.Where(x => x.Status == true).OrderByDescending(x => x.ViewCount).Take(top).ToList();
         }
+        public List<Cours> ListNewCourse(int top)
+        {
+            return db.Courses.Where(x => x.Status == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
+        }
         public Cours ViewDetail(long id)
         {
             return db.Courses.Find(id);
@@ -109,6 +113,20 @@ namespace Model.DAO
                 return false;
             }
 
+        }
+
+
+        public List<Cours> Search(string keyword, ref int totalRecord, int pageIndex = 1, int pageSize = 2)
+        {
+            totalRecord = db.Courses.Where(x => x.Name == keyword).Count();
+            var model = db.Courses.Where(x => x.Name == keyword);
+            model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return model.ToList();
+        }
+
+        public List<string> ListName(string keyword)
+        {
+            return db.Courses.Where(x => x.Name.Contains(keyword)).Select(x => x.Name).ToList();
         }
     }
 }

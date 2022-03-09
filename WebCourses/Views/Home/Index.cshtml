@@ -4,9 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var subject = (List<Model.EF.Category>)ViewBag.PopularSubject;
     var Courses = (List<Model.EF.Cours>)ViewBag.FeaterCourses;
-    
+    var newCourses = (List<Model.EF.Cours>)ViewBag.NewCourses;
+
 }
 @section jsFooter{
+    <script src="~/Assets/Outsite/js/jquery-ui.js"></script>
+    <script src="~/Assets/Outsite/js/autocomplete.js"></script>
 }
 <div class="w3l-index1">
     <div class="content">
@@ -27,9 +30,11 @@
         </div>
     </div>
 </div>
+
+
 <!-- //index-block1 -->
 <!-- index-block2 -->
-<section class="w3l-index2 py-5">
+<section id="why" class="w3l-index2 py-5">
     <div class="container py-md-3">
         <div class="header-section text-center mx-auto">
             <h3>Tại Sao Nên Học Với Chúng Tôi? </h3>
@@ -51,7 +56,7 @@
                     <a href="blog-single.html" class="d-block p-lg-4 p-3">
                         <img src="/Assets/Outsite/images/s3.png" alt="" class="img-fluid img-curve" />
                         <h3 class="my-3">Học Với Các Chuyên Gia</h3>
-                        
+
                     </a>
                 </div>
             </div>
@@ -60,7 +65,7 @@
                     <a href="blog-single.html" class="d-block p-lg-4 p-3">
                         <img src="/Assets/Outsite/images/s2.png" alt="" class="img-fluid img-curve" />
                         <h3 class="my-3">Học Tập Linh Hoạt</h3>
-                       
+
                     </a>
                 </div>
             </div>
@@ -69,7 +74,7 @@
 </section>
 <!-- /index-block2 -->
 <!-- index-block2 -->
-<section class="w3l-index3 py-5">
+<section id="subject" class="w3l-index3 py-5">
     <div class="container py-md-3">
         <div class="header-section text-center mx-auto">
             <h3>Chủ Đề Phổ Biến</h3>
@@ -87,28 +92,28 @@
                         var link = "/chu-de/" + item.MetaTitle + "-" + item.ID;
                         <div class="subject-card mt-4">
                             <div class="subject-card-header p-0" id="headingOne">
-                                <a href="@link" class="card__title p-3 p-lg-4 collapsed d-block" >
+                                <a href="@link" class="card__title p-3 p-lg-4 collapsed d-block">
                                     <div class="row">
                                         <div class="col-md-5 subject-img">
                                             <img src="@item.Image" class="img-fluid img-curve" alt="" />
                                         </div>
                                         <div class="col-md-7 subject-content mt-md-0 mt-4">
                                             <h3>@item.Name</h3>
-                                            <p>
+                                            <p class="description_subjcect">
                                                 @item.Description
                                             </p>
                                             <span class="course-number"><span class="fa fa-graduation-cap" aria-hidden="true"></span> @counts.Count() Khóa Học</span>
-                                            <p>@Html.Raw(item.Overview)</p>
+                                            <p class="detail_subject">@Html.Raw(item.Overview)</p>
                                         </div>
                                     </div>
-                
-                                        <span class="collapsed">
-                                            Xem Tất Cả
 
-                                        </span>
+                                    <span class="collapsed">
+                                        Xem Tất Cả
+
+                                    </span>
 
                                 </a>
-                            </div>                          
+                            </div>
                         </div>
                     }
 
@@ -231,7 +236,7 @@
 <!-- //stats -->
 <!-- logos Section -->
 <!-- //logos Section -->
-<section class="w3l-index5 py-5 text-center">
+<section id="find" class="w3l-index5 py-5 text-center">
     <div class="container py-lg-5">
         <div class="row">
             <div class="col-lg-9 col-md-10 mx-auto">
@@ -239,14 +244,19 @@
                     <h3>Tìm Khóa Học Tập Phù Hợp Cho Bạn</h3>
                     <p class="my-3">Tìm mục tiêu của bạn với các chương trình của chúng tôi, khám phá các tùy chọn của bạn và vạch ra con đường dẫn đến thành công.</p>
                 </div>
-                <a href="/dang-nhap" class="btn btn-light theme-button">Tham Gia</a>
+                <form class="search-chung" action="/tim-kiem" method="get">
+                    <div class="search__navbar">
+                        <input class="search__txt" id="txtKeyword" type="text" name="keyword" placeholder="Tìm Kiếm Khóa Học">
+                    </div>
+                    <button class="search__btn" type="submit"> Tìm Kiếm <i class="fa fa-search"></i></button>
+                </form>
             </div>
         </div>
     </div>
 </section>
 
 <!-- courses Section -->
-<section class="w3l-courses py-5">
+<section id="popular" class="w3l-courses py-5">
     <div class="container py-lg-3">
         <div class="header-section mb-5 text-center mx-auto">
             <h3>Khóa Học Nổi Bật</h3>
@@ -254,40 +264,105 @@
         <div class="owl-courses owl-carousel owl-theme">
             @foreach (var item in Courses)
             {
-                var countlesson=new Model.DAO.LessonDao().countlessson(item.ID);
+                var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
                 var countlesson1 = (List<Model.EF.Lesson>)countlesson;
+                var countlesson2 = countlesson1.Count();
+                var countnull = countlesson1.Where(x => x.ParentsID == null).Count();
+                var countkhacnull = countlesson1.Where(x => x.ParentsID != null).Count();
                 var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.ID);
                 var counts = (List<Model.EF.JoinedCours>)count;
-                var cateogry= new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
+                var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
                 var url = "/tong-quan/" + item.MetaTitle + "-" + item.ID;
-            <div class="item">
-                <div class="course-grid">
-                    <div class="course-img">
-                        <a href="@url">
-                            <img src="@item.Image" alt=" " class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="course-cont">
-                        <span class="subject red">@cateogry.Name</span>
-                        <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
-                        <ul class="admin-post">
-                            <li>
-                                <span class="fa fa-file-code-o"></span>@countlesson1.Count() Bài Học
-                            </li>
-                            <li>
-                                <span class="fa fa-user-o"></span>@counts.Count() Học Viên
-                            </li>
-                        </ul>
-                        <a href="@url" class="blog-btn mt-3">Tham Gia Khóa Học<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
+                <div class="item">
+                    <div class="course-grid">
+                        <div class="course-img">
+                            <a href="@url">
+                                <img src="@item.Image" alt=" " class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="course-cont">
+                            <span class="subject red">@cateogry.Name</span>
+                            <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
+                            <ul class="admin-post">
+                                @if (countkhacnull == 0)
+                                {
+                                    <li>
+                                        <span class="fa fa-file-code-o"></span>@countlesson2 Bài Học
+                                    </li>
+                                }
+                                else if (countnull > 0)
+                                {
+                                    <li>
+                                        <span class="fa fa-file-code-o"></span>@(countlesson2 - countnull)  Bài Học
+                                    </li>
+                                }
+                                <li>
+                                    <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                </li>
+                            </ul>
+                            <a href="@url" class="blog-btn mt-3">Tham Gia Khóa Học<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
         </div>
+    </div>
+</section>
+
+<section id="new" class="w3l-courses py-5">
+    <div class="container py-lg-3">
+        <div class="header-section mb-5 text-center mx-auto">
+            <h3>Khóa Học Mới</h3>
         </div>
+        <div class="owl-courses owl-carousel owl-theme">
+            @foreach (var item in newCourses)
+            {
+                var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
+                var countlesson1 = (List<Model.EF.Lesson>)countlesson;
+                var countlesson2 = countlesson1.Count();
+                var countnull = countlesson1.Where(x => x.ParentsID == null).Count();
+                var countkhacnull = countlesson1.Where(x => x.ParentsID != null).Count();
+                var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.ID);
+                var counts = (List<Model.EF.JoinedCours>)count;
+                var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
+                var url = "/tong-quan/" + item.MetaTitle + "-" + item.ID;
+                <div class="item">
+                    <div class="course-grid">
+                        <div class="course-img">
+                            <a href="@url">
+                                <img src="@item.Image" alt=" " class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="course-cont">
+                            <span class="subject blue">@cateogry.Name</span>
+                            <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
+                            <ul class="admin-post">
+                                @if (countkhacnull == 0)
+                                 {
+                                <li>
+                                    <span class="fa fa-file-code-o"></span>@countlesson2 Bài Học
+                                </li>
+                                }
+                                else if(countnull > 0)
+                                {
+                            <li>
+                                <span class="fa fa-file-code-o"></span>@(countlesson2 - countnull)  Bài Học
+                            </li>
+                                }
+                                
+                                <li>
+                                    <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                </li>
+                            </ul>
+                            <a href="@url" class="blog-btn mt-3">Tham Gia Khóa Học<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </section>
 <!-- //courses Section -->
 <!-- subscribe section -->
 <!-- //subscribe -->
 <!-- getstarted -->
-

@@ -17,7 +17,8 @@ namespace WebCourses.Controllers
         {
             var session = (User)Session[CommonConstants.USER_SESSION];
             var lesson = new LessonDao().ViewDetail(id);
-            ViewBag.Course = new CourseDao().ViewDetail(lesson.CourseID.Value);
+            var course = new CourseDao().ViewDetail(lesson.CourseID.Value);
+            ViewBag.Course = course;
             ViewBag.Lesson = new LessonDao().ListLessonByID(lesson.CourseID.Value);
             var check = new JoinedCoursesDao().CheckCourse(session.ID, lesson.CourseID.Value);
             var checklesson = new JoinedCoursesDao().CheckLesson(session.ID, lesson.CourseID.Value,lesson.ID);
@@ -38,15 +39,15 @@ namespace WebCourses.Controllers
                     joinedcourse.CourseID = lesson.CourseID;
                     joinedcourse.UserID = session.ID;
                     joinedcourse.Status = true;
+                    joinedcourse.MetaTitle = course.MetaTitle;
+                    joinedcourse.Image = course.Image;
+                    joinedcourse.CourseName = course.Name;
+                    
                     new JoinedCoursesDao().Insert(joinedcourse);
 
                 }
 
                 if (checklesson)
-                {
-
-                }
-                else if (lesson.ParentsID == null)
                 {
 
                 }

@@ -22,6 +22,12 @@ namespace WebCourses
                 defaults: new { controller = "Blog", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "WebCourses.Controllers" }
             );
+            routes.MapRoute(
+                name: "Search",
+                url: "tim-kiem",
+                defaults: new { controller = "KhoaHoc", action = "Search", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
 
             routes.MapRoute(
                 name: "Subject category",

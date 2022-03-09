@@ -3006,6 +3006,7 @@
     <Content Include="Assets\Admin\vendor\undraw_profile.svg" />
     <Content Include="Assets\Outsite\Common\ASPSnippets.GoogleAPI.dll" />
     <Content Include="Assets\Outsite\Common\CKFinder.dll" />
+    <Content Include="Assets\Outsite\css\jquery-ui.css" />
     <Content Include="Assets\Outsite\css\style-starter.css" />
     <Content Include="Assets\Outsite\fonts\fontawesome-webfont.svg" />
     <Content Include="Assets\Outsite\images\about.jpg" />
@@ -3042,10 +3043,12 @@
     <Content Include="Assets\Outsite\images\undraw_back_to_school_inwc.svg" />
     <Content Include="Assets\Outsite\images\undraw_experts3_3njd.svg" />
     <Content Include="Assets\Outsite\images\undraw_studying_s3l7.svg" />
+    <Content Include="Assets\Outsite\js\autocomplete.js" />
     <Content Include="Assets\Outsite\js\bootstrap.min.js" />
     <Content Include="Assets\Outsite\js\easyResponsiveTabs.js" />
     <Content Include="Assets\Outsite\js\jquery-1.9.1.min.js" />
     <Content Include="Assets\Outsite\js\jquery-3.4.1.slim.min.js" />
+    <Content Include="Assets\Outsite\js\jquery-ui.js" />
     <Content Include="Assets\Outsite\js\jquery.countup.js" />
     <Content Include="Assets\Outsite\js\jquery.magnific-popup.min.js" />
     <Content Include="Assets\Outsite\js\jquery.waypoints.min.js" />
@@ -3353,6 +3356,7 @@
     <Content Include="Views\Blog\Detail.cshtml" />
     <Content Include="Views\Category\Category.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\KhoaHoc\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
         <div class="header-section">
-            <h2 class="mb-2">Contact Us</h2>
+            <h2 class="mb-2">Khóa Học</h2>
         </div>
         <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Khóa Học</span>
     </div>
@@ -26,6 +26,9 @@
                         {
                             var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
                             var countlesson1 = (List<Model.EF.Lesson>)countlesson;
+                            var countlesson2 = countlesson1.Count();
+                            var countnull = countlesson1.Where(x => x.ParentsID == null).Count();
+                            var countkhacnull = countlesson1.Where(x => x.ParentsID != null).Count();
                             var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.ID);
                             var counts = (List<Model.EF.JoinedCours>)count;
                             var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
@@ -41,12 +44,21 @@
                                         </a>
                                     </div>
                                     <div class="course-cont">
-                                        <span class="subject green">Computer Science</span>
+                                        <span class="subject green">@cateogry.Name</span>
                                         <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
                                         <ul class="admin-post">
-                                            <li>
-                                                <span class="fa fa-file-code-o"></span>@countlesson1.Count() Bài Học
-                                            </li>
+                                            @if (countkhacnull == 0)
+                                            {
+                                                <li>
+                                                    <span class="fa fa-file-code-o"></span>@countlesson2 Bài Học
+                                                </li>
+                                            }
+                                            else if (countnull > 0)
+                                            {
+                                                <li>
+                                                    <span class="fa fa-file-code-o"></span>@(countlesson2 - countnull)  Bài Học
+                                                </li>
+                                            }
                                             <li>
                                                 <span class="fa fa-user-o"></span>@counts.Count() Học Viên
                                             </li>
@@ -59,16 +71,18 @@
                             </div>
                         }
 
+
+                        <div class="pagination-wrapper mt-lg-5 pagination-mt col-lg-12">
+
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
+                       {
+
+                           LiElementClasses = new List<string> { "page-item", "page-link" },
+
+                       })
+                        </div>
                     </div>
-                    <div class="col-lg-12">
-                               
-                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
-                           {
-                               UlElementClasses=new List<string> { "page-pagination" },
-                               LiElementClasses = new List<string> { "page-numbers" },
-                              
-                           })
-                    </div>
+                    
                     </div>
                 <!-- left side blog post content -->
                 <!-- right side bar -->

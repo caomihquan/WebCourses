@@ -250,30 +250,70 @@
                             <h3 class="content__courses">Tất Cả Bài học</h3>
                             @{
                                 var sobaidahoc = (float)progress.Count();
-                                var tongso = (float)lesson.Where(x => x.ParentsID != null).Count();
-                                var tiendo = (sobaidahoc / tongso) * 100 + "%";
+                                var tongso = lesson.Count();
+                                var tongsokhacnull = (float)lesson.Where(x => x.ParentsID != null).Count();
+                                var tongsonull = (float)lesson.Where(x => x.ParentsID == null).Count();
+
+                                if (tongso == 0)
+                                {
+
+                                }
+
+
+
                             }
-                            <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
-                                Tiến Độ:
-                                <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
-                            </div>
+                            @if (tongso == 0)
+                            {
+                                var tiendo = (sobaidahoc / tongsokhacnull) * 100 + "%";
+                                <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
+                                    Tiến Độ:
+                                    <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
+                                </div>
+                            }
+                            else if(tongsonull>0)
+                            {
+                                var tiendo = (sobaidahoc / tongso) * 100 + "%";
+                                <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
+                                    Tiến Độ:
+                                    <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
+                                </div>
+                            }
+
                             <ul class="lessons">
                                 @foreach (var li in lesson.Where(x => x.ParentsID == null))
                                 {
                                     var child = lesson.Where(x => x.ParentsID == li.ID);
                                     var parentClass = child.Count() > 0 ? "class=lesson_parent" : "";
                                     var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
+
                                     <li>
-                                        <a href="#link" @parentClass>@li.Name</a>
-                                        @if (child.Count() > 0)
+                                        @if (session != null)
                                         {
-                                            foreach (var childItem in child)
+                                            <a href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/dang-nhap" @parentClass>@li.Name</a>
+
+                                        }
+                                    </li>
+                                    if (child.Count() > 0)
+                                    {
+                                        foreach (var childItem in child)
+                                        {
+                                            if (session != null)
                                             {
-                                            <li title="@childItem.Name"><a href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name</a></li>
+
+                                                <li title="@childItem.Name"><a href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name</a></li>
+                                            }
+                                            else
+                                            {
+                                                <li title="@childItem.Name"><a href="/dang-nhap">@childItem.Name</a></li>
+                                            }
                                         }
                                     }
-                                        </li>
-                                    }
+
+                                }
                             </ul>
                         </aside>
 

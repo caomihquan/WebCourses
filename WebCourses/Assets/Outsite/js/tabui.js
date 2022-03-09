@@ -43,4 +43,7 @@ line.style.width = tabActive.offsetWidth + 'px';
                                       
                                         document.querySelector('.btn-appear').style.display="none"
                                     }
-                                    
+
+document.querySelector(".lesson_parent").addEventListener("click", function (event) {
+    event.preventDefault()
+});
