@@ -167,6 +167,7 @@
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\HasCredentialAttribute.cs" />
     <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3357,6 +3358,7 @@
     <Content Include="Views\Category\Category.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\KhoaHoc\Search.cshtml" />
+    <Content Include="Views\KhoaHoc\JoinedCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3364,6 +3366,7 @@
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Data\File\" />
     <Folder Include="Data\Video\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

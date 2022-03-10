@@ -3,11 +3,23 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var lesson =(List<Model.EF.Lesson>)ViewBag.Lesson;
+    var childs = 0;
+    foreach (var li in lesson)
+    {
+
+        var child = lesson.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
+        var countnull = lesson.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+        if (child > 0 && countnull > 0)
+        {
+            childs++;
+        }
+
+    }
     var progress =(List<Model.EF.ProgressLesson>)ViewBag.ProgressLesson;
     var baihoc = ViewBag.BaiHoc;
     var review = (List<Model.EF.ReviewLesson>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
-    
+
 }
 @section jsFooter{
     <script>
@@ -250,34 +262,14 @@
                             <h3 class="content__courses">Tất Cả Bài học</h3>
                             @{
                                 var sobaidahoc = (float)progress.Count();
-                                var tongso = lesson.Count();
-                                var tongsokhacnull = (float)lesson.Where(x => x.ParentsID != null).Count();
-                                var tongsonull = (float)lesson.Where(x => x.ParentsID == null).Count();
-
-                                if (tongso == 0)
-                                {
-
-                                }
-
-
-
-                            }
-                            @if (tongso == 0)
-                            {
-                                var tiendo = (sobaidahoc / tongsokhacnull) * 100 + "%";
-                                <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
-                                    Tiến Độ:
-                                    <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
-                                </div>
-                            }
-                            else if(tongsonull>0)
-                            {
+                                var tongso = (lesson.Count() - childs);
                                 var tiendo = (sobaidahoc / tongso) * 100 + "%";
+                            }
+
                                 <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
                                     Tiến Độ:
                                     <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
                                 </div>
-                            }
 
                             <ul class="lessons">
                                 @foreach (var li in lesson.Where(x => x.ParentsID == null))

@@ -28,6 +28,13 @@ namespace WebCourses
                 defaults: new { controller = "KhoaHoc", action = "Search", id = UrlParameter.Optional },
                 namespaces: new[] { "WebCourses.Controllers" }
             );
+            routes.MapRoute(
+               name: "Joined Course",
+               url: "khoa-hoc-da-tham-gia",
+               defaults: new { controller = "KhoaHoc", action = "JoinedCourse", id = UrlParameter.Optional },
+               namespaces: new[] { "WebCourses.Controllers" }
+           );
+
 
             routes.MapRoute(
                 name: "Subject category",

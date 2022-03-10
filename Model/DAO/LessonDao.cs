@@ -83,7 +83,7 @@ namespace Model.DAO
             IQueryable<Lesson> model = db.Lessons;
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.ID.ToString().Contains(searchString) || x.Name.Contains(searchString));
+                model = model.Where(x => x.ID.ToString().Contains(searchString) || x.Name.Contains(searchString) || x.CourseID.ToString().Contains(searchString));
             }
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }

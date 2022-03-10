@@ -9,11 +9,15 @@ namespace Model.EF
     [Table("JoinedCourses")]
     public partial class JoinedCours
     {
-        public long ID { get; set; }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long CourseID { get; set; }
 
-        public long? CourseID { get; set; }
-
-        public long? UserID { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long UserID { get; set; }
 
         [StringLength(250)]
         public string CourseName { get; set; }
@@ -24,7 +28,12 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaTitle { get; set; }
 
-        public double? Progress { get; set; }
+        public DateTime? CreatedDate { get; set; }
+
+        [StringLength(50)]
+        public string LevelCourse { get; set; }
+
+        public long? CategoryID { get; set; }
 
         public bool? Status { get; set; }
     }

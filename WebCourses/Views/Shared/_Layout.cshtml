@@ -316,9 +316,12 @@ Author URL: http://w3layouts.com
     <script src="/Assets/Admin/js/plugins/ckfinder/ckfinder.js"></script>
     <script src="/Assets/Admin/js/plugins/ckeditor/ckeditor.js"></script>
     <script>
-        document.querySelector(".lesson_parent").addEventListener("click", function (event) {
-            event.preventDefault()
-        });
+        var deleteLink = document.querySelectorAll(".lesson_parent");
+        for (var i = 0; i < deleteLink.length; i++) {
+            deleteLink[i].addEventListener('click', function (event) {
+                    event.preventDefault();
+            });
+        }
     </script>
     @RenderSection("jsFooter", required: false)
 </body>

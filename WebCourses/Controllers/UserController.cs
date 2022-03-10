@@ -13,14 +13,17 @@ using ASPSnippets.GoogleAPI;
 using System.Web.Script.Serialization;
 using System.Net;
 using BotDetect.Web.Mvc;
+using System.Threading.Tasks;
+using System.Web.Security;
 
 namespace WebCourses.Controllers
 {
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl=System.Web.HttpContext.Current.Request.UrlReferrer;
             return View();
         }
         public ActionResult Register()
@@ -28,7 +31,7 @@ namespace WebCourses.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(LoginModel model)
+        public ActionResult Login(LoginModel model,string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -46,7 +49,15 @@ namespace WebCourses.Controllers
                     userSession.Email = user.Email;
                     userSession.Address = user.Address;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
-                    return Redirect("/");
+                    if (returnUrl == null)
+                    {
+                        return Redirect("/");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    
                 }
                 else if (result == 0)
                 {
@@ -71,6 +82,7 @@ namespace WebCourses.Controllers
         public ActionResult Logout()
         {
             Session[CommonConstants.USER_SESSION] = null;
+            FormsAuthentication.SignOut();
             return Redirect("/");
         }
 
@@ -111,9 +123,7 @@ namespace WebCourses.Controllers
                 redirect_uri = RedirectUri.AbsoluteUri,
                 code = code
             });
-
-
-            var accessToken = result.access_token;
+             var accessToken = result.access_token;
 
             if (!string.IsNullOrEmpty(accessToken))
             {
@@ -148,7 +158,7 @@ namespace WebCourses.Controllers
                 }
             }
 
-            return Redirect("/");
+                return Redirect("/");
         }
 
 
@@ -166,7 +176,7 @@ namespace WebCourses.Controllers
         }
 
         [ActionName("LoginWithGooglePlus")]
-        public ActionResult LoginWithGooglePlusConfirmed()
+        public ActionResult LoginWithGooglePlusConfirmed(string returnUrl)
         {
             if (!string.IsNullOrEmpty(Request.QueryString["code"]))
             {
@@ -204,8 +214,7 @@ namespace WebCourses.Controllers
             {
                 return Content("access_denied");
             }
-            return RedirectToAction("Index", "Home");
-
+                return Redirect("/");
         }
 
         [HttpPost]

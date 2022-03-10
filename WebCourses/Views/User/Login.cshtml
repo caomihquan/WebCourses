@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
@@ -20,7 +21,7 @@
         <div class="literacy-login">
             <div class="literacy-login-info">
                 <h2>Login to your Account</h2>
-                @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                @using (Html.BeginForm("Login", "User", new { @returnUrl =ViewBag.ReturnUrl}, FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     <label></label>

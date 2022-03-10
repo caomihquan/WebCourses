@@ -59,12 +59,13 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                var cateogy = new Model.DAO.CourseDao().CategoryLesson(item.CourseID.Value);
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
                                     <td>@item.Name</td>
                                     <td>@item.DisplayOrder</td>
                                     <td>@item.ParentsID</td>
-                                    <td>@item.CourseID</td>
+                                    <td>@cateogy.Name</td>
                                     <td>@item.Video</td>
                                     <td>@item.CreatedDate</td>
                                     <td>@item.ViewCount</td>

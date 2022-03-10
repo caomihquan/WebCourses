@@ -31,6 +31,7 @@ namespace WebCourses.Controllers
             ViewBag.Lessons = new LessonDao().ListLessonByID(id);
             ViewBag.Course = course;
             ViewBag.CourseJoined = new JoinedCoursesDao().countUserJoined(id);
+            
             ViewBag.Review = new ReviewCourseDao().ListReview(id);
             if (session == null)
             {
@@ -38,8 +39,8 @@ namespace WebCourses.Controllers
             }
             else
             {
-            ViewBag.CheckCourse = new JoinedCoursesDao().CheckCourse(session.ID,course.ID);
-                
+                ViewBag.CheckCourse = new JoinedCoursesDao().CheckCourse(session.ID, course.ID);
+
             }
             var review = new ReviewCourse()
             {
@@ -49,7 +50,7 @@ namespace WebCourses.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendReview(ReviewCourse review, float rating=0)
+        public ActionResult SendReview(ReviewCourse review, float rating = 0)
         {
 
             var dao = new ReviewCourseDao();
@@ -59,14 +60,14 @@ namespace WebCourses.Controllers
             review.UserID = session.ID;
             review.CreatedBy = session.UserName;
             review.Status = true;
-            var result=dao.Insert(review);
-            if(result > 0)
+            var result = dao.Insert(review);
+            if (result > 0)
             {
                 return RedirectToAction("OverView", "KhoaHoc", new { id = review.CourseID });
             }
             return View(review);
 
-            
+
         }
 
         [ChildActionOnly]
@@ -87,13 +88,13 @@ namespace WebCourses.Controllers
         {
             var result = new ReviewCourseDao().Delete(id);
             if (result)
-                {
-                    return RedirectToAction("Detail", "Product");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Cập nhật Sản Phẩm Không thành công");
-                }
+            {
+                return RedirectToAction("Detail", "Product");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Cập nhật Sản Phẩm Không thành công");
+            }
             return View("Index");
         }
 
@@ -127,6 +128,13 @@ namespace WebCourses.Controllers
                 data = data,
                 status = true
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult JoinedCourse(string searchString, int page = 1, int pageSize = 6)
+        {
+            var session = (User)Session[CommonConstants.USER_SESSION];
+            var model = new JoinedCoursesDao().ListAllPaging(session.ID,searchString,page,pageSize);
+            return View(model);
         }
 
     }

@@ -21,6 +21,7 @@ namespace Model.EF
         [StringLength(250)]
         public string Video { get; set; }
 
+        [StringLength(500)]
         public string MoreFiles { get; set; }
 
         public long? CourseID { get; set; }

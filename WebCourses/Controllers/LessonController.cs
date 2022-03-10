@@ -10,7 +10,7 @@ using WebCourses.Common;
 
 namespace WebCourses.Controllers
 {
-    public class LessonController : Controller
+    public class LessonController :Controller
     {
         // GET: Lesson
         public ActionResult Index(long id)
@@ -36,11 +36,14 @@ namespace WebCourses.Controllers
                 else
                 {
                     var joinedcourse = new JoinedCours();
-                    joinedcourse.CourseID = lesson.CourseID;
+                    joinedcourse.CourseID = lesson.CourseID.Value;
                     joinedcourse.UserID = session.ID;
                     joinedcourse.Status = true;
                     joinedcourse.MetaTitle = course.MetaTitle;
                     joinedcourse.Image = course.Image;
+                    joinedcourse.LevelCourse = course.LevelCourse;
+                    joinedcourse.CategoryID = course.CategoryID;
+                    joinedcourse.CreatedDate = DateTime.Now;
                     joinedcourse.CourseName = course.Name;
                     
                     new JoinedCoursesDao().Insert(joinedcourse);

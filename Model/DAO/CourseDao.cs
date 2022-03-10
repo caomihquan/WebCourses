@@ -38,6 +38,10 @@ namespace Model.DAO
         {
             return db.Courses.Find(id);
         }
+        public Cours CategoryLesson(long id)
+        {
+            return db.Courses.Where(x=>x.ID==id).SingleOrDefault();
+        }
 
 
 

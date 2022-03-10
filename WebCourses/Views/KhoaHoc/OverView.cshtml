@@ -4,9 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var category = (Model.EF.Category)ViewBag.Cateogry;
     var lesson = (List<Model.EF.Lesson>)ViewBag.Lessons;
-    var countlesson2 = lesson.Count();
-    var countnull = lesson.Where(x => x.ParentsID == null).Count();
-    var countkhacnull = lesson.Where(x => x.ParentsID != null).Count();
+    var childs = 0;
+    foreach (var li in lesson)
+    {
+
+        var child = lesson.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
+        var countnull = lesson.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+        if (child > 0 && countnull > 0)
+        {
+            childs++;
+        }
+
+    }
     var thamgia = lesson.Where(x => x.DisplayOrder == 1 && x.CourseID== ViewBag.Course.ID);
     var review = (List<Model.EF.ReviewCourse>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
@@ -136,19 +145,19 @@
                                 if (ViewBag.CheckCourse)
                                 {
                                     <div class="btn-thamgiakhoahoc">
-                                        @foreach(var item in thamgia)
+                                        @foreach (var item in thamgia)
                                         {
-                                        <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
-                                        }   
+                                            <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
+                                        }
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="btn-thamgiakhoahoc">
-                                        @foreach(var item in thamgia)
+                                        @foreach (var item in thamgia)
                                         {
-                                        <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
-                                        }                                 
+                                            <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
+                                        }
                                     </div>
                                 }
                             }
@@ -340,14 +349,7 @@
                     <aside>
                         <h3 class="aside-title mb-3"></h3>
                         <p><i class="fas fa-laptop-code"></i> Trình Độ @ViewBag.Course.LevelCourse</p>
-                        @if (countkhacnull == 0)
-                        {
-                            <p><i class="fas fa-play-circle"></i> Tổng Số @lesson.Count() Bài Học</p>
-                        }
-                        else if (countnull > 0)
-                        {
-                            <p><i class="fas fa-play-circle"></i> Tổng Số @(countlesson2 - countnull) Bài Học</p>
-                        }
+                            <p><i class="fas fa-play-circle"></i> Tổng Số @(lesson.Count() - childs) Bài Học</p>
 
                         <p><i class="fas fa-user-tie"></i> Người Tạo: @ViewBag.Course.CreatedBy</p>
                     </aside>
