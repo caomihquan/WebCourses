@@ -108,5 +108,22 @@ namespace WebCourses.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(model);
         }
+
+        public JsonResult ChangeStatus(long id)
+        {
+            var result = new BlogDao().ChangeStatus(id);
+            return Json(new
+            {
+                status = result
+            });
+        }
+
+        public ActionResult CommentBlog(string searchString, int page = 1, int pageSize = 10)
+        {
+            var dao = new BlogDao();
+            var model = dao.ListAllPagingFalse(searchString, page, pageSize);
+            ViewBag.SearchString = searchString;
+            return View(model);
+        }
     }
 }

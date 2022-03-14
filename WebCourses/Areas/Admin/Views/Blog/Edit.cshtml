@@ -13,6 +13,7 @@
             finder.selectActionFunction = function (url) {
                 $('#txtImage').val(url);
                 $('#imgImages').attr("src", url);
+                $('#imgImages').attr("style", "display:block;width: 200px; height: 200px;");
                 $('#hideImage').attr("style", "display:none");
             };
             finder.popup();
@@ -68,7 +69,7 @@
         <div class="form-group">
             <div class="col-lg-10">
                 <img src="@Model.Image" id="hideImage" style="width:200px;height:200px" />
-                <img  id="imgImages" style="width: 200px; height: 200px; " />
+                <img  id="imgImages" style="display:none " />
             </div>
         </div>
 

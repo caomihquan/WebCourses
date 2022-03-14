@@ -51,12 +51,12 @@
                                         <form class="user">
                                             <div class="form-group">
                                                
-                                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                                                @Html.LabelFor(model => model.UserName)
                                                 @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus" })
                                             </div>
                                             <div class="form-group">
                                                 
-                                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3" })
+                                                @Html.LabelFor(model => model.Password)
                                                 @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user " })
                                             </div>
                                             <div class="form-group">

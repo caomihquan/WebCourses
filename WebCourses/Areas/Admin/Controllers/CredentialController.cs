@@ -63,7 +63,7 @@ namespace WebCourses.Areas.Admin.Controllers
             }
             SetViewBag();
             SetViewBagCreDential();
-            return View("Index");
+            return View(credential);
         }
 
         [HttpPost]

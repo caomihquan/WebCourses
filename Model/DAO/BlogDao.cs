@@ -16,6 +16,14 @@ namespace Model.DAO
         {
             db = new WebDbContext();
         }
+
+        public bool ChangeStatus(long id)
+        {
+            var user = db.Blogs.Find(id);
+            user.Status = !user.Status;
+            db.SaveChanges();
+            return user.Status;
+        }
         public Blog ViewDetail(long id)
         {
             return db.Blogs.Find(id);

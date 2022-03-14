@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-
+    var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
 }
 
 <nav id="breadcrumbs" class="breadcrumbs">
@@ -28,9 +28,14 @@
                         {
                             foreach (var item in Model)
                             {
+
+                                var progress=new Model.DAO.JoinedCoursesDao().progress(session.ID, item.CourseID);
                                 var countlesson = new Model.DAO.LessonDao().countlessson(item.CourseID);
                                 var countlesson1 = (List<Model.EF.Lesson>)countlesson;
                                 var childs = 0;
+
+
+
                                 foreach (var li in countlesson1)
                                 {
 
@@ -42,6 +47,11 @@
                                     }
 
                                 }
+                                var sobaidahoc = (float)progress.Count();
+                                var tongso = (countlesson1.Count() - childs);
+                                var tiendo = (sobaidahoc / tongso) * 100;
+                                var progresstiendo = (int)tiendo + "%";
+
                                 var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.CourseID);
                                 var counts = (List<Model.EF.JoinedCours>)count;
                                 var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
@@ -68,6 +78,9 @@
                                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
                                                 </li>
                                             </ul>
+                                            <div class="w3-light-grey w3-tiny">                                          
+                                                <div class="w3-container" style="width:@progresstiendo;background-color:var(--primary-color);text-align:center;">@progresstiendo</div>
+                                            </div>
 
                                             <a href="@url" class="blog-btn mt-3"><div class="btnkhoahoc">Học Tiếp Khóa Học</div>  <span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
 

@@ -185,6 +185,7 @@
   <ItemGroup>
     <Content Include="Assets\Admin\css\sb-admin-2.css" />
     <Content Include="Assets\Admin\css\sb-admin-2.min.css" />
+    <Content Include="Assets\Admin\js\controller\changeStatus.js" />
     <Content Include="Assets\Admin\js\controller\clearFile.js" />
     <Content Include="Assets\Admin\js\demo\chart-area-demo.js" />
     <Content Include="Assets\Admin\js\demo\chart-bar-demo.js" />
@@ -1343,6 +1344,7 @@
     <Content Include="Assets\Admin\vendor\chart.js\Chart.bundle.min.js" />
     <Content Include="Assets\Admin\vendor\chart.js\Chart.js" />
     <Content Include="Assets\Admin\vendor\chart.js\Chart.min.js" />
+    <Content Include="Assets\Admin\vendor\CM EDUCATION.png" />
     <Content Include="Assets\Admin\vendor\datatables\dataTables.bootstrap4.css" />
     <Content Include="Assets\Admin\vendor\datatables\dataTables.bootstrap4.js" />
     <Content Include="Assets\Admin\vendor\datatables\dataTables.bootstrap4.min.css" />

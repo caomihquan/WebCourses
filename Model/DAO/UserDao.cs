@@ -91,7 +91,7 @@ namespace Model.DAO
             IQueryable<User> model = db.Users;
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
+                model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString) || x.Email.Contains(searchString) || x.ID.ToString().Contains(searchString));
             }
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }

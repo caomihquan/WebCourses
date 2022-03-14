@@ -5,14 +5,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>CategoryBlog</h4>
+        <h4>Sửa Danh Mục Blog</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -69,7 +68,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Sua" class="btn btn-default" />
+                <input type="submit" value="Sửa" class="btn btn-primary" />
             </div>
         </div>
     </div>

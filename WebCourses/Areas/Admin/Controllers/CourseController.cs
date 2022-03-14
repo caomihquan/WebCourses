@@ -20,15 +20,34 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-
         public ActionResult Create()
         {
+            var weekDays = new string[3] { "Cơ Bản", "Thông Thường", "Nâng Cao" };
+            var items = weekDays.Select((day, index) =>
+            {
+                return new SelectListItem
+                {
+                    Value = day,
+                    Text = day
+                };
+            }).ToList();
+            ViewBag.list = new SelectList(items, "Text", "Value");
             return View();
         }
         [HttpGet]
         public ActionResult Edit(long id)
         {
             var course = new CourseDao().ViewDetail(id);
+            var weekDays = new string[3] { "Cơ Bản", "Thông Thường", "Nâng Cao" };
+            var items = weekDays.Select((day, index) =>
+            {
+                return new SelectListItem
+                {
+                    Value = day,
+                    Text = day
+                };
+            }).ToList();
+            ViewBag.list = new SelectList(items, "Text", "Value",course.LevelCourse);
             return View(course);
         }
 

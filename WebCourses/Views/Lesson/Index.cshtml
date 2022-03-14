@@ -263,12 +263,13 @@
                             @{
                                 var sobaidahoc = (float)progress.Count();
                                 var tongso = (lesson.Count() - childs);
-                                var tiendo = (sobaidahoc / tongso) * 100 + "%";
+                                var tiendo = (sobaidahoc / tongso) * 100 ;
+                                var progresstiendo = (int)tiendo + "%";
                             }
 
                                 <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
                                     Tiến Độ:
-                                    <div class="w3-container" style="width:@tiendo;background-color:var(--primary-color);text-align:center;">@tiendo</div>
+                                    <div class="w3-container" style="width:@progresstiendo;background-color:var(--primary-color);text-align:center;">@progresstiendo</div>
                                 </div>
 
                             <ul class="lessons">

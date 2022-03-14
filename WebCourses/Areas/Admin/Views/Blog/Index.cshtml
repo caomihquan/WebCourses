@@ -8,14 +8,13 @@
 @using PagedList.Mvc;
 
 @section header{
-    Danh Mục Blog
 }
 
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Danh Mục Tin Tức</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Blog</h6>
             </div>
             @using (Html.BeginForm("Index", "Blog", FormMethod.Get))
             {
@@ -36,7 +35,7 @@
             <div class="clear"></div>
             <div class="col-lg-12">
                 <div class="col-md-4">
-                    <a href="/Admin/Blog/Create"><i class="fas fa-plus-circle"></i> Tạo Danh Mục</a>
+                    <a href="/Admin/Blog/Create"><i class="fas fa-plus-circle"></i> Tạo Blog</a>
                 </div>
             </div>
             <div class="card-body">
@@ -45,9 +44,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Tên</th>
                                 <th>MetaTitle</th>
-                                <th>CategoryBlogId</th>
+                                <th>Danh Mục Blog</th>
                                 <th>Image</th>
                                 <th>Ngày Tạo</th>
                                 <th>Người Tạo</th>
@@ -66,7 +65,7 @@
                                     <td>@item.MetaTitle</td>
                                     <td>@item.CategoryBlogID</td>
                                     <td><img src="@item.Image" style="width:90px;height:90px;"/></td>
-                                    <td>@item.CreatedDate</td>
+                                    <td>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</td>
                                     <td>@item.CreatedBy</td>
                                     <td>@item.Tag</td>
                                     <td>@item.ViewCount</td>
