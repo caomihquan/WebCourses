@@ -38,6 +38,14 @@ namespace Model.DAO
         {
             return db.Courses.Find(id);
         }
+        public Cours ViewDetailOut(long id)
+        {
+            var model = db.Courses.Find(id);
+            model.ViewCount++;
+            db.SaveChanges();
+            return model;
+
+        }
         public Cours CategoryLesson(long id)
         {
             return db.Courses.Where(x=>x.ID==id).SingleOrDefault();

@@ -319,10 +319,11 @@ Author URL: http://w3layouts.com
         var deleteLink = document.querySelectorAll(".lesson_parent");
         for (var i = 0; i < deleteLink.length; i++) {
             deleteLink[i].addEventListener('click', function (event) {
-                    event.preventDefault();
+                event.preventDefault();
             });
         }
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @RenderSection("jsFooter", required: false)
 </body>
 

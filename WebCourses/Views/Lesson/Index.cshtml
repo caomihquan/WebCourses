@@ -69,6 +69,7 @@
             document.querySelector('.btn-appear').style.display = "none"
         }
     </script>
+    <script src="~/Assets/Outsite/js/controller/badword.js"></script>
 }
     <nav id="breadcrumbs" class="breadcrumbs">
         <div class="container page-wrapper text-center">
@@ -215,11 +216,11 @@
                                                     <input id="rating" type="hidden" name="rating" />
 
                                                     <div class="input-group">
-                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 })
+                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" })
                                                         @Html.HiddenFor(x => x.LessonID)
                                                     </div>
                                                     <div style=" text-align: right; margin-top: 16px;">
-                                                        <input type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
+                                                        <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
                                                     </div>
 
                                                 </div>

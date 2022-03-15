@@ -169,5 +169,29 @@ namespace WebCourses.Areas.Admin.Controllers
                 status = result
             });
         }
+
+
+        public ActionResult CommentLesson(string searchString, int page = 1, int pageSize = 10)
+        {
+            var dao = new ReviewLessonDao();
+            var model = dao.ListCommentLesson(searchString, page, pageSize);
+            ViewBag.SearchString = searchString;
+            return View(model);
+        }
+
+        public ActionResult DeleteComment(int id)
+        {
+            var result = new ReviewLessonDao().Delete(id);
+            if (result)
+            {
+                return RedirectToAction("Index", "CommentLesson");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Cập nhật Không thành công");
+            }
+            return View("Index");
+
+        }
     }
 }

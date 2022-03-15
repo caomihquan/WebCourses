@@ -13,6 +13,7 @@
 
 @section jsFooter{
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6168ecfe9afe107b"></script>
+    <script src="~/Assets/Outsite/js/controller/badword.js"></script>
 }
 
 <nav id="breadcrumbs" class="breadcrumbs">
@@ -100,11 +101,11 @@
                                     <input id="rating" type="hidden" name="rating" />
 
                                     <div class="input-group">
-                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 })
+                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" })
                                         @Html.HiddenFor(x => x.BlogID)
                                     </div>
                                     <div style=" text-align: right; margin-top: 16px;">
-                                        <input type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
+                                        <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
                                     </div>
 
                                 </div>

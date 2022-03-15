@@ -30,6 +30,7 @@ namespace WebCourses.Controllers
         {
             var model = new MenuDao().ListByGroupId(1);
             ViewBag.Login = new MenuDao().ListByGroupId(2);
+            ViewBag.Category = new CategoryDao().ListAll();
             return PartialView(model);
         }
 

@@ -1,24 +1,22 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "CommentBlog";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-@model PagedList.IPagedList<Model.EF.Cours>
+
+@model PagedList.IPagedList<Model.EF.ReviewBlog>
 
 @using PagedList.Mvc;
 
-@section header{
-  
-}
 
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Khóa Học</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Danh Mục BLog</h6>
             </div>
-            @using (Html.BeginForm("Index", "Course", FormMethod.Get))
+            @using (Html.BeginForm("CommentBlog", "Blog", FormMethod.Get))
             {
                 <div class="col-lg-12">
                     <div class="col-md-4">
@@ -35,25 +33,17 @@
                 </div>
             }
             <div class="clear"></div>
-            <div class="col-lg-12">
-                <div class="col-md-4">
-                    <a href="/Admin/Course/Create"><i class="fas fa-plus-circle"></i> Tạo Khóa Học</a>
-                </div>
-            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>MetaTitle</th>
-                                <th>Image</th>
-                                <th>LevelCourse</th>
-                                <th>CategoryID</th>
-                                <th>Tạo Bởi</th>
-                                <th>Lượt Xem</th>
-                                <th>Status</th>
+                                <th>UserID</th>
+                                <th>BlogID</th>
+                                <th>Comment</th>
+                                <th>Người Tạo</th>
+                                <th>Ngày Tạo</th>
                                 <th>#</th>
                             </tr>
                         </thead>
@@ -62,18 +52,15 @@
                             {
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
-                                    <td>@item.Name</td>
-                                    <td>@item.MetaTitle</td>
-                                    <td><img src="@item.Image" style="height:90px;width:90px;"></td>
-                                    <td>@item.LevelCourse</td>
-                                    <td>@item.CategoryID</td>
+                                    <td>@item.UserID</td>
+                                    <td>@item.BlogID</td>
+                                    <td>@item.Comment</td>
                                     <td>@item.CreatedBy</td>
-                                    <td>@item.ViewCount</td>
-                                    <td>@item.Status</td>
+                                    <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
                                     <td>
-                                        <a href="/Admin/Course/Edit/@item.ID" class="btn btn-primary">Sửa</a>
+                                        
 
-                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                                        @Ajax.ActionLink("Xóa", "DeleteComment", new { @id = item.ID }, new AjaxOptions
                                    {
                                        Confirm = "Bạn có muốn xóa bản ghi này",
                                        OnComplete = "$('#row_" + @item.ID + "').remove()",

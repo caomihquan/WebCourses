@@ -12853,7 +12853,7 @@ textarea:focus {
     top: 100%;
     width: 100%;
     z-index: 10000;
-    background-color: #fff;
+    background-color: var(--bg-color);
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
     transition: all 0.4s ease;
@@ -12894,7 +12894,7 @@ textarea:focus {
         font-size: 16px;
         font-weight: 700;
         line-height: 1.8em;
-        color: #1d1d1d;
+        color: var(--text-color);
         text-transform: uppercase;
     }
 
@@ -12914,7 +12914,7 @@ textarea:focus {
         position: relative;
         font-family: "Montserrat", sans-serif;
         font-size: 14px;
-        color: #1d1d1d;
+        color: var(--text-color);
         font-weight: 400;
     }
 
@@ -12930,7 +12930,7 @@ textarea:focus {
             content: '';
             width: 0;
             height: 1px;
-            background-color: #2AC37D;
+            background-color: var(--primary-color);
             -webkit-transition: all 0.3s ease;
             -moz-transition: all 0.3s ease;
             transition: all 0.3s ease;
@@ -12938,7 +12938,7 @@ textarea:focus {
 
         .mega-menu .mega-item a:hover {
             padding-left: 25px;
-            color: #2AC37D;
+            color: var(--primary-color);
         }
 
             .mega-menu .mega-item a:hover:before {
@@ -12954,7 +12954,7 @@ textarea:focus {
         font-size: 16px;
         font-weight: 700;
         line-height: 1.8em;
-        color: #1d1d1d;
+        color: var(--text-color);
         text-transform: uppercase;
     }
 
@@ -12962,7 +12962,7 @@ textarea:focus {
             color: #2AC37D;
         }
 
-@media (max-width: 1199px) {
+@media (max-width: 992px) {
     .mega-menu {
         position: relative;
         top: 0;

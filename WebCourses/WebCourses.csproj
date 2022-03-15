@@ -3048,6 +3048,7 @@
     <Content Include="Assets\Outsite\images\undraw_studying_s3l7.svg" />
     <Content Include="Assets\Outsite\js\autocomplete.js" />
     <Content Include="Assets\Outsite\js\bootstrap.min.js" />
+    <Content Include="Assets\Outsite\js\controller\badword.js" />
     <Content Include="Assets\Outsite\js\easyResponsiveTabs.js" />
     <Content Include="Assets\Outsite\js\jquery-1.9.1.min.js" />
     <Content Include="Assets\Outsite\js\jquery-3.4.1.slim.min.js" />
@@ -3318,6 +3319,8 @@
     <Content Include="Assets\Outsite\fonts\fontawesome-webfont.woff2" />
     <Content Include="Assets\Outsite\fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Views\Blog\DuyetBlog.cshtml" />
+    <Content Include="Areas\Admin\Views\Blog\CommentBlog.cshtml" />
+    <Content Include="Areas\Admin\Views\Lesson\CommentLesson.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3361,6 +3364,7 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\KhoaHoc\Search.cshtml" />
     <Content Include="Views\KhoaHoc\JoinedCourse.cshtml" />
+    <Content Include="Areas\Admin\Views\Course\CommentCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

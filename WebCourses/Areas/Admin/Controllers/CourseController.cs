@@ -145,5 +145,28 @@ namespace WebCourses.Areas.Admin.Controllers
             }
         }
 
+        public ActionResult CommentCourse(string searchString, int page = 1, int pageSize = 10)
+        {
+            var dao = new ReviewCourseDao();
+            var model = dao.ListCommentCourse(searchString, page, pageSize);
+            ViewBag.SearchString = searchString;
+            return View(model);
+        }
+
+        public ActionResult DeleteComment(int id)
+        {
+            var result = new ReviewCourseDao().Delete(id);
+            if (result)
+            {
+                return RedirectToAction("Index", "CommentCourse");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Cập nhật Không thành công");
+            }
+            return View("Index");
+
+        }
+
     }
 }

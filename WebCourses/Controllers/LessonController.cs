@@ -16,7 +16,7 @@ namespace WebCourses.Controllers
         public ActionResult Index(long id)
         {
             var session = (User)Session[CommonConstants.USER_SESSION];
-            var lesson = new LessonDao().ViewDetail(id);
+            var lesson = new LessonDao().ViewDetailOut(id);
             var course = new CourseDao().ViewDetail(lesson.CourseID.Value);
             ViewBag.Course = course;
             ViewBag.Lesson = new LessonDao().ListLessonByID(lesson.CourseID.Value);

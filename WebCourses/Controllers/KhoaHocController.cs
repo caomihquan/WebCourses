@@ -26,7 +26,7 @@ namespace WebCourses.Controllers
         public ActionResult OverView(long id)
         {
             var session = (User)Session[CommonConstants.USER_SESSION];
-            var course = new CourseDao().ViewDetail(id);
+            var course = new CourseDao().ViewDetailOut(id);
             ViewBag.Cateogry = new CategoryDao().ViewDetail(course.CategoryID.Value);
             ViewBag.Lessons = new LessonDao().ListLessonByID(id);
             ViewBag.Course = course;
@@ -136,6 +136,9 @@ namespace WebCourses.Controllers
             var model = new JoinedCoursesDao().ListAllPaging(session.ID,searchString,page,pageSize);
             return View(model);
         }
+
+
+       
 
     }
 }

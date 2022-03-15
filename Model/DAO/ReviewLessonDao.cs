@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,16 @@ namespace Model.DAO
                 return false;
             }
 
+        }
+
+        public IEnumerable<ReviewLesson> ListCommentLesson(string searchString, int page, int pageSize)
+        {
+            IQueryable<ReviewLesson> model = db.ReviewLessons;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.ID.ToString().Contains(searchString) || x.CreatedBy.Contains(searchString) || x.LessonID.ToString().Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
     }
 }

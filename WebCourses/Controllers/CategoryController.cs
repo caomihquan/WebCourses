@@ -10,7 +10,7 @@ namespace WebCourses.Controllers
     public class CategoryController : Controller
     {
         // GET: Category
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CategoryDao();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -18,7 +18,7 @@ namespace WebCourses.Controllers
             return View(model);
         }
 
-        public ActionResult Category(long cateId, int page = 1, int pageSize = 1)
+        public ActionResult Category(long cateId, int page = 1, int pageSize = 8)
         {
             var category = new CategoryDao().ViewDetail(cateId);
             ViewBag.Category = category;

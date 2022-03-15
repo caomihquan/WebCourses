@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,16 @@ namespace Model.DAO
         public List<ReviewBlog> ListReview(long blogid)
         {
             return db.ReviewBlogs.Where(x => x.BlogID == blogid).OrderByDescending(x => x.CreatedDate).ToList();
+        }
+
+        public IEnumerable<ReviewBlog> ListCommentBlog(string searchString, int page, int pageSize)
+        {
+            IQueryable<ReviewBlog> model = db.ReviewBlogs;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.ID.ToString().Contains(searchString) || x.CreatedBy.Contains(searchString) || x.BlogID.ToString().Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
 
     }
