@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item" style="position:inherit">
-                            <a class="nav-link" href="chu-de">Chủ Đề</a>
+                            <a class="nav-link" href="/chu-de">Chủ Đề</a>
                             <div class="mega-menu">
                                 <div class="mega-wrap">
                                     @foreach (var item in category.Where(x=>x.ParentsID==null))
@@ -36,7 +36,7 @@
                                     <ul class="mega-item">
                                         @foreach (var children in child)
                                         {
-                                            var link = "";
+                                            var link = "/chu-de/" + children.MetaTitle + "-" + children.ID;
                                         <li><a href="@link">@children.Name</a></li>
                                          }
                                     
@@ -71,7 +71,7 @@
                                 <a class="nav-link" href="#"><i class="fas fa-user-circle"></i> @session.Name</a>
                                 <div class="logout_user">
                                     <ul>
-
+                                        <li><a href="/thong-tin-nguoi-dung"><i class="fas fa-address-card"></i> Thông Tin</a>
                                         <li><a href="/dang-xuat"><i class="fas fa-power-off"></i> Đăng Xuất</a></li>
                                     </ul>
                                 </div>

@@ -32,6 +32,10 @@ namespace Model.DAO
         {
             return db.Blogs.Where(x=>x.Status==true).OrderByDescending(x=>x.CreatedDate).Take(id).ToList();
         }
+        public List<Blog> ListAllByTen(string id)
+        {
+            return db.Blogs.Where(x => x.CreatedBy == id).ToList();
+        }
 
         public long Insert(Blog blog)
         {

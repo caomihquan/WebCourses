@@ -86,6 +86,24 @@ namespace Model.DAO
             }
 
         }
+        public bool resetpassword(User entity)
+        {
+            try
+            {
+                var user = db.Users.Find(entity.ID);
+                if (!string.IsNullOrEmpty(entity.Password))
+                {
+                    user.Password = entity.Password;
+                }
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
         public IEnumerable<User> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<User> model = db.Users;
@@ -99,9 +117,14 @@ namespace Model.DAO
         {
             return db.Users.SingleOrDefault(x => x.UserName == userName);
         }
-        public User ViewDetail(int id)
+        public User ViewDetail(long id)
         {
             return db.Users.Find(id);
+        }
+
+        public User ViewEmail(string email)
+        {
+            return db.Users.Where(x=>x.Email==email).SingleOrDefault();
         }
 
         public List<string> GetListCredential(string userName)

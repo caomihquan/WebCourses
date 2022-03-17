@@ -20,7 +20,7 @@
     <div class="container py-lg-3">
         <div class="literacy-login">
             <div class="literacy-login-info">
-                <h2>Login to your Account</h2>
+                <h2 class="text-center">Đăng Nhập</h2>
                 @using (Html.BeginForm("Login", "User", new { @returnUrl =ViewBag.ReturnUrl}, FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
@@ -28,28 +28,30 @@
                     <div class="input-group">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     </div>
-                    @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-6" })
+                    @Html.LabelFor(model => model.UserName)
                     <div class="input-group">
                         @Html.TextBoxFor(model => model.UserName)
                         @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                     </div>
-                    @Html.LabelFor(model => model.UserName)
+                    @Html.LabelFor(model => model.Password)
                     <div class="input-group">
                         @Html.PasswordFor(model => model.Password)
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     </div>
                     <div class="login-check">
-                        <label class="checkbox"><input type="checkbox" name="checkbox"> Remember me</label>
-                        <a class="forgot" href="forgot-password.html">Forgot password?</a>
+                        <label class="checkbox"><input type="checkbox" name="checkbox"> Ghi Nhớ</label>
+                        <a class="forgot" href="/quen-mat-khau">Quên Mật Khẩu?</a>
                     </div>
-                    <button class="btn btn-primary theme-button btn-login" type="submit">Login</button>
+                    <button class="btn btn-primary theme-button btn-login" type="submit">Đăng Nhập</button>
                 }
                 <p class="account1">Bạn Chưa Có Tài Khoản? <a href="/dang-ky">Đăng Ký Ngay</a></p>
+                <hr />
+                <div class="text-center">Hoặc</div>
                 <div class="login-register-social">
-                    <a href="/User/LoginFacebook" class="btn btn-primary"><i class="fab fa-facebook"></i> Đăng Nhập Với Facbook</a>
+                    <a href="/User/LoginFacebook" class="btn btn-primary"><i class="fab fa-facebook-f"></i>   Facbook</a>
                     <form action="@Url.Action("LoginWithGooglePlus", "User")" method="post">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i> Google +</button>
 
                     </form>
                 </div>

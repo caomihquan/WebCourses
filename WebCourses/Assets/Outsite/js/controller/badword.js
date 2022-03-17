@@ -20,6 +20,16 @@
             }
         });
 
+        $('#forgotpassword').off('click').on('click', function (e) {
+            var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+            var text = $('#quenmatkhau').val()
+            if (!testEmail.test(text)) {
+                e.preventDefault();
+                /*alert('Nội Dung Chứa Những Từ Ngữ Không Hợp Lệ')*/
+                swal("Cảnh Báo!", "Không Đúng Định Dạng Email", "warning");
+            }
+        });
+
     },
 
 }

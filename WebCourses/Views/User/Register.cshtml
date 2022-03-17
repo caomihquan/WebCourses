@@ -16,9 +16,9 @@
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
         <div class="header-section">
-            <h2 class="mb-2">Đăng Nhập</h2>
+            <h2 class="mb-2">Đăng Ký</h2>
         </div>
-        <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Đăng Nhập</span>
+        <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Đăng Ký</span>
     </div>
 </nav>
 
@@ -27,7 +27,7 @@
     <div class="container py-lg-3">
         <div class="literacy-login">
             <div class="literacy-login-info">
-                <h2>Login to your Account</h2>
+                <h2 class="text-center">Đăng Ký</h2>
                 @using (Html.BeginForm("Register", "User", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
@@ -79,17 +79,19 @@
                         @Html.Captcha(registerCapcha)
                         @Html.TextBox("CaptchaCode")
                     </div>
-                   
 
 
-                    <button class="btn btn-primary theme-button btn-login" type="submit">Login</button>
+
+                    <button class="btn btn-primary theme-button btn-login" type="submit">Đăng Ký</button>
                 }
                 <p class="account1">Bạn Đã Có Tài Khoản? <a href="/dang-nhap">Đăng Nhập Ngay</a></p>
+                <hr />
+                <div class="text-center">Hoặc</div>
                 <div class="login-register-social">
-                    <a href="/User/LoginFacebook" class="btn btn-primary"><i class="fab fa-facebook"></i> Đăng Nhập Với Facbook</a>
+                    <a href="/User/LoginFacebook" class="btn btn-primary"><i class="fab fa-facebook-f"></i> Facbook</a>
                     <form action="@Url.Action("LoginWithGooglePlus", "User")" method="post">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i>  Login with Google + </button>
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-google-plus"></i> Google +</button>
 
                     </form>
                 </div>

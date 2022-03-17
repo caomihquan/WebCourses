@@ -168,14 +168,30 @@
                             <p>
                                 <strong>Course Description: </strong> <br>@ViewBag.Course.Description
                             </p>
-                            @if (ViewBag.Course.VideoOverview.Contains("youtube.com"))
+                            @if (ViewBag.Course.VideoOverview.Contains("<iframe"))
+                            {
+                                <div style="display:flex">
+                                    <div style="margin:auto">
+                                        @Html.Raw(ViewBag.Course.VideoOverview)
+                                    </div>
+                                </div>
+                            }
+                            else if (ViewBag.Course.VideoOverview.Contains("youtube.com"))
                             {
                                 <iframe width="100%" height="500" src="@ViewBag.Course.VideoOverview" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             }
                             else if (ViewBag.Course.VideoOverview.Contains("drive.google.com"))
                             {
-                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@ViewBag.Course.VideoOverview"> </video> </div>
-                            }
+                if (ViewBag.Course.VideoOverview.Contains("drive.google.com/uc?export=download&id="))
+                {
+                                 <div class="video-responsive"> <video controls> <source type="video/mp4" src="@ViewBag.Course.VideoOverview"> </video> </div>
+                }
+                else
+                {
+                        <iframe width="100%" height="500" src="@ViewBag.Course.VideoOverview" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                }
+
+                            }                            
                             else
                             {
                                 <div class="video-responsive"> <video controls> <source type="video/mp4" src="@ViewBag.Course.VideoOverview"> </video> </div>
@@ -226,17 +242,18 @@
                                                         {
                                                             <a href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name</a>
                                                         }
-                                                        else { 
+                                                        else
+                                                        {
                                                             <a href="/dang-nhap" @parentClass>@li.Name</a>
 
                                                         }
-                                                        </li>
-                                                        if (child.Count() > 0)
+                                                    </li>
+                                                    if (child.Count() > 0)
+                                                    {
+                                                        foreach (var childItem in child)
                                                         {
-                                                            foreach (var childItem in child)
+                                                            if (session != null)
                                                             {
-                                                                if (session != null)
-                                                                {
 
                                                                 <li title="@childItem.Name"><a href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name</a></li>
                                                             }
@@ -244,10 +261,10 @@
                                                             {
                                                                 <li title="@childItem.Name"><a href="/dang-nhap">@childItem.Name</a></li>
                                                             }
-                                                            }
-                                                         }
-                                                     
+                                                        }
                                                     }
+
+                                                }
                                             </ul>
                                         </aside>
 
@@ -262,29 +279,29 @@
                                         {
                                             using (Html.BeginForm("SendReview", "KhoaHoc", FormMethod.Post))
                                             {
-                                    <div class="reviews-submit">
-                                        <h4>Đánh Giá Của Bạn:</h4>
-                                        <div id="rateYo">
+                                                <div class="reviews-submit">
+                                                    <h4>Đánh Giá Của Bạn:</h4>
+                                                    <div id="rateYo">
 
-                                        </div>
-                                        @Html.AntiForgeryToken()
+                                                    </div>
+                                                    @Html.AntiForgeryToken()
 
-                                        
-                                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                                            <input id="rating" type="hidden" name="rating" />
 
-                                            <div class="input-group">
-                                                @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5 ,@id= "reviewbinhluan"})
-                                                @Html.HiddenFor(x => x.CourseID)
-                                                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
-                                            </div>
-                                            <div style=" text-align: right; margin-top: 16px;">
-                                                <input id="btnComment" type="submit" value="Gửi" class="btn btn-primary" style="width:100px;" />
-                                            </div>
+                                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                                    <input id="rating" type="hidden" name="rating" />
 
-                                        </div>
+                                                    <div class="input-group">
+                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" })
+                                                        @Html.HiddenFor(x => x.CourseID)
+                                                        @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div style=" text-align: right; margin-top: 16px;">
+                                                        <input id="btnComment" type="submit" value="Gửi" class="btn btn-primary" style="width:100px;" />
+                                                    </div>
 
-                                        }
+                                                </div>
+
+                                            }
 
                                         }
 
@@ -313,24 +330,25 @@
                                         @foreach (var item in review)
                                         {
                                             var rating = item.Rating;
-                                    <div id="row_@item.ID" style="display:flex;">
-                                        <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
-                                        <div class="comment_content">
-                                            <h4>@item.CreatedBy</h4>
+                                            <div id="row_@item.ID" style="display:flex;">
+                                                <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                                <div class="comment_content">
+                                                    <h4>@item.CreatedBy</h4>
 
-                                            <div class="sao@(i)"></div>
-                                            <div>@item.Comment</div>
-                                            <div style="font-size:12px;font-weight:300"> Đã Bình Luận Vào
-                                                <span style="font-weight:500">  @item.CreatedDate</span> | @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
-                                        {
-                                            Confirm = "Bạn có muốn xóa bản ghi này",
-                                            OnComplete = "$('#row_" + @item.ID + "').remove()",
-                                            HttpMethod = "Delete"
-                                        })
+                                                    <div class="sao@(i)"></div>
+                                                    <div>@item.Comment</div>
+                                                    <div style="font-size:12px;font-weight:300">
+                                                        Đã Bình Luận Vào
+                                                        <span style="font-weight:500">  @item.CreatedDate</span> | @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+{
+Confirm = "Bạn có muốn xóa bản ghi này",
+OnComplete = "$('#row_" + @item.ID + "').remove()",
+HttpMethod = "Delete"
+})
+                                                    </div>
+                                                </div>
+
                                             </div>
-                                        </div>
-
-                                    </div>
                                             i++;
                                         }
 

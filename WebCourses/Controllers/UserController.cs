@@ -15,6 +15,7 @@ using System.Net;
 using BotDetect.Web.Mvc;
 using System.Threading.Tasks;
 using System.Web.Security;
+using System.Net.Mail;
 
 namespace WebCourses.Controllers
 {
@@ -265,5 +266,110 @@ namespace WebCourses.Controllers
             }
             return View(model);
         }
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [CaptchaValidation("CaptchaCode", "forgotpassword", "Mã xác nhận không đúng!")]
+        public ActionResult ForgotPassword(string email)
+        {
+            if (ModelState.IsValid)
+            {
+                var forgot = new UserDao().ViewEmail(email);
+                if (forgot == null)
+                {
+                    ViewBag.Message = "Lỗi Email Không Tồn Tại";
+                }
+                else
+                {
+                    string a = System.IO.File.ReadAllText(Server.MapPath("/Assets/Outsite/Template/NewFeedback.html"));
+                    a = a.Replace("{{CustomerName}}", email);
+                    a = a.Replace("{{link}}", "https://localhost:44332/resetpassword/" + forgot.Password + "-" + forgot.ID);
+                    SendMail(email, "Email Quên Mật Khẩu Mới", a);
+                    return RedirectToAction("SuccessEmail");
+                }
+            }
+            return View();
+            
+        }
+        public ActionResult SuccessEmail()
+        {
+            return View();
+        }
+        public void SendMail(string toEmailAddress, string subject, string content)
+        {
+            var fromEmailAddress = ConfigurationManager.AppSettings["FromEmailAddress"].ToString();
+            var fromEmailDisplayName = ConfigurationManager.AppSettings["FromEmailDisplayName"].ToString();
+            var fromEmailPassword = ConfigurationManager.AppSettings["FromEmailPassword"].ToString();
+            var smtpHost = ConfigurationManager.AppSettings["SMTPHost"].ToString();
+            var smtpPort = ConfigurationManager.AppSettings["SMTPPort"].ToString();
+
+            bool enabledSsl = bool.Parse(ConfigurationManager.AppSettings["EnabledSSL"].ToString());
+
+            string body = content;
+            MailMessage message = new MailMessage(new MailAddress(fromEmailAddress, fromEmailDisplayName), new MailAddress(toEmailAddress));
+            message.Subject = subject;
+            message.IsBodyHtml = true;
+            message.Body = body;
+
+            var client = new SmtpClient();
+            client.Credentials = new NetworkCredential(fromEmailAddress, fromEmailPassword);
+            client.Host = smtpHost;
+            client.EnableSsl = enabledSsl;
+            client.Port = !string.IsNullOrEmpty(smtpPort) ? Convert.ToInt32(smtpPort) : 0;
+            client.Send(message);
+        }
+
+        public ActionResult ResetPassword(int id)
+        {
+            var model = new UserDao().ViewDetail(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(User model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var dao = new UserDao();
+
+                if (!string.IsNullOrEmpty(model.Password) && !string.IsNullOrEmpty(model.ConfirmPassword))
+                {
+                    var encryptedMd5Pas = Encryptor.MD5Hash(model.Password);
+                    var encryptedMd5Pass = Encryptor.MD5Hash(model.ConfirmPassword);
+                    model.Password = encryptedMd5Pas;
+                    model.ConfirmPassword = encryptedMd5Pass;
+                    if (encryptedMd5Pas == encryptedMd5Pass)
+                    {
+                        var result = dao.resetpassword(model);
+                        if (result)
+                        {
+                            
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Xác Nhận Mật Khẩu Không Đúng";
+                            ModelState.AddModelError("", "Xác Nhận Mật Khẩu Không Đúng");
+                        }
+                    }
+
+                }
+            }
+            return View(model);
+        }
+
+        public ActionResult ThongTinUser()
+        {
+            var session = (User)Session[CommonConstants.USER_SESSION];
+            var model = new UserDao().ViewDetail(session.ID);
+            ViewBag.KhoaHoc = new JoinedCoursesDao().ListAllbyID(session.ID).Count();
+            ViewBag.BaiHoc = new JoinedCoursesDao().listallbaihocbyid(session.ID).Count();
+            ViewBag.Blog = new BlogDao().ListAllByTen(session.CreatedBy).Count();
+            return View(model);
+        }
+
+
     }
 }

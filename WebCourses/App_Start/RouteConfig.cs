@@ -28,6 +28,14 @@ namespace WebCourses
                 defaults: new { controller = "KhoaHoc", action = "Search", id = UrlParameter.Optional },
                 namespaces: new[] { "WebCourses.Controllers" }
             );
+
+            routes.MapRoute(
+                name: "ThongTinUser",
+                url: "thong-tin-nguoi-dung",
+                defaults: new { controller = "User", action = "ThongTinUser", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+
             routes.MapRoute(
                name: "Joined Course",
                url: "khoa-hoc-da-tham-gia",
@@ -93,6 +101,12 @@ namespace WebCourses
                 namespaces: new[] { "WebCourses.Controllers" }
             );
             routes.MapRoute(
+                name: "ResetPassword",
+                url: "resetpassword/{password}-{id}",
+                defaults: new { controller = "User", action = "ResetPassword", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
                 name: "Login",
                 url: "dang-nhap",
                 defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },
@@ -102,6 +116,12 @@ namespace WebCourses
                 name: "Logout",
                 url: "dang-xuat",
                 defaults: new { controller = "User", action = "Logout", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
+                name: "ForgotPassword",
+                url: "quen-mat-khau",
+                defaults: new { controller = "User", action = "ForgotPassword", id = UrlParameter.Optional },
                 namespaces: new[] { "WebCourses.Controllers" }
             );
             routes.MapRoute(

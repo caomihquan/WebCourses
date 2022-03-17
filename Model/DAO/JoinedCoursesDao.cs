@@ -29,6 +29,11 @@ namespace Model.DAO
             return model.OrderByDescending(x => x.CourseID).ToPagedList(page, pageSize);
         }
 
+        public List<JoinedCours> ListAllbyID(long top)
+        {
+            return db.JoinedCourses.Where(x => x.UserID == top).ToList();
+        }
+
         public bool CheckCourse(long userid,long courseid)
         {
             return db.JoinedCourses.Count(x => x.UserID == userid && x.CourseID == courseid) > 0;
@@ -56,6 +61,10 @@ namespace Model.DAO
         public List<ProgressLesson> progress(long userid,long courseid)
         {
             return db.ProgressLessons.Where(x => x.UserID == userid && x.CourseID == courseid).ToList();
+        }
+        public List<ProgressLesson> listallbaihocbyid(long userid)
+        {
+            return db.ProgressLessons.Where(x => x.UserID == userid).ToList();
         }
     }
 }

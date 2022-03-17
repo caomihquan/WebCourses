@@ -12364,7 +12364,7 @@ h5.card-title {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     text-overflow: ellipsis;
 }
 .w3l-blog .blog-post a.blog-btn {
@@ -12713,9 +12713,6 @@ input[type=search]::-webkit-search-cancel-button {
 }
 
 .w3l-account .literacy-login h2 {
-    display: inline-block;
-    font-size: 26px;
-    margin-bottom: 25px;
     color: var(--primary-color);
 }
 
@@ -12754,8 +12751,7 @@ input[type=search]::-webkit-search-cancel-button {
 
 .login-register-social {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: space-evenly;
     margin-top: 10px;
 }
 

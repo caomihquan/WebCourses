@@ -3058,6 +3058,7 @@
     <Content Include="Assets\Outsite\js\jquery.waypoints.min.js" />
     <Content Include="Assets\Outsite\js\owl.carousel.js" />
     <Content Include="Assets\Outsite\js\tabui.js" />
+    <Content Include="Assets\Outsite\Template\NewFeedback.html" />
     <Content Include="Assets\undraw_profile.svg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -3365,6 +3366,10 @@
     <Content Include="Views\KhoaHoc\Search.cshtml" />
     <Content Include="Views\KhoaHoc\JoinedCourse.cshtml" />
     <Content Include="Areas\Admin\Views\Course\CommentCourse.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\User\SuccessEmail.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\User\ThongTinUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
