@@ -8,6 +8,7 @@
 
 }
 @section jsFooter{
+
     <script src="~/Assets/Outsite/js/jquery-ui.js"></script>
     <script src="~/Assets/Outsite/js/autocomplete.js"></script>
 }
@@ -278,11 +279,14 @@
                         <div class="course-img">
                             <a href="@url">
                                 <img src="@item.Image" alt=" " class="img-fluid">
+                                <div class="price">
+                                    <h4>@item.LevelCourse</h4>
+                                </div>
                             </a>
                         </div>
                         <div class="course-cont">
                             <span class="subject red">@cateogry.Name</span>
-                            <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
+                            <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                             <ul class="admin-post">
                                 @if (countkhacnull == 0)
                                 {
@@ -339,18 +343,21 @@
                     <div class="course-grid">
                         <div class="course-img">
                             <a href="@url">
-                                <img src="@item.Image" alt=" " class="img-fluid">
+                                <img src="@item.Image" alt="" class="img-fluid">
+                                <div class="price">
+                                    <h4>@item.LevelCourse</h4>
+                                </div>
                             </a>
                         </div>
+
                         <div class="course-cont">
                             <span class="subject blue">@cateogry.Name</span>
-                            <h5 class="card-title"><a href="courses-single.html">@item.Name</a></h5>
+                            <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                             <ul class="admin-post">
+                                <li>
+                                    <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs)  Bài Học
+                                </li>
 
-                            <li>
-                                <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs)  Bài Học
-                            </li>
-                                
                                 <li>
                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
                                 </li>

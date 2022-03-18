@@ -12326,6 +12326,7 @@ h5.card-title {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;
+    height:64px;
 }
 .w3l-blog .admin-post {
   border-bottom: 1px solid var(--border-color);

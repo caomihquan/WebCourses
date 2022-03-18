@@ -319,7 +319,7 @@
                                             }
                                             else
                                             {
-                                                tb = (@tb / @review.Count);
+                                                tb = (tb / review.Count);
                                             }
                                         }
                                         <div class="tab-pane fade show active col-lg-4" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
@@ -337,14 +337,23 @@
 
                                                     <div class="sao@(i)"></div>
                                                     <div>@item.Comment</div>
+                                                    
                                                     <div style="font-size:12px;font-weight:300">
                                                         Đã Bình Luận Vào
-                                                        <span style="font-weight:500">  @item.CreatedDate</span> | @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
-{
-Confirm = "Bạn có muốn xóa bản ghi này",
-OnComplete = "$('#row_" + @item.ID + "').remove()",
-HttpMethod = "Delete"
-})
+                                                        <span style="font-weight:500">  @item.CreatedDate</span> |
+                                                        @if (session!=null && item.UserID == session.ID)
+                                                        {
+                                                            @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                                                            {
+                                                            Confirm = "Bạn có muốn xóa bản ghi này",
+                                                            OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                            HttpMethod = "Delete"
+                                                            })
+                }
+                else
+                {
+
+                }
                                                     </div>
                                                 </div>
 

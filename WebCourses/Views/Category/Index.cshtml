@@ -73,11 +73,11 @@
                                 <!-- right side bar -->
                                 <div class="col-lg-12">
                                     <aside>
-                                        <h3 class="aside-title mb-3">Search</h3>
+                                        <h3 class="aside-title mb-3">Tìm Kiếm</h3>
                                         @using (Html.BeginForm("Index", "Category", FormMethod.Get, new { @class = "form-inline search-form" }))
                                         {
                                             <form class="form-inline search-form" action="#" method="post">
-                                                <input class="form-control" type="text" placeholder="Search here" name="searchString" value="@ViewBag.SearchString">
+                                                <input class="form-control" type="text" placeholder="Nhập Từ Khóa   " name="searchString" value="@ViewBag.SearchString">
                                                 <button class="btn search" type="submit"><span class="fa fa-search"></span></button>
                                             </form>
 

@@ -128,7 +128,7 @@
                                     <div style="font-size:12px;font-weight:300">
                                         Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span> 
                                         <div >
-                                        @if (item.UserID == session.ID)
+                                        @if (session!=null&& item.UserID == session.ID)
                                         {
 
                                             @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
