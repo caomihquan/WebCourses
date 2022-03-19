@@ -20,6 +20,16 @@ namespace WebCourses.Controllers
             return View(model);
         }
 
+        public ActionResult BlogSave(string searchString, int page = 1, int pageSize = 10)
+        {
+            var session = (User)Session[CommonConstants.USER_SESSION];
+            var dao = new BlogSaveDao();
+            var model = dao.ListAllPaging(searchString, page, pageSize,session.ID);
+            ViewBag.SearchString = searchString;
+            ViewBag.Tag = new BlogDao().ListAllTag();
+            return View(model);
+        }
+
         [ChildActionOnly]
         public PartialViewResult CategoryBlog()
         {
@@ -148,6 +158,51 @@ namespace WebCourses.Controllers
 
 
         }
+
+        [HttpPost]
+        public JsonResult AddChangeBlogSaveStatus(long id)
+        {
+            var model = new BlogDao().ViewDetail(id);
+            var session = (User)Session[CommonConstants.USER_SESSION];
+            var saveblog = new BlogDao().ViewDetailBlogSave(id, session.ID);
+            long? userid = 0;
+            if (saveblog == null)
+            {
+                userid = 0;
+            }
+            else
+            {
+                userid = saveblog.UserID;
+            }
+            var result = true;
+
+            if (session.ID == userid && model.ID==id)
+            {
+                result = new BlogDao().ChangeBlogSave(model.ID, session.ID);
+            }
+            else
+            {
+                var blogsave = new BlogSave();
+                blogsave.BlogID = model.ID;
+                blogsave.UserID = session.ID;
+                blogsave.MetaTitle = model.MetaTitle;
+                blogsave.Name = model.Name;
+                blogsave.Image = model.Image;
+                blogsave.Description = model.Description;
+                blogsave.CategoryBlogID = model.CategoryBlogID;
+                blogsave.CreatedDate = model.CreatedDate;
+                blogsave.CreatedBy = model.CreatedBy;
+                blogsave.Status = true;
+                result = new BlogDao().AddBlogSave(blogsave);
+               
+            }
+            return Json(new
+            {
+                status = result
+            });
+
+        }
+        
 
         [HttpDelete]
         public ActionResult Delete(long id)

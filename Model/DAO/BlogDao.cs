@@ -28,6 +28,10 @@ namespace Model.DAO
         {
             return db.Blogs.Find(id);
         }
+        public BlogSave ViewDetailBlogSave(long blogid,long userid)
+        {
+            return db.BlogSaves.Where(x=>x.UserID==userid && x.BlogID==blogid).SingleOrDefault();
+        }
         public List<Blog> RecentBlog(int id)
         {
             return db.Blogs.Where(x=>x.Status==true).OrderByDescending(x=>x.CreatedDate).Take(id).ToList();
@@ -70,6 +74,19 @@ namespace Model.DAO
             }
 
             return blog.ID;
+        }
+        public bool ChangeBlogSave(long blogid,long userid)
+        {
+            var user = db.BlogSaves.Where(x=>x.BlogID==blogid&&x.UserID==userid).SingleOrDefault();
+            user.Status = !user.Status;
+            db.SaveChanges();
+            return user.Status;
+        }
+        public bool AddBlogSave(BlogSave entity)
+        {
+            db.BlogSaves.Add(entity);
+            db.SaveChanges();
+            return true;
         }
 
 

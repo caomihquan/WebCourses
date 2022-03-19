@@ -14,6 +14,8 @@
 @section jsFooter{
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6168ecfe9afe107b"></script>
     <script src="~/Assets/Outsite/js/controller/badword.js"></script>
+    <script src="~/Assets/Outsite/js/controller/saveBlog.js"></script>
+
 }
 
 <nav id="breadcrumbs" class="breadcrumbs">
@@ -32,6 +34,25 @@
             </li>
             <li>
                 <span class="far fa-eye"></span> @blog.ViewCount Lượt Xem
+            </li>
+            <li>
+                    @if (session == null)
+                    {
+                        <a href="/dang-nhap"><i class="far fa-bookmark"></i></a>
+                    }
+                    else
+                    {
+                        var save = new Model.DAO.BlogDao().ViewDetailBlogSave(blog.ID, session.ID);
+                        if (save == null)
+                        {
+                            <a href="#" class="saveblog" data-id="@blog.ID"><i class="far fa-bookmark"></i></a>
+                        }
+                        else
+                        {
+                            var color = (save.Status ? "<i class=\"fas fa-bookmark\"></i>" : "<i class=\"far fa-bookmark\"></i>");
+                            <a href="#" class="saveblog" data-id="@blog.ID">@Html.Raw(color)</a>
+                        }
+                    }
             </li>
 
         </ul>

@@ -12080,10 +12080,18 @@ div#small-dialog iframe {
   color: var(--text-blue); }
 
 .w3l-courses h5.card-title a {
-  font-size: 26px;
-  line-height: 31.2px;
-  margin-bottom: 10px;
-  color: var(--title-color); }
+    font-size: 26px;
+    line-height: 31.2px;
+    margin-bottom: 10px;
+    color: var(--title-color);
+    font-size: 26px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    height: 64px;
+}
 
 .w3l-courses h5.card-title a:hover {
   color: var(--primary-color); }
@@ -12314,6 +12322,7 @@ h5.card-title {
   line-height: 31.2px;
   margin-bottom: 10px;
   color: var(--title-color);
+  height:64px;
 }
 .w3l-blog h5.card-title a, .w3l-blog h5.card-title {
   font-size: 26px;
@@ -12351,6 +12360,7 @@ h5.card-title {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;
+    height:50px;
 }
 .description_subjcect {
     color: var(--text-color);
@@ -12781,7 +12791,7 @@ input[type=search]::-webkit-search-cancel-button {
 .logout_user {
     position: absolute;
     right: 0;
-    background-color: var(--breadcrumb-bg);
+    background-color: var(--bg-color);
     text-align: center;
     display: none;
     width:165px;
@@ -13021,15 +13031,15 @@ li:hover .mega-menu {
     opacity: 1;
 }
 
-
-
-
-
-
-    /* width */
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
+.luubaiviet {
+    display: inline-block;
+    float: right;
+    font-size: 24px;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
 
     /* Track */
     ::-webkit-scrollbar-track {

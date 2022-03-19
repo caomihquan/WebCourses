@@ -104,7 +104,7 @@ namespace WebCourses.Controllers
             var fb = new FacebookClient();
             var loginUrl = fb.GetLoginUrl(new
             {
-                client_id = /*ConfigurationManager.AppSettings["FbAppId"]*/1024793591616473,
+                client_id = 1024793591616473,
                 client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
                 redirect_uri = RedirectUri.AbsoluteUri,
                 response_type = "code",
@@ -119,7 +119,7 @@ namespace WebCourses.Controllers
             var fb = new FacebookClient();
             dynamic result = fb.Post("oauth/access_token", new
             {
-                client_id = /*ConfigurationManager.AppSettings["FbAppId"]*/1024793591616473,
+                client_id = 1024793591616473,
                 client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
                 redirect_uri = RedirectUri.AbsoluteUri,
                 code = code
@@ -174,11 +174,12 @@ namespace WebCourses.Controllers
             GoogleConnect.ClientSecret = "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";
             GoogleConnect.RedirectUri = Request.Url.AbsoluteUri.Split('?')[0];
             GoogleConnect.Authorize("profile", "email");
+            ViewBag.ReturnUrl = System.Web.HttpContext.Current.Request.UrlReferrer;
         }
-
+        
         [ActionName("LoginWithGooglePlus")]
-        public ActionResult LoginWithGooglePlusConfirmed(string returnUrl)
-        {
+        public ActionResult LoginWithGooglePlusConfirmed()
+        {            
             if (!string.IsNullOrEmpty(Request.QueryString["code"]))
             {
                 string code = Request.QueryString["code"];

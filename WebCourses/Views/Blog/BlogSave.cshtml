@@ -1,23 +1,21 @@
-﻿@model PagedList.IPagedList<Model.EF.Blog>
+﻿@model PagedList.IPagedList<Model.EF.BlogSave>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BlogSave";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var tag = (List<Model.EF.Tag>)ViewBag.Tag;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
-
-
 }
 @section jsFooter{
     <script src="/Assets/Outsite/js/controller/saveBlog.js"></script>
-    }
+}
 
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
         <div class="header-section">
-            <h2 class="mb-2">Blog</h2>
+            <h2 class="mb-2">Bài Viết Lưu</h2>
         </div>
-        <a href="/">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Blog</span>
+        <a href="/">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Bài Viết Lưu</span>
     </div>
 </nav>
 
@@ -33,7 +31,7 @@
                         {
                             var cateogryblog = new Model.DAO.CategoryBlogDao().CategoryCourses(item.CategoryBlogID);
                             var url = "/blog-chi-tiet/" + item.MetaTitle + "-" + item.ID;
-                            
+
                             <div class="col-md-6">
                                 <div class="blog-post">
                                     <div class="blg-img">
@@ -64,21 +62,21 @@
                                             }
                                             else
                                             {
-                                                var save = new Model.DAO.BlogDao().ViewDetailBlogSave(item.ID, session.ID);
+                                                var save = new Model.DAO.BlogDao().ViewDetailBlogSave(item.BlogID.Value, session.ID);
                                                 if (save == null)
                                                 {
-                                                    <a href="#" class="saveblog" data-id="@item.ID"><i class="far fa-bookmark"></i></a>
+                                                    <a href="#" class="saveblog" data-id="@item.BlogID"><i class="far fa-bookmark"></i></a>
                                                 }
                                                 else
                                                 {
                                                     var color = (save.Status ? "<i class=\"fas fa-bookmark\"></i>" : "<i class=\"far fa-bookmark\"></i>");
-                                                    <a href="#" class="saveblog" data-id="@item.ID">@Html.Raw(color)</a>
+                                                    <a href="#" class="saveblog" data-id="@item.BlogID">@Html.Raw(color)</a>
                                                 }
                                             }
 
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         }
@@ -91,9 +89,9 @@
 
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
                    {
-                      
+
                        LiElementClasses = new List<string> { "page-item", "page-link" },
-                       
+
                    })
                     </div>
                 </div>

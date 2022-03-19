@@ -14,6 +14,7 @@ namespace Model.EF
 
         public virtual DbSet<About> Abouts { get; set; }
         public virtual DbSet<Blog> Blogs { get; set; }
+        public virtual DbSet<BlogSave> BlogSaves { get; set; }
         public virtual DbSet<BlogTag> BlogTags { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryBlog> CategoryBlogs { get; set; }
@@ -37,6 +38,10 @@ namespace Model.EF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Blog>()
+                .Property(e => e.MetaTitle)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BlogSave>()
                 .Property(e => e.MetaTitle)
                 .IsUnicode(false);
 

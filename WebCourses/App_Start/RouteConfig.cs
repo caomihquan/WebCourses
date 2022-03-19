@@ -23,6 +23,12 @@ namespace WebCourses
                 namespaces: new[] { "WebCourses.Controllers" }
             );
             routes.MapRoute(
+                name: "BlogSave",
+                url: "bai-viet-luu",
+                defaults: new { controller = "Blog", action = "BlogSave", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
                 name: "Search",
                 url: "tim-kiem",
                 defaults: new { controller = "KhoaHoc", action = "Search", id = UrlParameter.Optional },

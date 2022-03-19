@@ -20,7 +20,7 @@ namespace WebCourses.Controllers
 
         public ActionResult Category(long cateId, int page = 1, int pageSize = 8)
         {
-            var category = new CategoryDao().ViewDetail(cateId);
+            var category = new CategoryDao().ViewDetailout(cateId);
             ViewBag.Category = category;
             int totalRecord = 0;
             var model = new CategoryDao().ListByCategoryId(cateId, ref totalRecord, page, pageSize);

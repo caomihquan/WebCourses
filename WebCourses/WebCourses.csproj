@@ -3049,6 +3049,7 @@
     <Content Include="Assets\Outsite\js\autocomplete.js" />
     <Content Include="Assets\Outsite\js\bootstrap.min.js" />
     <Content Include="Assets\Outsite\js\controller\badword.js" />
+    <Content Include="Assets\Outsite\js\controller\saveBlog.js" />
     <Content Include="Assets\Outsite\js\easyResponsiveTabs.js" />
     <Content Include="Assets\Outsite\js\jquery-1.9.1.min.js" />
     <Content Include="Assets\Outsite\js\jquery-3.4.1.slim.min.js" />
@@ -3370,6 +3371,7 @@
     <Content Include="Views\User\SuccessEmail.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\User\ThongTinUser.cshtml" />
+    <Content Include="Views\Blog\BlogSave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\BlogDao.cs" />
+    <Compile Include="DAO\BlogSaveDao.cs" />
     <Compile Include="DAO\CategoryBlogDao.cs" />
     <Compile Include="DAO\CategoryDao.cs" />
     <Compile Include="DAO\CourseDao.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Blog.cs" />
+    <Compile Include="EF\BlogSave.cs" />
     <Compile Include="EF\BlogTag.cs" />
     <Compile Include="EF\Category.cs" />
     <Compile Include="EF\CategoryBlog.cs" />
