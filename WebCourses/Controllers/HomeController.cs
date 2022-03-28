@@ -15,8 +15,8 @@ namespace WebCourses.Controllers
            
             ViewBag.PopularSubject = new CategoryDao().ListPopularSubjects(3);
             ViewBag.TotalCourses = new CourseDao().ListAll().Count();
-            ViewBag.FeaterCourses = new CourseDao().ListFeatureCourses(2);
-            ViewBag.NewCourses = new CourseDao().ListNewCourse(2);
+            ViewBag.FeaterCourses = new CourseDao().ListFeatureCourses(5);
+            ViewBag.NewCourses = new CourseDao().ListNewCourse(5);
 
             ViewBag.TotalSubjects = new CategoryDao().ListAll().Count();
             ViewBag.TotalMember = new UserDao().ListAll().Count();

@@ -56,6 +56,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 var dao = new LessonDao();
                 lesson.CreatedBy = session.UserName;
                 lesson.ViewCount = 0;
+                int byteCount = 0;
                 string chuoi = "";
                 if (file[0] == null)
                 {
@@ -65,11 +66,23 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     foreach (HttpPostedFileBase f in file)
                     {
+                        int sizefile = f.ContentLength;
+                        byteCount = sizefile + byteCount;
+                        if (byteCount < 26214400)
+                        {
                             string files = Path.GetFileName(f.FileName);
                             string _path = Path.Combine(Server.MapPath("/Data/File"), files);
                             var video = _path.Substring(49);
                             f.SaveAs(_path);
-                            chuoi = chuoi + "," + video;                      
+                            chuoi = chuoi + "," + video;
+                        }
+                        else
+                        {
+                            chuoi = null;
+                            ViewBag.Message = "Tổng Dung Lượng File Không Vượt Quá 25MB";
+                            return View(lesson);
+                        }
+
                     }
                     lesson.MoreFiles = chuoi;
                 }
@@ -109,6 +122,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 var dao = new LessonDao();
                 lesson.ModifiedBy = session.UserName;
                 string chuoi = "";
+                int byteCount = 0;
                 var list = new LessonDao().ViewDetail(lesson.ID);
                 
                 if (file[0] == null)
@@ -119,11 +133,22 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     foreach (HttpPostedFileBase f in file)
                     {
+                        int sizefile = f.ContentLength;
+                        byteCount = sizefile + byteCount;
+                        if (byteCount < 26214400)
+                        {
                             string files = Path.GetFileName(f.FileName);
                             string _path = Path.Combine(Server.MapPath("/Data/File"), files);
                             var video = _path.Substring(49);
                             f.SaveAs(_path);
                             chuoi = chuoi + "," + video;
+                        }
+                        else
+                        {
+                            chuoi = null;
+                            ViewBag.Message = "Tổng Dung Lượng File Không Vượt Quá 25MB";
+                            return View(lesson);
+                        }
                     }
                     lesson.MoreFiles = chuoi;
                 }

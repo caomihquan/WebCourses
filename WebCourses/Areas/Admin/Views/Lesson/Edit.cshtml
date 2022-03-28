@@ -89,6 +89,7 @@
         </ul>
         <div class="col-md-10">
             @Html.TextBox("file", "", new { @type = "file", @multiple = "" }) <br />
+            <div class="alert-danger">@ViewBag.Message</div>
         </div>
     </div>
 

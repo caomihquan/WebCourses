@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace WebCourses.Areas.Admin.Controllers
 {
-    public class CategoryBlogController : Controller
+    public class CategoryBlogController : BaseController
     {
         // GET: Admin/CategoryBlog
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
@@ -42,7 +42,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 long id = dao.Insert(categoryblog);
                 if (id > 0)
                 {
-                   /* SetAlert("Thêm Thành Công ", "success");*/
+                    SetAlert("Thêm Thành Công ", "success");
                     return RedirectToAction("Index", "CategoryBlog");
                 }
                 else
@@ -63,7 +63,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 var result = dao.Update(categoryblog);
                 if (result)
                 {
-                    /*SetAlert("Sửa Thành Công ", "success");*/
+                    SetAlert("Sửa Thành Công ", "success");
                     return RedirectToAction("Index", "CategoryBlog");
                 }
                 else

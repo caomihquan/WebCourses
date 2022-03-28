@@ -3024,6 +3024,7 @@
     <Content Include="Assets\Outsite\images\b7.jpg" />
     <Content Include="Assets\Outsite\images\banner.jpg" />
     <Content Include="Assets\Outsite\images\check.png" />
+    <Content Include="Assets\Outsite\images\favicon.ico" />
     <Content Include="Assets\Outsite\images\join.jpg" />
     <Content Include="Assets\Outsite\images\logo1.png" />
     <Content Include="Assets\Outsite\images\logo2.png" />

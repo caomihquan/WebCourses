@@ -236,11 +236,15 @@
                                                     var child = lesson.Where(x => x.ParentsID == li.ID);
                                                     var parentClass = child.Count() > 0 ? "class=lesson_parent" : "";
                                                     var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
-
+                                                    
                                                     <li>
                                                         @if (session != null)
                                                         {
-                                                            <a href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name</a>
+                                                            var check = new Model.DAO.JoinedCoursesDao().CheckLesson(session.ID, li.CourseID.Value, li.ID);
+                                                            var style = check ? "<i style=color:green class=\"fas fa-check\"></i>" : "";
+                                                            var style1 = check ? "style=background-color:var(--light)" : "";
+
+                                                            <a @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
                                                         }
                                                         else
                                                         {
@@ -250,12 +254,17 @@
                                                     </li>
                                                     if (child.Count() > 0)
                                                     {
+
                                                         foreach (var childItem in child)
                                                         {
+
                                                             if (session != null)
                                                             {
+                                                                var checkchild = new Model.DAO.JoinedCoursesDao().CheckLesson(session.ID, childItem.CourseID.Value, childItem.ID);
+                                                                var stylechild = checkchild ? "<i style=color:green class=\"fas fa-check\"></i>" : "";
+                                                                var stylechild1 = checkchild ? "style=background-color: var(--light)":"";
 
-                                                                <li title="@childItem.Name"><a href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name</a></li>
+                                                                <li title="@childItem.Name"><a @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
                                                             }
                                                             else
                                                             {

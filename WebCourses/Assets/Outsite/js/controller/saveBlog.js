@@ -16,10 +16,23 @@
                     if (response.status == true) {
                         btn.empty();
                         btn.append('<i class="fas fa-bookmark"></i>');
-                        
+                        swal({
+                            type: "success",
+                            title: "Đã Lưu",
+                            text: "Bạn Đã Lưu Blog Thành Công",
+                            buttons: false,
+                            timer: 1500
+                        });
                     } else {
                         btn.empty();
                         btn.append('<i class="far fa-bookmark"></i>');
+                        swal({
+                            type: "success",
+                            title: "Đã Xóa",
+                            text: "Bạn Đã Bỏ Lưu Blog",
+                            buttons: false,
+                            timer: 1500
+                        });
                     }
                 }
             });

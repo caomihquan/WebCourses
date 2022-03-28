@@ -49,6 +49,7 @@ namespace WebCourses.Controllers
                     userSession.Phone = user.Phone;
                     userSession.Email = user.Email;
                     userSession.Address = user.Address;
+                    userSession.GroupID = user.GroupID;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
                     if (returnUrl == null)
                     {
@@ -143,6 +144,7 @@ namespace WebCourses.Controllers
                 user.Status = true;
                 user.Name = firstname + " " + middlename + " " + lastname;
                 user.CreatedDate = DateTime.Now;
+                user.GroupID = "MEMBER";
                 var resultInsert = new UserDao().InsertForFacebook(user);
                 if (resultInsert)
                 {
@@ -155,6 +157,7 @@ namespace WebCourses.Controllers
                     userSession.Phone = nguoidung.Phone;
                     userSession.Email = nguoidung.Email;
                     userSession.Address = nguoidung.Address;
+                    userSession.GroupID = nguoidung.GroupID;
                     Session.Add(CommonConstants.USER_SESSION, userSession);                   
                 }
             }
@@ -209,6 +212,7 @@ namespace WebCourses.Controllers
                     userSession.Phone = nguoidung.Phone;
                     userSession.Email = nguoidung.Email;
                     userSession.Address = nguoidung.Address;
+                    userSession.GroupID = nguoidung.GroupID;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
                 }
             }
@@ -244,6 +248,7 @@ namespace WebCourses.Controllers
                     user.Email = model.Email;
                     user.Address = model.Address;
                     user.CreatedDate = DateTime.Now;
+                    user.GroupID = "MEMBER";
                     user.Status = true;
                     var result = dao.Insert(user);
                     if (result > 0)
@@ -286,7 +291,7 @@ namespace WebCourses.Controllers
                 {
                     string a = System.IO.File.ReadAllText(Server.MapPath("/Assets/Outsite/Template/NewFeedback.html"));
                     a = a.Replace("{{CustomerName}}", email);
-                    a = a.Replace("{{link}}", "https://localhost:44332/resetpassword/" + forgot.Password + "-" + forgot.ID);
+                    a = a.Replace("{{link}}", "https://localhost:44332/resetpassword/" + forgot.Password + "-"+ forgot.ID);
                     SendMail(email, "Email Quên Mật Khẩu Mới", a);
                     return RedirectToAction("SuccessEmail");
                 }

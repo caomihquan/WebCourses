@@ -8,8 +8,8 @@ Author URL: http://w3layouts.com
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title></title>
+    <link rel="icon" type="image/x-icon" href="~/Assets/Outsite/images/favicon.ico">
+    <title>CM Education</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="/Assets/Admin/js/jquery.rateyo.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -20,6 +20,7 @@ Author URL: http://w3layouts.com
 </head>
 
 <body>
+
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
@@ -53,6 +54,7 @@ Author URL: http://w3layouts.com
 
     <!--header-->
     @{Html.RenderAction("header", "Home");}
+
     @RenderBody()
     <!-- index-block1 -->
     <!-- / getstarted -->
@@ -272,17 +274,13 @@ Author URL: http://w3layouts.com
         const bodyElement = document.querySelector('body');
         const themeToggle = document.querySelector('#themeToggle');
         const darkModeMql = window.matchMedia('(prefers-color-scheme: dark)');
-
         const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : userPreference(darkModeMql);
-
         if (currentTheme) {
             bodyElement.classList.add(currentTheme);
-
             if (currentTheme === 'dark') {
                 themeToggle.checked = true;
             }
         }
-
         function userPreference(e) {
             if (e.matches) {
                 bodyElement.classList.add("dark");
@@ -292,9 +290,7 @@ Author URL: http://w3layouts.com
                 return ""
             }
         }
-
         darkModeMql.addListener(userPreference);
-
         function themeSwitcher(e) {
             if (e.target.checked) {
                 bodyElement.classList.add('dark');
@@ -304,7 +300,6 @@ Author URL: http://w3layouts.com
                 localStorage.setItem('theme', '');
             }
         }
-
         themeToggle.addEventListener('change', themeSwitcher);
     </script>
     <!--//theme switcher dark and light mode script-->
@@ -324,7 +319,6 @@ Author URL: http://w3layouts.com
         }
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   
     @RenderSection("jsFooter", required: false)
 </body>
 
