@@ -79,6 +79,9 @@
       <HintPath>..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.18.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.18\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -3007,8 +3010,6 @@
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Assets\Admin\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Assets\Admin\vendor\undraw_profile.svg" />
-    <Content Include="Assets\Outsite\Common\ASPSnippets.GoogleAPI.dll" />
-    <Content Include="Assets\Outsite\Common\CKFinder.dll" />
     <Content Include="Assets\Outsite\css\jquery-ui.css" />
     <Content Include="Assets\Outsite\css\style-starter.css" />
     <Content Include="Assets\Outsite\fonts\fontawesome-webfont.svg" />

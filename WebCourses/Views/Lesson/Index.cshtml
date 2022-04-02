@@ -1,8 +1,8 @@
-﻿@model Model.EF.ReviewLesson 
+﻿@model Model.EF.ReviewLesson
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var lesson =(List<Model.EF.Lesson>)ViewBag.Lesson;
+    var lesson = (List<Model.EF.Lesson>)ViewBag.Lesson;
     var childs = 0;
     foreach (var li in lesson)
     {
@@ -15,7 +15,7 @@
         }
 
     }
-    var progress =(List<Model.EF.ProgressLesson>)ViewBag.ProgressLesson;
+    var progress = (List<Model.EF.ProgressLesson>)ViewBag.ProgressLesson;
     var baihoc = ViewBag.BaiHoc;
     var review = (List<Model.EF.ReviewLesson>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
@@ -70,262 +70,284 @@
         }
     </script>
     <script src="~/Assets/Outsite/js/controller/badword.js"></script>
+    <script>
+        const current = $("#current").first();
+        const position = current.position();
+        $(".sidebar-lesson").scrollTop(position.top);
+    </script>
 }
-    <nav id="breadcrumbs" class="breadcrumbs">
-        <div class="container page-wrapper text-center">
-            <div class="header-section">
-                <h2 class="mb-2">@ViewBag.Course.Name</h2>
-
-            </div>
-            <ul class="admin-post mb-0">
-                <li>
-                    <span class="fa fa-book"></span>@baihoc.Name
-                </li>
-                <li>
-                    <span class="fa fa-eye"></span>@baihoc.ViewCount Lượt Xem Bài Học
-                </li>
-
-            </ul>
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">@ViewBag.Course.Name</h2>
 
         </div>
-    </nav>
+        <ul class="admin-post mb-0">
+            <li>
+                <span class="fa fa-book"></span>@baihoc.Name
+            </li>
+            <li>
+                <span class="fa fa-eye"></span>@baihoc.ViewCount Lượt Xem Bài Học
+            </li>
+
+        </ul>
+
+    </div>
+</nav>
 
 
-    <section class="w3l-blog">
+<section class="w3l-blog">
 
-        <div class="single blog pb-5 pt-md-4 pt-2">
+    <div class="single blog pb-5 pt-md-4 pt-2">
 
-            <div class="container pb-lg-3">
-                <div class="row">
-                    <!-- left side blog post content -->
-                    <div class="w3l-courses blog-posts col-lg-8 pr-lg-0">
+        <div class="container pb-lg-3">
+            <div class="row">
+                <!-- left side blog post content -->
+                <div class="w3l-courses blog-posts col-lg-8 pr-lg-0">
 
-                        <div class="row">
+                    <div class="row">
 
-                            <div class=" col-md-12">
-                                <div class="btn-appear">
-                                    <div> </div>
-                                    <span class="appear-course">Hiện Nội Dung</span>
-                                </div>
-                                <div class="course-grid">
+                        <div class=" col-md-12">
+                            <div class="btn-appear">
+                                <div> </div>
+                                <span class="appear-course">Hiện Nội Dung</span>
+                            </div>
+                            <div class="course-grid">
 
-                                    <div class="course-img">
+                                <div class="course-img">
 
 
-                                        @if (baihoc.Video == null || baihoc.Video == "")
+                                    @if (baihoc.Video == null || baihoc.Video == "")
+                                    {
+
+                                    }
+                                    else
+                                    {
+
+                                        if (baihoc.Video.Contains("<iframe"))
                                         {
 
+                                            <div style="display:flex">
+                                                <div style="margin:auto">
+                                                    @Html.Raw(baihoc.Video)
+                                                </div>
+                                            </div>
+                                        }
+                                        else if (baihoc.Video.Contains("youtube.com"))
+                                        {
+                                            <div class="iframe-container">
+                                                <iframe width="100%" height="500" src="@baihoc.Video" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            </div>
+
+                                        }
+                                        else if (baihoc.Video.Contains("drive.google.com"))
+                                        {
+                                            <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
                                         }
                                         else
                                         {
+                                            <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
+                                        }
 
-                                            if (baihoc.Video.Contains("<iframe"))
-                                            {
-                                               
-                                                <div style="display:flex">
-                                                    <div style="margin:auto">
-                                                        @Html.Raw(baihoc.Video)
+                                    }
+
+
+                                </div>
+
+                            </div>
+                            <div style="background-color:var(--bg-color)">
+                                <!-- Tab items -->
+                                <div class="tabs">
+                                    <div class="tab-item active">
+                                        <i class="fas fa-brain"></i>
+                                        Nội Dung
+                                    </div>
+                                    <div class="tab-item">
+
+                                        <i class="fas fa-file-signature"></i>
+                                        Bài Tập
+                                    </div>
+                                    <div class="tab-item">
+                                        <i class="fas fa-comment-alt"></i>
+                                        Bình Luận
+                                    </div>
+                                    <div class="tab-item">
+                                        <i class="fas fa-file"></i>
+                                        Tệp
+                                    </div>
+                                    <div class="line"></div>
+                                </div>
+
+                                <!-- Tab content -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        @Html.Raw(baihoc.Content)
+                                    </div>
+                                    <div class="tab-pane">
+                                        @Html.Raw(baihoc.HomeWork)
+
+                                    </div>
+                                    <div class="tab-pane commentoverview">
+                                        @foreach (var item in review)
+                                        {
+
+                                            <div id="row_@item.ID" style="display:flex">
+                                                <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                                <div class="comment_content">
+                                                    <h4>@item.CreatedBy </h4>
+                                                    <div>@item.Comment</div>
+                                                    <div style="font-size:12px;font-weight:300">
+                                                        Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
+                                                        <div>
+                                                            @if (item.UserID == session.ID)
+                                                            {
+
+                                                                @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
+                                                                     {
+                                                          Confirm = "Bạn có muốn xóa bản ghi này",
+                                                          OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                          HttpMethod = "Delete"
+                                                                     })
+
+                                                            }
+                                                        </div>
                                                     </div>
+
                                                 </div>
-                                            }
-                                            else if (baihoc.Video.Contains("youtube.com"))
-                                            {
-                                                <div class="iframe-container">
-                                                    <iframe width="100%" height="500" src="@baihoc.Video" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            </div>
+                                        }
+                                        @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post))
+                                        {
+                                            <div class="reviews-submit">
+                                                <h4>Đánh Giá Của Bạn:</h4>
+                                                @Html.AntiForgeryToken()
+
+
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                <input id="rating" type="hidden" name="rating" />
+
+                                                <div class="input-group">
+                                                    @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" })
+                                                    @Html.HiddenFor(x => x.LessonID)
+                                                </div>
+                                                <div style=" text-align: right; margin-top: 16px;">
+                                                    <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
                                                 </div>
 
-                                            }
-                                            else if (baihoc.Video.Contains("drive.google.com"))
+                                            </div>
+
+                                        }
+                                    </div>
+                                    <div class="tab-pane">
+                                        <ul>
+                                            @if (baihoc.MoreFiles == null || baihoc.MoreFiles == "")
                                             {
-                                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
+
                                             }
                                             else
                                             {
-                                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
-                                            }
-
-                                        }
-
-
-                                    </div>
-
-                                </div>
-                                <div style="background-color:var(--bg-color)">
-                                    <!-- Tab items -->
-                                    <div class="tabs">
-                                        <div class="tab-item active">
-                                            <i class="fas fa-brain"></i>
-                                            Nội Dung
-                                        </div>
-                                        <div class="tab-item">
-                                            
-                                            <i class="fas fa-file-signature"></i>
-                                            Bài Tập
-                                        </div>
-                                        <div class="tab-item">
-                                            <i class="fas fa-comment-alt"></i>
-                                            Bình Luận
-                                        </div>
-                                        <div class="tab-item">
-                                            <i class="fas fa-file"></i>
-                                            Tệp
-                                        </div>
-                                        <div class="line"></div>
-                                    </div>
-
-                                    <!-- Tab content -->
-                                    <div class="tab-content">
-                                        <div class="tab-pane active">
-                                            @Html.Raw(baihoc.Content)
-                                        </div>
-                                        <div class="tab-pane">
-                                            @Html.Raw(baihoc.HomeWork)
-                                            
-                                        </div>
-                                        <div class="tab-pane commentoverview">
-                                            @foreach (var item in review)
-                                            {
-                                                
-                                            <div id="row_@item.ID" style="display:flex">
-                                                <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
-                                                    <div class="comment_content">
-                                                        <h4>@item.CreatedBy </h4>
-                                                        <div>@item.Comment</div>
-                                                        <div style="font-size:12px;font-weight:300">
-                                                            Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span> 
-                                                                             <div>
-                                                                                 @if (item.UserID == session.ID)
-                                                                                 {
-
-                                                                                     @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
-                                                                                          {
-                                                                               Confirm = "Bạn có muốn xóa bản ghi này",
-                                                                               OnComplete = "$('#row_" + @item.ID + "').remove()",
-                                                                               HttpMethod = "Delete"
-                                                                                          })
-
-                                                                                 }
-                                                                             </div>
-                                                            </div>
-                                                        
-                                                    </div>
-                                            </div>
-                                            }
-                                            @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post))
-                                            {
-                                                <div class="reviews-submit">
-                                                    <h4>Đánh Giá Của Bạn:</h4>
-                                                    @Html.AntiForgeryToken()
-
-
-                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                                    <input id="rating" type="hidden" name="rating" />
-
-                                                    <div class="input-group">
-                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" })
-                                                        @Html.HiddenFor(x => x.LessonID)
-                                                    </div>
-                                                    <div style=" text-align: right; margin-top: 16px;">
-                                                        <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
-                                                    </div>
-
-                                                </div>
-
-                                            }
-                                        </div>
-                                        <div class="tab-pane">
-                                            <ul>
-                                                @if (baihoc.MoreFiles == null || baihoc.MoreFiles=="")
+                                                string[] tags = baihoc.MoreFiles.Substring(1).Split(',');
+                                                foreach (var item in tags)
                                                 {
-
+                                                    <li style="list-style:none"><i class="far fa-file"></i> <a href="@item" target="_blank">@item.Substring(11)</a></li>
                                                 }
-                                                else
-                                                {
-                                                    string[] tags = baihoc.MoreFiles.Substring(1).Split(',');
-                                                    foreach (var item in tags)
-                                                    {
-                                                        <li style="list-style:none"><i class="far fa-file"></i> <a href="@item" target="_blank">@item.Substring(11)</a></li>
-                                                    }
-                                                }
-                                            </ul>
-                                        </div>
+                                            }
+                                        </ul>
                                     </div>
                                 </div>
-
                             </div>
 
                         </div>
 
-                        <!-- pagination -->
-
                     </div>
-                    <!-- left side blog post content -->
-                    <!-- right side bar -->
 
-                    <div class="right-side-bar col-lg-4 pl-lg-5">
+                    <!-- pagination -->
 
-                        <aside class="posts p-4 sidebar-lesson">
-                            <span class="close-course">Ẩn Nội Dung</span>
-                            <h3 class="content__courses">Tất Cả Bài học</h3>
-                            @{
-                                var sobaidahoc = (float)progress.Count();
-                                var tongso = (lesson.Count() - childs);
-                                var tiendo = (sobaidahoc / tongso) * 100 ;
-                                var progresstiendo = (int)tiendo + "%";
-                            }
+                </div>
+                <!-- left side blog post content -->
+                <!-- right side bar -->
 
-                                <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
-                                    Tiến Độ:
-                                    <div class="w3-container" style="width:@progresstiendo;background-color:var(--primary-color);text-align:center;">@progresstiendo</div>
-                                </div>
+                <div class="right-side-bar col-lg-4 pl-lg-5">
 
-                            <ul class="lessons">
-                                @foreach (var li in lesson.Where(x => x.ParentsID == null))
-                                {
-                                    var child = lesson.Where(x => x.ParentsID == li.ID);
-                                    var parentClass = child.Count() > 0 ? "class=lesson_parent" : "";
-                                    var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
-                                    var check = new Model.DAO.JoinedCoursesDao().CheckLesson(session.ID, li.CourseID.Value, li.ID);
-                                    var style = check ? "<i style=color:green class=\"fas fa-check\"></i>" : "";
-                                    var style1 = check ? "style=background-color:var(--light)": "";
-                                    <li>
-                                        @if (session != null)
+                    <aside class="posts p-4 sidebar-lesson">
+                        <span class="close-course">Ẩn Nội Dung</span>
+                        <h3 class="content__courses">Tất Cả Bài học</h3>
+                        @{
+                            var sobaidahoc = (float)progress.Count();
+                            var tongso = (lesson.Count() - childs);
+                            var tiendo = (sobaidahoc / tongso) * 100;
+                            var progresstiendo = (int)tiendo + "%";
+                        }
+
+                        <div class="w3-light-grey w3-tiny" style="border-top:1px solid var(--border-color);display:flex">
+                            Tiến Độ:
+                            <div class="w3-container" style="width:@progresstiendo;background-color:var(--primary-color);text-align:center;color:white">@progresstiendo</div>
+                        </div>
+
+                        <ul class="lessons">
+                            @foreach (var li in lesson.Where(x => x.ParentsID == null))
+                            {
+                                var child = lesson.Where(x => x.ParentsID == li.ID);
+                                var parentClass = child.Count() > 0 ? "class=lesson_parent" : "";
+                                var url = "/bai-hoc/" + li.MetaTitle + "-" + li.ID;
+                                var check = new Model.DAO.JoinedCoursesDao().CheckLesson(session.ID, li.CourseID.Value, li.ID);
+                                var style = check ? "<i style=color:green class=\"fas fa-check\"></i>" : "";
+                                var style1 = check ? "style=background-color:var(--light)" : "";
+                                <li>
+                                    @if (session != null)
+                                    {
+                                        if (li.ID == baihoc.ID)
                                         {
-                                        <a @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
+                                            <a id="current" style="background-color: var(--primary-color);color:white;" href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
                                         }
                                         else
                                         {
-                                            <a href="/dang-nhap" @parentClass>@li.Name</a>
 
+                                            <a @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
                                         }
-                                    </li>
-                                    if (child.Count() > 0)
+                                    }
+                                    else
                                     {
-                                        foreach (var childItem in child)
+                                        <a href="/dang-nhap" @parentClass>@li.Name</a>
+
+                                    }
+                                </li>
+                                if (child.Count() > 0)
+                                {
+                                    foreach (var childItem in child)
+                                    {
+                                        var checkchild = new Model.DAO.JoinedCoursesDao().CheckLesson(session.ID, childItem.CourseID.Value, childItem.ID);
+                                        var stylechild = checkchild ? "<i style=color:green class=\"fas fa-check\"></i>" : "";
+                                        var stylechild1 = checkchild ? "style=background-color:var(--light)" : "";
+                                        if (session != null)
                                         {
-                                            var checkchild = new Model.DAO.JoinedCoursesDao().CheckLesson(session.ID, childItem.CourseID.Value, childItem.ID);
-                                            var stylechild = checkchild ? "<i style=color:green class=\"fas fa-check\"></i>" : "";
-                                            var stylechild1 = checkchild ? "style=background-color:var(--light)" : "";
-                                            if (session != null)
+                                            if (childItem.ID == baihoc.ID)
                                             {
 
-                                                <li title="@childItem.Name"><a @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
+                                                <li title="@childItem.Name"><a style="background-color: var(--primary-color);color:white;" href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
                                             }
                                             else
                                             {
-                                                <li title="@childItem.Name"><a href="/dang-nhap">@childItem.Name</a></li>
+                                                <li title="@childItem.Name"><a @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
+
                                             }
+
+                                        }
+                                        else
+                                        {
+                                            <li title="@childItem.Name"><a href="/dang-nhap">@childItem.Name</a></li>
                                         }
                                     }
-
                                 }
-                            </ul>
-                        </aside>
 
-                    </div>
-                    <!-- //right side bar -->
+                            }
+                        </ul>
+                    </aside>
+
                 </div>
+                <!-- //right side bar -->
             </div>
         </div>
-    </section>
+    </div>
+</section>
 

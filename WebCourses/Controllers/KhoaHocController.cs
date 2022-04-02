@@ -31,7 +31,7 @@ namespace WebCourses.Controllers
             ViewBag.Lessons = new LessonDao().ListLessonByID(id);
             ViewBag.Course = course;
             ViewBag.CourseJoined = new JoinedCoursesDao().countUserJoined(id);
-            
+            ViewBag.ProgressLesson = new JoinedCoursesDao().CourseCurrent(course.ID);
             ViewBag.Review = new ReviewCourseDao().ListReview(id);
             if (session == null)
             {

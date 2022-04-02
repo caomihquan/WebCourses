@@ -12582,7 +12582,10 @@ h5.card-title {
   font-size:18px;
   cursor:default;
 }
- 
+.lessons {
+    height: 550px;
+    overflow-y: auto;
+}
 .lessons li a{
   display: block;
   color: var(--text-color);
@@ -12590,7 +12593,8 @@ h5.card-title {
   border-bottom: 1px solid var(--border-color);
 }
 .lessons li:hover{
-  background-color: var(--light)
+  background-color: var(--light);
+  opacity:0.7;
   
 }
 .iframe-container {
@@ -12641,8 +12645,6 @@ h5.card-title {
 
 .sidebar-lesson{
   animation: mymove ease 0.3s;
-  height:550px;
-  overflow-y: auto;
   padding:0 !important; 
 }
 

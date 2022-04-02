@@ -16,10 +16,13 @@
         }
 
     }
-    var thamgia = lesson.Where(x => x.DisplayOrder == 1 && x.CourseID== ViewBag.Course.ID);
+    var thamgia = lesson.Where(x => x.DisplayOrder == 1 && x.CourseID== ViewBag.Course.ID).SingleOrDefault();
     var review = (List<Model.EF.ReviewCourse>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
     var coursejoined = (List<Model.EF.JoinedCours>)ViewBag.CourseJoined;
+    var progress = (List<Model.EF.ProgressLesson>)ViewBag.ProgressLesson;
+    var lessonmax = progress.Max(x => x.LessonID);
+    var coursecurrent = lesson.Where(x => x.CourseID == ViewBag.Course.ID && x.ID == lessonmax ).SingleOrDefault();
     var i = 1;
     var a = 1;
     var tb = 0;
@@ -142,22 +145,18 @@
                             }
                             else
                             {
-                                if (ViewBag.CheckCourse)
+                                if (ViewBag.CheckCourse&&coursecurrent!=null)
                                 {
                                     <div class="btn-thamgiakhoahoc">
-                                        @foreach (var item in thamgia)
-                                        {
-                                            <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
-                                        }
+                                            <a href="/bai-hoc/@coursecurrent.MetaTitle-@coursecurrent.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="btn-thamgiakhoahoc">
-                                        @foreach (var item in thamgia)
-                                        {
-                                            <a href="/bai-hoc/@item.MetaTitle-@item.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
-                                        }
+
+                                            <a href="/bai-hoc/@thamgia.MetaTitle-@thamgia.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
+
                                     </div>
                                 }
                             }

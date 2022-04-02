@@ -19,6 +19,11 @@ namespace Model.DAO
         {
             return db.JoinedCourses.Where(x => x.CourseID == top).ToList();
         }
+        public List<ProgressLesson> CourseCurrent(long courseid)
+        {
+            
+            return db.ProgressLessons.Where(x=>x.CourseID==courseid).ToList();
+        }
         public IEnumerable<JoinedCours> ListAllPaging(long userid,string searchString, int page, int pageSize)
         {
             IQueryable<JoinedCours> model = db.JoinedCourses.Where(x => x.UserID == userid);

@@ -60,6 +60,7 @@ namespace WebCourses.Controllers
                     progresscourse.CourseID = lesson.CourseID;
                     progresscourse.LessonID = lesson.ID;
                     progresscourse.UserID = session.ID;
+                    progresscourse.CreatedDate = DateTime.Now;
                     new JoinedCoursesDao().InsertProgress(progresscourse);
                 }
                 ViewBag.ProgressLesson = new JoinedCoursesDao().progress(session.ID, lesson.CourseID.Value);

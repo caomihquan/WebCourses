@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebCourses.Common;
+using System.Linq.Dynamic.Core;
 
 namespace WebCourses.Areas.Admin.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebCourses.Areas.Admin.Controllers
     {
         // GET: Admin/User
         /*[HasCredential(RoleID = "VIEW_USER")]*/
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string searchString, string sortProperty, string sortOrder, int page = 1, int pageSize = 10)
         {
             var dao = new UserDao();
             var model = dao.ListAllPaging(searchString, page, pageSize);

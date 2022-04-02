@@ -36,7 +36,7 @@ namespace Model.DAO
         }
         public List<Category> ListPopularSubjects(int top)
         {
-            return db.Categories.Where(x => x.Status == true).OrderByDescending(x => x.ViewCount).Take(top).ToList();
+            return db.Categories.Where(x => x.Status == true && x.ParentsID!=null).OrderByDescending(x => x.ViewCount).Take(top).ToList();
         }
         public List<Category> ListAll()
         {
