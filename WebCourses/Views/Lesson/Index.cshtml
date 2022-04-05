@@ -71,10 +71,32 @@
     </script>
     <script src="~/Assets/Outsite/js/controller/badword.js"></script>
     <script>
-        const current = $("#current").first();
-        const position = current.position();
-        $(".sidebar-lesson").scrollTop(position.top);
+        var vitri = $('#current').position().top;
+        $('.lessons').scrollTop(vitri-70);
     </script>
+    <script>
+
+        $(document).ready(function () {
+            $(".btnCancle").each(function (index, value) {
+                $(this).click(function () {
+                const c = "#form" + value.getAttribute('id').toString();
+                $(c).addClass("display-none");
+                })          
+            })
+            $(".traloi").each(function (index,value) {
+                $(this).click(function (e) {
+                    e.preventDefault();
+                    const a = "#form" + value.getAttribute('id').toString();
+                    $('.answerid').val(value.getAttribute('id'));
+                    $(".abcxyz").addClass("display-none");
+                    $(a).toggleClass("display-none");
+                    
+                });
+ });
+});
+    </script>
+
+
 }
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
@@ -165,11 +187,11 @@
                                     <div class="tab-item">
 
                                         <i class="fas fa-file-signature"></i>
-                                        Bài Tập
+                                        Bài Tập 
                                     </div>
                                     <div class="tab-item">
                                         <i class="fas fa-comment-alt"></i>
-                                        Bình Luận
+                                        Bình Luận (@(review.Count()))
                                     </div>
                                     <div class="tab-item">
                                         <i class="fas fa-file"></i>
@@ -188,35 +210,7 @@
 
                                     </div>
                                     <div class="tab-pane commentoverview">
-                                        @foreach (var item in review)
-                                        {
-
-                                            <div id="row_@item.ID" style="display:flex">
-                                                <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
-                                                <div class="comment_content">
-                                                    <h4>@item.CreatedBy </h4>
-                                                    <div>@item.Comment</div>
-                                                    <div style="font-size:12px;font-weight:300">
-                                                        Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
-                                                        <div>
-                                                            @if (item.UserID == session.ID)
-                                                            {
-
-                                                                @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
-                                                                     {
-                                                          Confirm = "Bạn có muốn xóa bản ghi này",
-                                                          OnComplete = "$('#row_" + @item.ID + "').remove()",
-                                                          HttpMethod = "Delete"
-                                                                     })
-
-                                                            }
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        }
-                                        @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post))
+                                        @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post, new { @style="padding:8px 8%;" }))
                                         {
                                             <div class="reviews-submit">
                                                 <h4>Đánh Giá Của Bạn:</h4>
@@ -227,7 +221,7 @@
                                                 <input id="rating" type="hidden" name="rating" />
 
                                                 <div class="input-group">
-                                                    @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" })
+                                                    @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" ,@style="height:74px"})
                                                     @Html.HiddenFor(x => x.LessonID)
                                                 </div>
                                                 <div style=" text-align: right; margin-top: 16px;">
@@ -237,6 +231,98 @@
                                             </div>
 
                                         }
+                                        @foreach (var item in review)
+                                        {
+                                            var answerid = new Model.DAO.ReviewLessonDao().ListReviewAnswer(item.LessonID.Value, item.ID);
+                                            <div id="row_@item.ID" style="display: flex; border-top:1px solid var(--border-color)">
+                                                <div style="width:50px;margin-top:20px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                                <div class="comment_content">
+                                                    <h5>@item.CreatedBy </h5>
+                                                    <div>@item.Comment</div>
+                                                    <div style="font-size:10px;font-weight:300">
+
+                                                        Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
+
+                                                    </div>
+                                                    <div style="display:flex">
+                                                        <a href="" class="traloi" id="@item.ID">Trả Lời   </a>
+                                                        
+                                                        <div>
+                                                            @if (item.UserID == session.ID)
+                                                            {
+
+                                                                @Ajax.ActionLink("  Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
+                                                                     {
+                                                          Confirm = "Bạn có muốn xóa bản ghi này",
+                                                          OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                          HttpMethod = "Delete"
+                                                                     })
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post, new { @id = "form" + item.ID, @class = "display-none abcxyz" }))
+                                            {
+                                                <div class="reviews-submit" style="margin:0 10%;">
+                                                    <h4>Trả Lời:</h4>
+                                                    @Html.AntiForgeryToken()
+
+
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    <input id="rating" type="hidden" name="rating" />
+
+                                                    <div class="input-group">
+                                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan", @style = "height:74px" })
+                                                        @Html.HiddenFor(x => x.LessonID)
+                                                        @Html.HiddenFor(x => x.AnswerID, new { @class = "answerid" })
+                                                    </div>
+                                                    <div style=" text-align: right; margin-top: 16px;">
+                                                        <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
+                                                        <div id=@item.ID class="btn btn-light btnCancle" style="width:100px;">Hủy Bỏ</div>
+                                                    </div>
+
+                                                </div>
+
+                                            }
+                                            foreach (var answer in answerid)
+                                            {
+                                                <div id="row_@answer.ID" style="display:flex; margin:8px 10% ;">
+                                                    <div style="width: 40px; margin-top: 20px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                                    <div class="comment_content">
+                                                        <h6>@answer.CreatedBy </h6>
+                                                        <div>@answer.Comment</div>
+                                                        <div style="font-size:8px;font-weight:300">
+
+                                                            Đã Bình Luận Vào <span style="font-weight:500">@answer.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
+
+                                                        </div>
+                                                        <div style="display:flex">
+                                                            <div>
+                                                                @if (answer.UserID == session.ID)
+                                                                {
+
+                                                                    @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = answer.ID }, new AjaxOptions
+                                                                         {
+                                                              Confirm = "Bạn có muốn xóa bản ghi này",
+                                                              OnComplete = "$('#row_" + answer.ID + "').remove()",
+                                                              HttpMethod = "Delete"
+                                                                         })
+
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            }
+
+
+                                        }
+
+
                                     </div>
                                     <div class="tab-pane">
                                         <ul>
@@ -303,7 +389,7 @@
                                         else
                                         {
 
-                                            <a @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
+                                            <a  @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
                                         }
                                     }
                                     else
@@ -324,11 +410,11 @@
                                             if (childItem.ID == baihoc.ID)
                                             {
 
-                                                <li title="@childItem.Name"><a style="background-color: var(--primary-color);color:white;" href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
+                                                <li id="current" title="@childItem.Name"><a style="background-color: var(--primary-color);color:white;" href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
                                             }
                                             else
                                             {
-                                                <li title="@childItem.Name"><a @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
+                                                <li title="@childItem.Name"><a  @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
 
                                             }
 

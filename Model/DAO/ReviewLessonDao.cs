@@ -18,7 +18,14 @@ namespace Model.DAO
 
         public List<ReviewLesson> ListReview(long lessonid)
         {
-            return db.ReviewLessons.Where(x => x.LessonID == lessonid).OrderByDescending(x => x.CreatedDate).ToList();
+            return db.ReviewLessons.Where(x => x.LessonID == lessonid && x.AnswerID==null).OrderByDescending(x => x.CreatedDate).ToList();
+            
+        }
+
+        public List<ReviewLesson> ListReviewAnswer(long lessonid , long reviewid)
+        {
+            return db.ReviewLessons.Where(x => x.LessonID == lessonid && x.AnswerID == reviewid).OrderByDescending(x => x.CreatedDate).ToList();
+
         }
 
         public long Insert(ReviewLesson entity)

@@ -24,6 +24,7 @@ namespace Model.EF
         public long? UserID { get; set; }
 
         public long? LessonID { get; set; }
+        public long? AnswerID { get; set; }
 
         public bool Status { get; set; }
     }

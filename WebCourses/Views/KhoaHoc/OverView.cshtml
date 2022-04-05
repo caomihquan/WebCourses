@@ -25,12 +25,11 @@
     var coursecurrent = lesson.Where(x => x.CourseID == ViewBag.Course.ID && x.ID == lessonmax ).SingleOrDefault();
     var i = 1;
     var a = 1;
-    var tb = 0;
+    float tb = 0;
 }
 @section jsFooter{
     <script>
-        @*const $ = document.querySelector.bind(document);
-        const $$ = document.querySelectorAll.bind(document);*@
+ 
 
         const tabs = document.querySelectorAll('.tab-item')
         const panes = document.querySelectorAll('.tab-pane')
@@ -316,7 +315,7 @@
                                         @*average*@
                                         @foreach (var tong in review)
                                         {
-                                            tb = (int)tb + (int)tong.Rating;
+                                            tb = (float)tb + (float)tong.Rating;
                                         }
 
 
@@ -327,7 +326,7 @@
                                             }
                                             else
                                             {
-                                                tb = (tb / review.Count);
+                                                tb = (float)Math.Round((tb / review.Count)*2,MidpointRounding.AwayFromZero)/2;
                                             }
                                         }
                                         <div class="tab-pane fade show active col-lg-4" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
@@ -357,11 +356,9 @@
                                                             OnComplete = "$('#row_" + @item.ID + "').remove()",
                                                             HttpMethod = "Delete"
                                                             })
-                }
-                else
-                {
-
-                }
+                                                         }
+                                                         else
+                                                            {}
                                                     </div>
                                                 </div>
 

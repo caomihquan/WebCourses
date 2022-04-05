@@ -18,5 +18,7 @@ namespace Model.EF
         public long? LessonID { get; set; }
 
         public DateTime? CreatedDate { get; set; }
+
+        
     }
 }
