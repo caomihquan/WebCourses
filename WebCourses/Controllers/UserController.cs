@@ -373,6 +373,7 @@ namespace WebCourses.Controllers
             ViewBag.KhoaHoc = new JoinedCoursesDao().ListAllbyID(session.ID).Count();
             ViewBag.BaiHoc = new JoinedCoursesDao().listallbaihocbyid(session.ID).Count();
             ViewBag.Blog = new BlogDao().ListAllByTen(session.CreatedBy).Count();
+            ViewBag.ChungChi = new CertificateDao().ListAll(session.ID);
             return View(model);
         }
 

@@ -18,6 +18,9 @@ namespace Model.EF
         public virtual DbSet<BlogTag> BlogTags { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryBlog> CategoryBlogs { get; set; }
+        public virtual DbSet<Certificate> Certificates { get; set; }
+        public virtual DbSet<CertificateOwned> CertificateOwneds { get; set; }
+        public virtual DbSet<CourseActive> CourseActives { get; set; }
         public virtual DbSet<Cours> Courses { get; set; }
         public virtual DbSet<Credential> Credentials { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
@@ -33,6 +36,7 @@ namespace Model.EF
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserActiveCourse> UserActiveCourses { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -55,6 +59,26 @@ namespace Model.EF
 
             modelBuilder.Entity<CategoryBlog>()
                 .Property(e => e.MetaTitle)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Certificate>()
+                .Property(e => e.Logo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Certificate>()
+                .Property(e => e.Image)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CertificateOwned>()
+                .Property(e => e.Logo)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CertificateOwned>()
+                .Property(e => e.FileCertificate)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<CourseActive>()
+                .Property(e => e.KeyActive)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Cours>()

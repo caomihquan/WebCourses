@@ -63,12 +63,14 @@
     <Compile Include="DAO\BlogSaveDao.cs" />
     <Compile Include="DAO\CategoryBlogDao.cs" />
     <Compile Include="DAO\CategoryDao.cs" />
+    <Compile Include="DAO\CertificateDao.cs" />
     <Compile Include="DAO\CourseDao.cs" />
     <Compile Include="DAO\CredentialDao.cs" />
     <Compile Include="DAO\GroupUserDao.cs" />
     <Compile Include="DAO\JoinedCoursesDao.cs" />
     <Compile Include="DAO\LessonDao.cs" />
     <Compile Include="DAO\MenuDao.cs" />
+    <Compile Include="DAO\ProgressLessonDao.cs" />
     <Compile Include="DAO\ReviewBlogDao.cs" />
     <Compile Include="DAO\ReviewCourseDao.cs" />
     <Compile Include="DAO\ReviewLessonDao.cs" />
@@ -79,7 +81,10 @@
     <Compile Include="EF\BlogTag.cs" />
     <Compile Include="EF\Category.cs" />
     <Compile Include="EF\CategoryBlog.cs" />
+    <Compile Include="EF\Certificate.cs" />
+    <Compile Include="EF\CertificateOwned.cs" />
     <Compile Include="EF\Cours.cs" />
+    <Compile Include="EF\CourseActive.cs" />
     <Compile Include="EF\Credential.cs" />
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="EF\Role.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
+    <Compile Include="EF\UserActiveCourse.cs" />
     <Compile Include="EF\UserGroup.cs" />
     <Compile Include="EF\WebDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

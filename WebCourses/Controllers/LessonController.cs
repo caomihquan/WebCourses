@@ -19,7 +19,8 @@ namespace WebCourses.Controllers
             var lesson = new LessonDao().ViewDetailOut(id);
             var course = new CourseDao().ViewDetail(lesson.CourseID.Value);
             ViewBag.Course = course;
-            ViewBag.Lesson = new LessonDao().ListLessonByID(lesson.CourseID.Value);
+            var lessonAll= new LessonDao().ListLessonByID(lesson.CourseID.Value);
+            ViewBag.Lesson = lessonAll;
             var check = new JoinedCoursesDao().CheckCourse(session.ID, lesson.CourseID.Value);
             var checklesson = new JoinedCoursesDao().CheckLesson(session.ID, lesson.CourseID.Value,lesson.ID);
             ViewBag.BaiHoc = lesson;
@@ -63,9 +64,46 @@ namespace WebCourses.Controllers
                     progresscourse.CreatedDate = DateTime.Now;
                     new JoinedCoursesDao().InsertProgress(progresscourse);
                 }
-                ViewBag.ProgressLesson = new JoinedCoursesDao().progress(session.ID, lesson.CourseID.Value);
+                ViewBag.ProgressLesson = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
                 ViewBag.Review = new ReviewLessonDao().ListReview(id);
                 
+                
+            }
+            var progresslessonbyuser = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
+            var childs = 0;
+            foreach (var li in lessonAll)
+            {
+
+                var child = lessonAll.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
+                var countnull = lessonAll.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+                if (child > 0 && countnull > 0)
+                {
+                    childs++;
+                }
+
+            }
+            var sobaidahoc = (float)progresslessonbyuser.Count();
+            var tongso = (lessonAll.Count() - childs);
+            var tiendo = (sobaidahoc / tongso) * 100;
+            var progresstiendo = (int)tiendo;
+
+            if (progresstiendo == 100)
+            {
+                var certificate = new ProgressLessonDao().CertificatebyCourse(lesson.CourseID.Value);
+                if (certificate != null)
+                {
+                    var certificateown = new CertificateOwned();
+                    var checkcertificate = new CertificateDao().CheckCertificate(session.ID, certificate.ID);
+                    certificateown.UserID = session.ID;
+                    certificateown.CertificateID = certificate.ID;
+                    certificateown.FileCertificate = certificate.Image;
+                    certificateown.Logo = certificate.Logo;
+                    certificateown.CertificateName = certificate.Name;
+                    if (!checkcertificate)
+                    {
+                        new ProgressLessonDao().InsertCertificateOwned(certificateown);
+                    }
+                }
                 
             }
             var review = new ReviewLesson()

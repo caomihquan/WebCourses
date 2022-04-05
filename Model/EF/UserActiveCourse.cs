@@ -6,17 +6,13 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("ProgressLesson")]
-    public partial class ProgressLesson
+    [Table("UserActiveCourse")]
+    public partial class UserActiveCourse
     {
         public long ID { get; set; }
 
         public long? UserID { get; set; }
 
-        public long? CourseID { get; set; }
-
-        public long? LessonID { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
+        public long? CourseActiveID { get; set; }
     }
 }

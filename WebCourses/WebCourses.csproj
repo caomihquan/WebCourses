@@ -158,6 +158,7 @@
     <Compile Include="Areas\Admin\Controllers\BlogController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryBlogController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CertificateController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CredentialController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -3325,6 +3326,9 @@
     <Content Include="Areas\Admin\Views\Blog\DuyetBlog.cshtml" />
     <Content Include="Areas\Admin\Views\Blog\CommentBlog.cshtml" />
     <Content Include="Areas\Admin\Views\Lesson\CommentLesson.cshtml" />
+    <Content Include="Areas\Admin\Views\Certificate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Certificate\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Certificate\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3379,6 +3383,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Data\Certificate\" />
     <Folder Include="Data\File\" />
     <Folder Include="Data\Video\" />
     <Folder Include="Views\Base\" />
