@@ -17,21 +17,21 @@
                         btn.empty();
                         btn.append('<i class="fas fa-bookmark"></i>');
                         swal({
-                            type: "success",
+                            icon: "success",
                             title: "Đã Lưu",
                             text: "Bạn Đã Lưu Blog Thành Công",
                             buttons: false,
-                            timer: 1500
+                            timer: 2000
                         });
                     } else {
                         btn.empty();
                         btn.append('<i class="far fa-bookmark"></i>');
                         swal({
-                            type: "success",
+                            icon: "success",
                             title: "Đã Xóa",
                             text: "Bạn Đã Bỏ Lưu Blog",
                             buttons: false,
-                            timer: 1500
+                            timer: 2000
                         });
                     }
                 }

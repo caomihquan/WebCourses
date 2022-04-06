@@ -1,0 +1,71 @@
+﻿@model Model.EF.CourseActive
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script>
+        const id = $("#idcourse").text();
+        $("#CourseID").val(id);
+    </script>
+    }
+<nav id="breadcrumbs" class="breadcrumbs">
+    <div class="container page-wrapper text-center">
+        <div class="header-section">
+            <h2 class="mb-2">Kích Hoạt Khóa Học</h2>
+        </div>
+        <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Kích Hoạt Khóa Học</span>
+    </div>
+</nav>
+<div style="display:none">
+    <div id="idcourse">@ViewBag.Course.ID</div>
+</div>
+<section class="w3l-account py-5">
+    <!-- login -->
+    <div class="container py-lg-3">
+        <div class="literacy-login">
+            <div class="literacy-login-info" style="max-width:100%;display:flex;justify-content:center">
+                <div>
+                    <h2 class="text-center">Nạp qua Momo</h2>
+                    <ol style="padding: 10px 0px 32px 18px;">
+                        <li>1.Mở app momo và <b>Quét mã</b> bên dưới.</li>
+                        <li>2.Nhập số tiền ứng với giá của khóa học bạn muốn.</li>
+                        <li><b>3.Sau khi chuyển tiền, nhập thông tin giao dịch:</b></li>
+                    </ol>
+
+                    <div class="has-text-centered"><div style="display: flex; justify-content: center; margin:10px 0"><img src="~/Assets/Outsite/images/momocaominhquan.png" width="230" height="230"></div>Nếu không quét mã được,<!-- --> <a href="https://nhantien.momo.vn/0921278802">bấm vào đây để chuyển tiền</a>.</div>
+
+                   
+                    @using (Html.BeginForm("Payment", "Lesson", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <label></label>
+                        <div class="input-group">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                        <label>Mã Giao Dịch</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.TransactionID)
+                            @Html.ValidationMessageFor(model => model.TransactionID, "", new { @class = "text-danger" })
+                        </div>
+                        
+                        <div class="input-group">
+                            @Html.HiddenFor(model => model.CourseID)
+                            @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
+                        </div>
+                        <button class="btn btn-primary theme-button btn-login" type="submit">Kích Hoạt</button>
+                    }
+                </div>
+
+                
+            </div>
+
+            
+            <hr />
+        </div>
+        </div>
+ 
+</section>
+
+
+

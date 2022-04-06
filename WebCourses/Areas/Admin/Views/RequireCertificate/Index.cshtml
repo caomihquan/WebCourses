@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+@model PagedList.IPagedList<Model.EF.RequireCertificate>
+
+@using PagedList.Mvc;
+
+@section header{
+
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Danh Mục BLog</h6>
+            </div>
+            @using (Html.BeginForm("Index", "RequireCertificate", FormMethod.Get))
+            {
+                <div class="col-lg-12">
+                    <div class="col-md-4">
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" name="searchString" />
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn-primary ">Tìm Kiếm</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            <div class="clear"></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Mã Người Dùng</th>
+                                <th>Email</th>
+                                <th>Mã Chứng Chỉ</th>
+                                <th>Ngày Gửi</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row_@item.ID">
+                                    <td>@item.ID</td>
+                                    <td>@item.UserID</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.CertificateID</td>
+                                    <td>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</td>
+                                    <td>
+
+                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                                   {
+                                       Confirm = "Bạn có muốn xóa bản ghi này",
+                                       OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                       HttpMethod = "Delete"
+                                   }, new { @class = "btn btn-danger" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="col-lg-12">
+                        <div class="dataTables_paginate paging_simple_numbers col-md-4" id="dataTable_paginate">
+                            <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <Span>of</Span> @Model.PageCount
+
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
+                            {
+                           LiElementClasses = new List<string> { "page-item", "page-link" }
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

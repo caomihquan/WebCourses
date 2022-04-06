@@ -21,6 +21,11 @@ namespace Model.DAO
             return db.Lessons.Find(id);
         }
 
+        public bool CheckActive(long userid, long courseid)
+        {
+            return db.UserActiveCourses.Count(x => x.UserID == userid && x.CourseActiveID == courseid) > 0;
+        }
+
         public Lesson ViewDetailOut(long id)
         {
             var model = db.Lessons.Find(id);

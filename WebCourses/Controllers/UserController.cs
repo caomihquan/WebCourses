@@ -378,5 +378,45 @@ namespace WebCourses.Controllers
         }
 
 
+        [HttpPost]
+        public JsonResult RequireCertificate(long id)
+        {
+            if (ModelState.IsValid)
+            {
+                var session = (User)Session[CommonConstants.USER_SESSION];
+                var dao = new CertificateDao();
+                var model = new RequireCertificate();
+                var certificate = dao.ViewDetailOwn(id);
+                model.CreatedDate = DateTime.Now;
+                model.CertificateID = certificate.CertificateID.Value;
+                model.Email = session.Email;
+                model.UserID = session.ID;
+                if (!dao.CheckRequireCertificate(session.ID,certificate.CertificateID.Value))
+                {
+                    var result = dao.RequireCertificate(model);
+                    if (result)
+                    {
+                        return Json(new
+                        {
+                            status = result
+                        });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "không thành công.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Bạn Không Đủ Điều Kiện");
+                }
+            }
+            return Json(new
+            {
+                status = false
+            }) ;
+
+        }
+        
     }
 }

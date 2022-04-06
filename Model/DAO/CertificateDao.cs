@@ -20,6 +20,10 @@ namespace Model.DAO
         {
             return db.CertificateOwneds.Count(x => x.UserID == userid && x.CertificateID == certificate) > 0;
         }
+        public bool CheckRequireCertificate(long userid , long certificate)
+        {
+            return db.RequireCertificate.Count(x => x.UserID == userid && x.CertificateID == certificate) > 0;
+        }
         public bool CheckChungchi(long certificateid)
         {
             return db.Certificates.Count(x => x.IDCourse == certificateid) > 0;
@@ -30,6 +34,20 @@ namespace Model.DAO
             db.Certificates.Add(entity);
             db.SaveChanges();
             return entity.ID;
+        }
+        public bool RequireCertificate(RequireCertificate entity)
+        {
+            try
+            {
+                db.RequireCertificate.Add(entity);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+           
         }
         public bool Update(Certificate entity)
         {
@@ -59,6 +77,16 @@ namespace Model.DAO
             return model.OrderByDescending(x => x.IDCourse).ToPagedList(page, pageSize);
         }
 
+        public IEnumerable<RequireCertificate> ListAllPagingRequireCertificate(string searchString, int page, int pageSize)
+        {
+            IQueryable<RequireCertificate> model = db.RequireCertificate;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.UserID.ToString().Contains(searchString) || x.CertificateID.ToString().Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+        }
+
 
         public bool Delete(int id)
         {
@@ -66,6 +94,21 @@ namespace Model.DAO
             {
                 var category = db.Certificates.Find(id);
                 db.Certificates.Remove(category);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
+        public bool DeleteRequireCertificate(int id)
+        {
+            try
+            {
+                var category = db.RequireCertificate.Find(id);
+                db.RequireCertificate.Remove(category);
                 db.SaveChanges();
                 return true;
             }
@@ -83,6 +126,10 @@ namespace Model.DAO
         public Certificate ViewDetail(long id)
         {
             return db.Certificates.Find(id);
+        }
+        public CertificateOwned ViewDetailOwn(long id)
+        {
+            return db.CertificateOwneds.Find(id);
         }
     }
 }

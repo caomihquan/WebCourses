@@ -117,5 +117,7 @@ namespace WebCourses.Areas.Admin.Controllers
             var dao = new GroupUserDao();
             ViewBag.GroupID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
+
+
     }
 }

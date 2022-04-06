@@ -49,6 +49,9 @@ namespace Model.EF
         [StringLength(50)]
         public string ModifiedBy { get; set; }
 
+        [StringLength(50)]
+        public string KeyActive { get; set; }
+
         public long? ViewCount { get; set; }
 
         public bool Status { get; set; }

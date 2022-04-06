@@ -33,6 +33,7 @@ namespace Model.EF
         public virtual DbSet<ReviewBlog> ReviewBlogs { get; set; }
         public virtual DbSet<ReviewCourse> ReviewCourses { get; set; }
         public virtual DbSet<ReviewLesson> ReviewLessons { get; set; }
+        public virtual DbSet<RequireCertificate> RequireCertificate { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -77,9 +78,7 @@ namespace Model.EF
                 .Property(e => e.FileCertificate)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<CourseActive>()
-                .Property(e => e.KeyActive)
-                .IsUnicode(false);
+            
 
             modelBuilder.Entity<Cours>()
                 .Property(e => e.MetaTitle)

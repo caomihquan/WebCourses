@@ -93,6 +93,7 @@
     <Compile Include="EF\Menu.cs" />
     <Compile Include="EF\MenuType.cs" />
     <Compile Include="EF\ProgressLesson.cs" />
+    <Compile Include="EF\RequireCertificate.cs" />
     <Compile Include="EF\ReviewBlog.cs" />
     <Compile Include="EF\ReviewCourse.cs" />
     <Compile Include="EF\ReviewLesson.cs" />

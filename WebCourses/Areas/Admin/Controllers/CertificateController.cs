@@ -19,6 +19,9 @@ namespace WebCourses.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(model);
         }
+
+
+
         [HttpGet]
 
         public ActionResult Create()

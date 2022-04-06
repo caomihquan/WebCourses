@@ -64,6 +64,13 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.ID;
         }
+
+        public long InsertUserActiveCourse(CourseActive entity)
+        {
+            db.CourseActives.Add(entity);
+            db.SaveChanges();
+            return entity.ID;
+        }
         public bool Update(Cours entity)
         {
             try
@@ -140,5 +147,7 @@ namespace Model.DAO
         {
             return db.Courses.Where(x => x.Name.Contains(keyword)).Select(x => x.Name).ToList();
         }
+
+        
     }
 }

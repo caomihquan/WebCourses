@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var chungchi = (List<Model.EF.CertificateOwned>)ViewBag.ChungChi;
 }
+
+@section jsFooter{
+
+    <script src="~/Assets/Outsite/js/controller/requireCertificate.js"></script>
+}
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
         <div class="header-section">
@@ -35,22 +40,23 @@
                             <div><a href="/resetpassword/@Model.Password-@Model.ID" class="btn btn-primary">Đổi Mật Khẩu</a></div>
                         </div>
                         <div class="col-lg-12" style="border-top:1px solid var(--border-color);margin:10px 0">
-                            @if (chungchi.Count>0)
+                            @if (chungchi.Count > 0)
                             {
                                 <h3 style="margin: 10px;">Chứng Chỉ</h3>
                                 <div class="row">
                                     @foreach (var item in chungchi)
                                     {
-                                    <div class="col-lg-3">
-                                        <img style="height: 100px; width: 100px; display:flex;margin:auto" src="@item.Logo" title="@item.CertificateName" />
-                                        <p class="text-center">@item.CertificateName</p>
-                                    </div>
+                                        <div class="col-lg-3">
+                                            <img style="height: 100px; width: 100px; display:flex;margin:auto" src="@item.Logo" title="@item.CertificateName" />
+                                            <p class="text-center">@item.CertificateName</p>
+                                            <a style="display: flex; justify-content: center; font-weight: 600; " href="#" class="requirecertificate" data-id="@item.ID">Xin Chứng Chỉ</a>
+                                        </div>
                                     }
                                 </div>
                             }
                             else
                             {
-                        <h3 style="margin: 10px;">Chứng Chỉ</h3>
+                                <h3 style="margin: 10px;">Chứng Chỉ</h3>
                                 <div>Bạn Hiện Chưa Hoàn Thành Khóa Học Nào</div>
                             }
                         </div>

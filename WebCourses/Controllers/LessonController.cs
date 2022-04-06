@@ -18,18 +18,118 @@ namespace WebCourses.Controllers
             var session = (User)Session[CommonConstants.USER_SESSION];
             var lesson = new LessonDao().ViewDetailOut(id);
             var course = new CourseDao().ViewDetail(lesson.CourseID.Value);
-            ViewBag.Course = course;
-            var lessonAll= new LessonDao().ListLessonByID(lesson.CourseID.Value);
-            ViewBag.Lesson = lessonAll;
-            var check = new JoinedCoursesDao().CheckCourse(session.ID, lesson.CourseID.Value);
-            var checklesson = new JoinedCoursesDao().CheckLesson(session.ID, lesson.CourseID.Value,lesson.ID);
-            ViewBag.BaiHoc = lesson;
+            var checkactivecourse = new LessonDao().CheckActive(session.ID, course.ID);
             if (session == null)
             {
                 return Redirect("/dang-nhap");
             }
+            else if (course.Price!=null && course.Price!=0)
+            {
+                if (checkactivecourse)
+                {
+                    ViewBag.Course = course;
+                    var lessonAll = new LessonDao().ListLessonByID(lesson.CourseID.Value);
+                    ViewBag.Lesson = lessonAll;
+                    var check = new JoinedCoursesDao().CheckCourse(session.ID, lesson.CourseID.Value);
+                    var checklesson = new JoinedCoursesDao().CheckLesson(session.ID, lesson.CourseID.Value, lesson.ID);
+                    ViewBag.BaiHoc = lesson;
+
+                    if (check)
+                    {
+
+                    }
+                    else
+                    {
+                        var joinedcourse = new JoinedCours();
+                        joinedcourse.CourseID = lesson.CourseID.Value;
+                        joinedcourse.UserID = session.ID;
+                        joinedcourse.Status = true;
+                        joinedcourse.MetaTitle = course.MetaTitle;
+                        joinedcourse.Image = course.Image;
+                        joinedcourse.LevelCourse = course.LevelCourse;
+                        joinedcourse.CategoryID = course.CategoryID;
+                        joinedcourse.CreatedDate = DateTime.Now;
+                        joinedcourse.CourseName = course.Name;
+
+                        new JoinedCoursesDao().Insert(joinedcourse);
+
+                    }
+
+                    if (checklesson)
+                    {
+
+                    }
+                    else
+                    {
+                        var progresscourse = new ProgressLesson();
+                        progresscourse.CourseID = lesson.CourseID;
+                        progresscourse.LessonID = lesson.ID;
+                        progresscourse.UserID = session.ID;
+                        progresscourse.CreatedDate = DateTime.Now;
+                        new JoinedCoursesDao().InsertProgress(progresscourse);
+                    }
+                    ViewBag.ProgressLesson = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
+                    ViewBag.Review = new ReviewLessonDao().ListReview(id);
+
+
+
+                    var progresslessonbyuser = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
+                    var childs = 0;
+                    foreach (var li in lessonAll)
+                    {
+
+                        var child = lessonAll.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
+                        var countnull = lessonAll.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+                        if (child > 0 && countnull > 0)
+                        {
+                            childs++;
+                        }
+
+                    }
+                    var sobaidahoc = (float)progresslessonbyuser.Count();
+                    var tongso = (lessonAll.Count() - childs);
+                    var tiendo = (sobaidahoc / tongso) * 100;
+                    var progresstiendo = (int)tiendo;
+
+                    if (progresstiendo == 100)
+                    {
+                        var certificate = new ProgressLessonDao().CertificatebyCourse(lesson.CourseID.Value);
+                        if (certificate != null)
+                        {
+                            var certificateown = new CertificateOwned();
+                            var checkcertificate = new CertificateDao().CheckCertificate(session.ID, certificate.ID);
+                            certificateown.UserID = session.ID;
+                            certificateown.CertificateID = certificate.ID;
+                            certificateown.FileCertificate = certificate.Image;
+                            certificateown.Logo = certificate.Logo;
+                            certificateown.CertificateName = certificate.Name;
+                            if (!checkcertificate)
+                            {
+                                new ProgressLessonDao().InsertCertificateOwned(certificateown);
+                            }
+                        }
+
+                    }
+                    var review = new ReviewLesson()
+                    {
+                        LessonID = lesson.ID
+                    };
+                    return View(review);
+                }
+                else
+                {
+                    return RedirectToAction("Payment", "Lesson", new { id = course.ID });
+                }
+            }
             else
             {
+                ViewBag.Course = course;
+                var lessonAll = new LessonDao().ListLessonByID(lesson.CourseID.Value);
+                ViewBag.Lesson = lessonAll;
+                var check = new JoinedCoursesDao().CheckCourse(session.ID, lesson.CourseID.Value);
+                var checklesson = new JoinedCoursesDao().CheckLesson(session.ID, lesson.CourseID.Value, lesson.ID);
+                ViewBag.BaiHoc = lesson;
+
                 if (check)
                 {
 
@@ -46,7 +146,7 @@ namespace WebCourses.Controllers
                     joinedcourse.CategoryID = course.CategoryID;
                     joinedcourse.CreatedDate = DateTime.Now;
                     joinedcourse.CourseName = course.Name;
-                    
+
                     new JoinedCoursesDao().Insert(joinedcourse);
 
                 }
@@ -66,52 +166,90 @@ namespace WebCourses.Controllers
                 }
                 ViewBag.ProgressLesson = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
                 ViewBag.Review = new ReviewLessonDao().ListReview(id);
-                
-                
-            }
-            var progresslessonbyuser = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
-            var childs = 0;
-            foreach (var li in lessonAll)
-            {
 
-                var child = lessonAll.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
-                var countnull = lessonAll.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
-                if (child > 0 && countnull > 0)
+
+
+                var progresslessonbyuser = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
+                var childs = 0;
+                foreach (var li in lessonAll)
                 {
-                    childs++;
-                }
 
-            }
-            var sobaidahoc = (float)progresslessonbyuser.Count();
-            var tongso = (lessonAll.Count() - childs);
-            var tiendo = (sobaidahoc / tongso) * 100;
-            var progresstiendo = (int)tiendo;
-
-            if (progresstiendo == 100)
-            {
-                var certificate = new ProgressLessonDao().CertificatebyCourse(lesson.CourseID.Value);
-                if (certificate != null)
-                {
-                    var certificateown = new CertificateOwned();
-                    var checkcertificate = new CertificateDao().CheckCertificate(session.ID, certificate.ID);
-                    certificateown.UserID = session.ID;
-                    certificateown.CertificateID = certificate.ID;
-                    certificateown.FileCertificate = certificate.Image;
-                    certificateown.Logo = certificate.Logo;
-                    certificateown.CertificateName = certificate.Name;
-                    if (!checkcertificate)
+                    var child = lessonAll.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
+                    var countnull = lessonAll.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+                    if (child > 0 && countnull > 0)
                     {
-                        new ProgressLessonDao().InsertCertificateOwned(certificateown);
+                        childs++;
                     }
-                }
-                
-            }
-            var review = new ReviewLesson()
-            {
-                LessonID = lesson.ID
-            };
-            return View(review);
 
+                }
+                var sobaidahoc = (float)progresslessonbyuser.Count();
+                var tongso = (lessonAll.Count() - childs);
+                var tiendo = (sobaidahoc / tongso) * 100;
+                var progresstiendo = (int)tiendo;
+
+                if (progresstiendo == 100)
+                {
+                    var certificate = new ProgressLessonDao().CertificatebyCourse(lesson.CourseID.Value);
+                    if (certificate != null)
+                    {
+                        var certificateown = new CertificateOwned();
+                        var checkcertificate = new CertificateDao().CheckCertificate(session.ID, certificate.ID);
+                        certificateown.UserID = session.ID;
+                        certificateown.CertificateID = certificate.ID;
+                        certificateown.FileCertificate = certificate.Image;
+                        certificateown.Logo = certificate.Logo;
+                        certificateown.CertificateName = certificate.Name;
+                        if (!checkcertificate)
+                        {
+                            new ProgressLessonDao().InsertCertificateOwned(certificateown);
+                        }
+                    }
+
+                }
+                var review = new ReviewLesson()
+                {
+                    LessonID = lesson.ID
+                };
+                return View(review);
+            }
+            
+            
+
+        }
+        public ActionResult ActiveSuccess()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Payment(long id)
+        {
+            var model = new CourseDao().ViewDetail(id);
+            ViewBag.Course = model;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Payment(CourseActive model)
+        {
+            var session = (User)Session[CommonConstants.USER_SESSION];
+            if (ModelState.IsValid)
+            {
+                var dao = new CourseDao();
+                model.CourseID = model.CourseID;
+                model.CreatedDate = DateTime.Now;
+                model.Status = true;
+                model.TransactionID = model.TransactionID;
+                model.UserID = session.ID;
+                long id = dao.InsertUserActiveCourse(model);
+                if (id > 0)
+                {
+                    return RedirectToAction("ActiveSuccess", "Lesson");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Không thành công");
+                }
+            }
+            return View(model);
         }
 
         [HttpPost]

@@ -164,6 +164,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LessonController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RequireCertificateController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserGroupController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
@@ -191,6 +192,8 @@
     <Content Include="Assets\Admin\css\sb-admin-2.min.css" />
     <Content Include="Assets\Admin\js\controller\changeStatus.js" />
     <Content Include="Assets\Admin\js\controller\clearFile.js" />
+    <Content Include="Assets\Outsite\images\momocaominhquan.png" />
+    <Content Include="Assets\Outsite\js\controller\requireCertificate.js" />
     <Content Include="Assets\Admin\js\demo\chart-area-demo.js" />
     <Content Include="Assets\Admin\js\demo\chart-bar-demo.js" />
     <Content Include="Assets\Admin\js\demo\chart-pie-demo.js" />
@@ -3329,6 +3332,7 @@
     <Content Include="Areas\Admin\Views\Certificate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Certificate\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Certificate\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\RequireCertificate\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3378,6 +3382,9 @@
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\User\ThongTinUser.cshtml" />
     <Content Include="Views\Blog\BlogSave.cshtml" />
+    <Content Include="Views\KhoaHoc\PaymentConfirm.cshtml" />
+    <Content Include="Views\Lesson\Payment.cshtml" />
+    <Content Include="Views\Lesson\ActiveSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

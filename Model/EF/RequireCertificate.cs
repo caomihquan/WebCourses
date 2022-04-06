@@ -1,3 +1,4 @@
+﻿
 namespace Model.EF
 {
     using System;
@@ -6,20 +7,16 @@ namespace Model.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("CourseActive")]
-    public partial class CourseActive
+    [Table("RequireCertificate")]
+    public partial class RequireCertificate
     {
         public long ID { get; set; }
-
-
-        public int TransactionID { get; set; }
-
         public long UserID { get; set; }
+        public long CertificateID { get; set; }
 
+        [StringLength(50)]
+        public string Email { get; set; }
         public DateTime? CreatedDate { get; set; }
 
-        public long CourseID { get; set; }
-
-        public bool? Status { get; set; }
     }
 }
