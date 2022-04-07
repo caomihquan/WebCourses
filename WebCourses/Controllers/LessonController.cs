@@ -226,18 +226,18 @@ namespace WebCourses.Controllers
         [HttpGet]
         public ActionResult Payment(long id)
         {
-            ViewBag.Course = id;
-            return RedirectToAction("Payment", "Lesson", new { id = id });
+            ViewBag.CourseID = id;
+            return View();
         }
         [HttpPost]
-        public ActionResult Payment(CourseActive model)
+        public ActionResult Payment(CourseActive model,long id)
         {
             var session = (User)Session[CommonConstants.USER_SESSION];
             if (ModelState.IsValid)
             {
                 
                 var dao = new CourseDao();
-                model.CourseID = model.CourseID;
+                model.CourseID = id;
                 model.CreatedDate = DateTime.Now;
                 model.Status = true;
                 model.TransactionID = model.TransactionID;
@@ -249,9 +249,9 @@ namespace WebCourses.Controllers
                     a = a.Replace("{{UserID}}", session.ID.ToString());
                     a = a.Replace("{{MaGiaoDich}}", model.TransactionID.ToString());
                     a = a.Replace("{{MaKhoaHoc}}", model.CourseID.ToString());
-                    SendMail("caominhquan0512@gmail.com", "Email Quên Mật Khẩu Mới", a);
-                    long id = dao.InsertUserActiveCourse(model);
-                    if (id > 0)
+                    SendMail("caominhquan0512@gmail.com", "Email Đăng Ký Khóa Học", a);
+                    long result = dao.InsertUserActiveCourse(model);
+                    if (result > 0)
                     {
                         return RedirectToAction("ActiveSuccess", "Lesson");
                     }
@@ -262,7 +262,7 @@ namespace WebCourses.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Không thành công");
+                    ModelState.AddModelError("", "Mã Giao Dịch Đã Tồn Tại");
                 }
                 
             }

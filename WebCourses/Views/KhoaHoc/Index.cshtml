@@ -3,6 +3,44 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    float tb = 0;
+    var a = 1;
+    var i = 1;
+
+}
+
+@section jsFooter{
+    @foreach (var item in Model)
+    {
+        var review = new Model.DAO.ReviewCourseDao().ListReview(item.ID);
+        foreach (var tong in review)
+        {
+            tb = (float)tb + (float)tong.Rating;
+        }
+        if (review.Count == 0)
+        {
+            tb = 0;
+        }
+        else
+        {
+            tb = (float)Math.Round((tb / review.Count) * 2, MidpointRounding.AwayFromZero) / 2;
+        }
+        <script>
+            $(function () {
+                $('.trungbinh@(a)').rateYo({
+                    rating: @tb,
+                    numStars: 5,
+                    maxValue: 5,
+                    halfStar: true,
+                    starWidth: "20px",
+                    readOnly: true
+
+                });
+            });
+        </script>
+        a++;
+        tb = 0;
+    }
 }
 
 
@@ -27,12 +65,12 @@
                             var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
                             var countlesson1 = (List<Model.EF.Lesson>)countlesson;
                             var childs = 0;
-                            foreach(var li in countlesson1)
+                            foreach (var li in countlesson1)
                             {
 
                                 var child = countlesson1.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
-                                var countnull = countlesson1.Where(x => x.ParentsID == null && x.ID != li.ParentsID ).Count();
-                                if(child >0 && countnull > 0)
+                                var countnull = countlesson1.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+                                if (child > 0 && countnull > 0)
                                 {
                                     childs++;
                                 }
@@ -53,7 +91,10 @@
                                         </a>
                                     </div>
                                     <div class="course-cont">
-                                        <span class="subject green">@cateogry.Name</span>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span class="subject blue">@cateogry.Name</span>
+                                            <span class="trungbinh@(i)"></span>
+                                        </div>
                                         <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                                         <ul class="admin-post">
 
@@ -76,6 +117,7 @@
                                     </div>
                                 </div>
                             </div>
+                            i++;
                         }
 
 
@@ -89,8 +131,8 @@
                        })
                         </div>
                     </div>
-                    
-                    </div>
+
+                </div>
                 <!-- left side blog post content -->
                 <!-- right side bar -->
                 <div class="right-side-bar col-lg-4 pl-lg-5">
@@ -109,7 +151,7 @@
 
                     @{ Html.RenderAction("Category", "KhoaHoc");}
                     @{ Html.RenderAction("RecentBlog", "KhoaHoc");}
-                    
+
                 </div>
                 <!-- //right side bar -->
             </div>

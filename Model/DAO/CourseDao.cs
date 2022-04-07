@@ -142,7 +142,7 @@ namespace Model.DAO
         public List<Cours> Search(string keyword, ref int totalRecord, int pageIndex = 1, int pageSize = 2)
         {
             totalRecord = db.Courses.Where(x => x.Name == keyword).Count();
-            var model = db.Courses.Where(x => x.Name == keyword);
+            var model = db.Courses.Where(x=>x.Name.Contains(keyword));
             model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return model.ToList();
         }

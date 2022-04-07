@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var idcourse = ViewBag.Course;
+    var idcourse = ViewBag.CourseID;
 }
 @section jsFooter{
     <script>
@@ -18,7 +18,7 @@
         <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Kích Hoạt Khóa Học</span>
     </div>
 </nav>
-<div style="display:none">
+<div style="display:block">
     <div id="idcourse">@(idcourse!=null ? idcourse:null)</div>
 </div>
 <section class="w3l-account py-5">
@@ -42,18 +42,18 @@
                         @Html.AntiForgeryToken()
                         <label></label>
                         <div class="input-group">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                         </div>
                         <label>Mã Giao Dịch</label>
                         <div class="input-group">
-                            @Html.EditorFor(model => model.TransactionID)
+                            @Html.EditorFor(model => model.TransactionID, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.TransactionID, "", new { @class = "text-danger" })
                         </div>
                         
-                        <div class="input-group">
+                        @*<div class="input-group">
                             @Html.EditorFor(model => model.CourseID)
                             @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
-                        </div>
+                        </div>*@
                         <button class="btn btn-primary theme-button btn-login" type="submit">Kích Hoạt</button>
                     }
                 </div>

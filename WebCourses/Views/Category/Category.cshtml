@@ -3,6 +3,43 @@
     ViewBag.Title = "Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var category = (Model.EF.Category)ViewBag.Category;
+    float tb = 0;
+    var a = 1;
+    var tang = 1;
+}
+
+@section jsFooter{
+    @foreach (var item in Model)
+    {
+        var review = new Model.DAO.ReviewCourseDao().ListReview(item.ID);
+        foreach (var tong in review)
+        {
+            tb = (float)tb + (float)tong.Rating;
+        }
+        if (review.Count == 0)
+        {
+            tb = 0;
+        }
+        else
+        {
+            tb = (float)Math.Round((tb / review.Count) * 2, MidpointRounding.AwayFromZero) / 2;
+        }
+        <script>
+            $(function () {
+                $('.trungbinh@(a)').rateYo({
+                    rating: @tb,
+                    numStars: 5,
+                    maxValue: 5,
+                    halfStar: true,
+                    starWidth: "20px",
+                    readOnly: true
+
+                });
+            });
+        </script>
+        a++;
+        tb = 0;
+    }
 }
 
 <nav id="breadcrumbs" class="breadcrumbs">
@@ -49,19 +86,28 @@
                                             <a href="@url">
                                                 <img src="@item.Image" alt=" " class="img-fluid">
                                                 <div class="price">
-                                                    <h4>@item.LevelCourse</h4>
+                                                    <h4>@(item.Price.HasValue ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                                 </div>
                                             </a>
                                         </div>
                                         <div class="course-cont">
-                                            <span class="subject green">@category.Name</span>
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <span class="subject blue">@cateogry.Name</span>
+                                                <span class="trungbinh@(tang)"></span>
+                                            </div>
                                             <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                                             <ul class="admin-post">
-                                                    <li>
-                                                        <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs) Bài Học
+                                                <li>
+                                                    <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs) Bài Học
 
                                                 <li>
                                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                                </li>
+                                                <li>
+                                                    <span class="fas fa-eye"></span>@item.ViewCount Lượt Xem
+                                                </li>
+                                                <li>
+                                                    <span class="fas fa-atom"></span>@item.LevelCourse
                                                 </li>
                                             </ul>
 
@@ -70,6 +116,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                tang++;
                             }
 
 

@@ -5,12 +5,79 @@
     var subject = (List<Model.EF.Category>)ViewBag.PopularSubject;
     var Courses = (List<Model.EF.Cours>)ViewBag.FeaterCourses;
     var newCourses = (List<Model.EF.Cours>)ViewBag.NewCourses;
-
+    float tb = 0;
+    var a = 1;
+    var i = 1;
+    float tb1 = 0;
+    var a1 = 1;
+    var i1 = 1;
 }
 @section jsFooter{
 
     <script src="~/Assets/Outsite/js/jquery-ui.js"></script>
     <script src="~/Assets/Outsite/js/autocomplete.js"></script>
+    @foreach (var item in newCourses)
+    {
+        var review = new Model.DAO.ReviewCourseDao().ListReview(item.ID);
+        foreach (var tong in review)
+        {
+            tb = (float)tb + (float)tong.Rating;
+        }
+        if (review.Count == 0)
+        {
+            tb = 0;
+        }
+        else
+        {
+            tb = (float)Math.Round((tb / review.Count) * 2, MidpointRounding.AwayFromZero) / 2;
+        }
+        <script>
+            $(function () {
+                $('.trungbinh@(a)').rateYo({
+                    rating: @tb,
+                    numStars: 5,
+                    maxValue: 5,
+                    halfStar: true,
+                    starWidth: "20px",
+                    readOnly: true
+
+                });
+            });
+        </script>
+        a++;
+        tb = 0;
+    }
+    @foreach (var item in Courses)
+    {
+        var review1 = new Model.DAO.ReviewCourseDao().ListReview(item.ID);
+        foreach (var tong1 in review1)
+        {
+            tb1 = (float)tb1 + (float)tong1.Rating;
+        }
+        if (review1.Count == 0)
+        {
+            tb1 = 0;
+        }
+        else
+        {
+            tb1 = (float)Math.Round((tb1 / review1.Count) * 2, MidpointRounding.AwayFromZero) / 2;
+        }
+        <script>
+            $(function () {
+                $('.trungbinha@(a1)').rateYo({
+                    rating: @tb1,
+                    numStars: 5,
+                    maxValue: 5,
+                    halfStar: true,
+                    starWidth: "20px",
+                    readOnly: true
+
+                });
+            });
+        </script>
+        a1++;
+        tb1 = 0;
+    }
 }
 <div class="w3l-index1">
     <div class="content">
@@ -293,8 +360,12 @@
                                 </div>
                             </a>
                         </div>
+                        
                         <div class="course-cont">
-                            <span class="subject red">@cateogry.Name</span>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span class="subject blue">@cateogry.Name</span>
+                                <span class="trungbinha@(i1)"></span>
+                            </div>
                             <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                             <ul class="admin-post">
                                 <li>
@@ -314,6 +385,7 @@
                         </div>
                     </div>
                 </div>
+                i1++;
             }
         </div>
     </div>
@@ -355,9 +427,12 @@
                                 </div>
                             </a>
                         </div>
-
+                        
                         <div class="course-cont">
-                            <span class="subject blue">@cateogry.Name</span>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span class="subject blue">@cateogry.Name</span>
+                                <span class="trungbinh@(i)"></span>
+                            </div>
                             <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                             <ul class="admin-post">
                                 <li>
@@ -379,6 +454,7 @@
                         </div>
                     </div>
                 </div>
+                i++;
             }
         </div>
     </div>

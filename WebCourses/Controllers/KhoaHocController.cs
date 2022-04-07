@@ -99,7 +99,7 @@ namespace WebCourses.Controllers
             return View("Index");
         }
 
-        public ActionResult Search(string keyword, int page = 1, int pageSize = 9)
+        public ActionResult Search(string keyword, int page = 1, int pageSize = 8)
         {
             int totalRecord = 0;
             var model = new CourseDao().Search(keyword, ref totalRecord, page, pageSize);
