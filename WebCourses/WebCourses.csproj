@@ -165,6 +165,7 @@
     <Compile Include="Areas\Admin\Controllers\LessonController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\RequireCertificateController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserActiveCourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserGroupController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
@@ -3066,6 +3067,7 @@
     <Content Include="Assets\Outsite\js\owl.carousel.js" />
     <Content Include="Assets\Outsite\js\tabui.js" />
     <Content Include="Assets\Outsite\Template\NewFeedback.html" />
+    <Content Include="Assets\Outsite\Template\Payment.html" />
     <Content Include="Assets\undraw_profile.svg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -3333,6 +3335,9 @@
     <Content Include="Areas\Admin\Views\Certificate\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Certificate\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\RequireCertificate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserActiveCourse\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserActiveCourse\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\UserActiveCourse\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3382,7 +3387,6 @@
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\User\ThongTinUser.cshtml" />
     <Content Include="Views\Blog\BlogSave.cshtml" />
-    <Content Include="Views\KhoaHoc\PaymentConfirm.cshtml" />
     <Content Include="Views\Lesson\Payment.cshtml" />
     <Content Include="Views\Lesson\ActiveSuccess.cshtml" />
   </ItemGroup>

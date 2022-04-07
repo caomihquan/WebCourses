@@ -74,6 +74,7 @@
     <Compile Include="DAO\ReviewBlogDao.cs" />
     <Compile Include="DAO\ReviewCourseDao.cs" />
     <Compile Include="DAO\ReviewLessonDao.cs" />
+    <Compile Include="DAO\UserActiveCourseDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\Blog.cs" />

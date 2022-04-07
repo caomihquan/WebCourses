@@ -3,7 +3,10 @@ using Model.DAO;
 using Model.EF;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebCourses.Common;
@@ -223,9 +226,8 @@ namespace WebCourses.Controllers
         [HttpGet]
         public ActionResult Payment(long id)
         {
-            var model = new CourseDao().ViewDetail(id);
-            ViewBag.Course = model;
-            return View();
+            ViewBag.Course = id;
+            return RedirectToAction("Payment", "Lesson", new { id = id });
         }
         [HttpPost]
         public ActionResult Payment(CourseActive model)
@@ -233,23 +235,61 @@ namespace WebCourses.Controllers
             var session = (User)Session[CommonConstants.USER_SESSION];
             if (ModelState.IsValid)
             {
+                
                 var dao = new CourseDao();
                 model.CourseID = model.CourseID;
                 model.CreatedDate = DateTime.Now;
                 model.Status = true;
                 model.TransactionID = model.TransactionID;
                 model.UserID = session.ID;
-                long id = dao.InsertUserActiveCourse(model);
-                if (id > 0)
+                if (!dao.CheckActiveCourse(model.TransactionID))
                 {
-                    return RedirectToAction("ActiveSuccess", "Lesson");
+                    string a = System.IO.File.ReadAllText(Server.MapPath("/Assets/Outsite/Template/Payment.html"));
+                    a = a.Replace("{{CustomerName}}", session.UserName);
+                    a = a.Replace("{{UserID}}", session.ID.ToString());
+                    a = a.Replace("{{MaGiaoDich}}", model.TransactionID.ToString());
+                    a = a.Replace("{{MaKhoaHoc}}", model.CourseID.ToString());
+                    SendMail("caominhquan0512@gmail.com", "Email Quên Mật Khẩu Mới", a);
+                    long id = dao.InsertUserActiveCourse(model);
+                    if (id > 0)
+                    {
+                        return RedirectToAction("ActiveSuccess", "Lesson");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Không thành công");
+                    }
                 }
                 else
                 {
                     ModelState.AddModelError("", "Không thành công");
                 }
+                
             }
             return View(model);
+        }
+        public void SendMail(string toEmailAddress, string subject, string content)
+        {
+            var fromEmailAddress = ConfigurationManager.AppSettings["FromEmailAddress"].ToString();
+            var fromEmailDisplayName = ConfigurationManager.AppSettings["FromEmailDisplayName"].ToString();
+            var fromEmailPassword = ConfigurationManager.AppSettings["FromEmailPassword"].ToString();
+            var smtpHost = ConfigurationManager.AppSettings["SMTPHost"].ToString();
+            var smtpPort = ConfigurationManager.AppSettings["SMTPPort"].ToString();
+
+            bool enabledSsl = bool.Parse(ConfigurationManager.AppSettings["EnabledSSL"].ToString());
+
+            string body = content;
+            MailMessage message = new MailMessage(new MailAddress(fromEmailAddress, fromEmailDisplayName), new MailAddress(toEmailAddress));
+            message.Subject = subject;
+            message.IsBodyHtml = true;
+            message.Body = body;
+
+            var client = new SmtpClient();
+            client.Credentials = new NetworkCredential(fromEmailAddress, fromEmailPassword);
+            client.Host = smtpHost;
+            client.EnableSsl = enabledSsl;
+            client.Port = !string.IsNullOrEmpty(smtpPort) ? Convert.ToInt32(smtpPort) : 0;
+            client.Send(message);
         }
 
         [HttpPost]

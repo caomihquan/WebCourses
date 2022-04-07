@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var idcourse = ViewBag.Course;
 }
 @section jsFooter{
     <script>
@@ -18,7 +19,7 @@
     </div>
 </nav>
 <div style="display:none">
-    <div id="idcourse">@ViewBag.Course.ID</div>
+    <div id="idcourse">@(idcourse!=null ? idcourse:null)</div>
 </div>
 <section class="w3l-account py-5">
     <!-- login -->
@@ -45,12 +46,12 @@
                         </div>
                         <label>Mã Giao Dịch</label>
                         <div class="input-group">
-                            @Html.TextBoxFor(model => model.TransactionID)
+                            @Html.EditorFor(model => model.TransactionID)
                             @Html.ValidationMessageFor(model => model.TransactionID, "", new { @class = "text-danger" })
                         </div>
                         
                         <div class="input-group">
-                            @Html.HiddenFor(model => model.CourseID)
+                            @Html.EditorFor(model => model.CourseID)
                             @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
                         </div>
                         <button class="btn btn-primary theme-button btn-login" type="submit">Kích Hoạt</button>

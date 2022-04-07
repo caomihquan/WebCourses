@@ -71,6 +71,10 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.ID;
         }
+        public bool CheckActiveCourse(long id)
+        {
+            return db.CourseActives.Count(x => x.TransactionID==id ) > 0;
+        }
         public bool Update(Cours entity)
         {
             try

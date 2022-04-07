@@ -49,7 +49,7 @@
                                             <a href="@url">
                                                 <img src="@item.Image" alt=" " class="img-fluid">
                                                 <div class="price">
-                                                    <h4>@item.LevelCourse</h4>
+                                                    <h4>@(item.Price.HasValue ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                                 </div>
                                             </a>
                                         </div>
@@ -57,12 +57,18 @@
                                             <span class="subject green">@cateogry.Name</span>
                                             <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                                             <ul class="admin-post">
-                                                    <li>
-                                                        <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs)  Bài Học
-                                                    </li>
+                                                <li>
+                                                    <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs)  Bài Học
+                                                </li>
 
                                                 <li>
                                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                                </li>
+                                                <li>
+                                                    <span class="fas fa-eye"></span>@item.ViewCount Lượt Xem
+                                                </li>
+                                                <li>
+                                                    <span class="fas fa-atom"></span>@item.LevelCourse
                                                 </li>
                                             </ul>
 

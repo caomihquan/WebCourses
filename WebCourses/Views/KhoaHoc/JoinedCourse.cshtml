@@ -67,9 +67,9 @@
                                             }
                                             <a href="@url">
                                                 <img src="@item.Image" alt=" " class="img-fluid">
-                                                <div class="price">
+                                                @*<div class="price">
                                                     <h4>@item.LevelCourse</h4>
-                                                </div>
+                                                </div>*@
                                             </a>
                                         </div>
                                         <div class="course-cont">
@@ -82,6 +82,10 @@
                                                 </li>
                                                 <li>
                                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                                </li>
+                                                
+                                                <li>
+                                                    <span class="fas fa-atom"></span>@item.LevelCourse
                                                 </li>
                                             </ul>
                                             <div class="w3-light-grey w3-tiny">                                          

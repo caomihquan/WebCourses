@@ -114,7 +114,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 }
                 var dao = new CertificateDao();
                 var category = new CertificateDao().ViewDetail(id);
-                if (categoryblog.IDCourse== category.IDCourse)
+                if (categoryblog.IDCourse == category.IDCourse)
                 {
                     var result = dao.Update(categoryblog);
                     if (result)

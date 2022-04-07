@@ -14,7 +14,6 @@
         <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Khóa Học</span>
     </div>
 </nav>
-<a href="@Url.Action("Payment","KhoaHoc")">Thanh toán</a>
 
 <section class="w3l-blog">
     <div class="single blog pb-5 pt-md-4 pt-2">
@@ -49,7 +48,7 @@
                                         <a href="@url">
                                             <img src="@item.Image" alt=" " class="img-fluid">
                                             <div class="price">
-                                                <h4>@item.LevelCourse</h4>
+                                                <h4>@(item.Price.HasValue ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                             </div>
                                         </a>
                                     </div>
@@ -63,6 +62,12 @@
                                             </li>
                                             <li>
                                                 <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                            </li>
+                                            <li>
+                                                <span class="fas fa-eye"></span>@item.ViewCount Lượt Xem
+                                            </li>
+                                            <li>
+                                                <span class="fas fa-atom"></span>@item.LevelCourse
                                             </li>
                                         </ul>
 

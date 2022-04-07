@@ -267,9 +267,18 @@
             {
                 var countlesson = new Model.DAO.LessonDao().countlessson(item.ID);
                 var countlesson1 = (List<Model.EF.Lesson>)countlesson;
-                var countlesson2 = countlesson1.Count();
-                var countnull = countlesson1.Where(x => x.ParentsID == null).Count();
-                var countkhacnull = countlesson1.Where(x => x.ParentsID != null).Count();
+                var childs = 0;
+                foreach (var li in countlesson1)
+                {
+
+                    var child = countlesson1.Where(x => x.ParentsID != null && x.ParentsID == li.ID).Count();
+                    var countnull = countlesson1.Where(x => x.ParentsID == null && x.ID != li.ParentsID).Count();
+                    if (child > 0 && countnull > 0)
+                    {
+                        childs++;
+                    }
+
+                }
                 var count = new Model.DAO.JoinedCoursesDao().countUserJoined(item.ID);
                 var counts = (List<Model.EF.JoinedCours>)count;
                 var cateogry = new Model.DAO.CategoryDao().CategoryCourses(item.CategoryID);
@@ -280,7 +289,7 @@
                             <a href="@url">
                                 <img src="@item.Image" alt=" " class="img-fluid">
                                 <div class="price">
-                                    <h4>@item.LevelCourse</h4>
+                                    <h4>@(item.Price.HasValue ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                 </div>
                             </a>
                         </div>
@@ -288,20 +297,17 @@
                             <span class="subject red">@cateogry.Name</span>
                             <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                             <ul class="admin-post">
-                                @if (countkhacnull == 0)
-                                {
-                                    <li>
-                                        <span class="fa fa-file-code-o"></span>@countlesson2 Bài Học
-                                    </li>
-                                }
-                                else if (countnull > 0)
-                                {
-                                    <li>
-                                        <span class="fa fa-file-code-o"></span>@(countlesson2 - countnull)  Bài Học
-                                    </li>
-                                }
+                                <li>
+                                    <span class="fa fa-file-code-o"></span>@(countlesson1.Count() - childs) Bài Học
+                                </li>
                                 <li>
                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
+                                </li>
+                                <li>
+                                    <span class="fas fa-eye"></span>@item.ViewCount Lượt Xem
+                                </li>
+                                <li>
+                                    <span class="fas fa-atom"></span>@item.LevelCourse
                                 </li>
                             </ul>
                             <a href="@url" class="blog-btn mt-3">Tham Gia Khóa Học<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
@@ -345,7 +351,7 @@
                             <a href="@url">
                                 <img src="@item.Image" alt="" class="img-fluid">
                                 <div class="price">
-                                    <h4>@item.LevelCourse</h4>
+                                    <h4>@(item.Price.HasValue ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                 </div>
                             </a>
                         </div>
@@ -361,6 +367,13 @@
                                 <li>
                                     <span class="fa fa-user-o"></span>@counts.Count() Học Viên
                                 </li>
+                                <li>
+                                    <span class="fas fa-eye"></span>@item.ViewCount Lượt Xem
+                                </li>
+                                <li>
+                                    <span class="fas fa-atom"></span>@item.LevelCourse
+                                </li>
+
                             </ul>
                             <a href="@url" class="blog-btn mt-3">Tham Gia Khóa Học<span class="fa fa-long-arrow-right" aria-hidden="true"></span></a>
                         </div>
