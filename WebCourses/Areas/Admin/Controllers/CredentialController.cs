@@ -11,6 +11,7 @@ namespace WebCourses.Areas.Admin.Controllers
     public class CredentialController : BaseController
     {
         // GET: Admin/Credential
+        [HasCredential(RoleID = "VIEW_QUYEN")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CredentialDao();
@@ -19,7 +20,7 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-
+        [HasCredential(RoleID = "ADD_QUYEN")]
         public ActionResult Create()
         {
             SetViewBag();
@@ -27,6 +28,7 @@ namespace WebCourses.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_QUYEN")]
         public ActionResult Edit(string roleid,string usergroup)
         {
             
@@ -38,6 +40,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [HasCredential(RoleID = "ADD_QUYEN")]
         public ActionResult Create(Credential credential)
         {
             if (ModelState.IsValid)
@@ -67,6 +70,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [HasCredential(RoleID = "EDIT_QUYEN")]
         public ActionResult Edit(Credential credential)
         {
             if (ModelState.IsValid)
@@ -98,6 +102,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_QUYEN")]
         public ActionResult Delete(string id, string usergroup)
         {
             new CredentialDao().Delete(id,usergroup);

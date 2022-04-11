@@ -12859,7 +12859,6 @@ textarea:focus {
     position: absolute;
     top: 100%;
     left: 0;
-    top: 100%;
     width: 100%;
     z-index: 10000;
     background-color: var(--bg-color);
@@ -12880,7 +12879,7 @@ textarea:focus {
     border-top: 1px solid #d8d8d8;
 }
 
-    .mega-menu .mega-wrap {
+.mega-menu .mega-wrap {
         max-width: 1440px;
         margin: 0 auto;
         padding: 35px 30px;
@@ -12945,7 +12944,7 @@ textarea:focus {
             transition: all 0.3s ease;
         }
 
-        .mega-menu .mega-item a:hover {
+.mega-menu .mega-item a:hover {
             padding-left: 25px;
             color: var(--primary-color);
         }

@@ -12,6 +12,8 @@ namespace WebCourses.Areas.Admin.Controllers
     public class LessonController : BaseController
     {
         // GET: Admin/Lesson
+        [HasCredential(RoleID = "VIEW_LESSON")]
+
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new LessonDao();
@@ -20,12 +22,15 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
+        [HasCredential(RoleID = "ADD_LESSON")]
 
         public ActionResult Create()
         {
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_LESSON")]
+
         public ActionResult Edit(long id)
         {
             var lesson = new LessonDao().ViewDetail(id);
@@ -35,6 +40,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_LESSON")]
+
         public ActionResult Create(Lesson lesson, HttpPostedFileBase filevideo, List<HttpPostedFileBase> file)
         {
             if (ModelState.IsValid)
@@ -102,6 +109,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "EDIT_LESSON")]
+
         public ActionResult Edit(Lesson lesson, HttpPostedFileBase filevideo, List<HttpPostedFileBase> file)
         {
             if (ModelState.IsValid)
@@ -167,6 +176,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_LESSON")]
         public ActionResult Delete(int id)
         {
             new LessonDao().Delete(id);
@@ -195,7 +205,7 @@ namespace WebCourses.Areas.Admin.Controllers
             });
         }
 
-
+        [HasCredential(RoleID = "VIEW_COMMENTLESSON")]
         public ActionResult CommentLesson(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ReviewLessonDao();

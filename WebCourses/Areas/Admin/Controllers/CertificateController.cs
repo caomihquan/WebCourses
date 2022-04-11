@@ -12,6 +12,7 @@ namespace WebCourses.Areas.Admin.Controllers
     public class CertificateController : BaseController
     {
         // GET: Admin/Certificate
+        [HasCredential(RoleID = "VIEW_CERTIFICATE")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CertificateDao();
@@ -23,12 +24,13 @@ namespace WebCourses.Areas.Admin.Controllers
 
 
         [HttpGet]
-
+        [HasCredential(RoleID = "ADD_CERTIFICATE")]
         public ActionResult Create()
         {
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_CERTIFICATE")]
         public ActionResult Edit(long id)
         {
             var category = new CertificateDao().ViewDetail(id);
@@ -38,6 +40,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_CERTIFICATE")]
         public ActionResult Create(Certificate categoryblog, HttpPostedFileBase file)
         {
             
@@ -96,6 +99,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "EDIT_CERTIFICATE")]
         public ActionResult Edit(Certificate categoryblog,long id, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -137,6 +141,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_CERTIFICATE")]
         public ActionResult Delete(int id)
         {
             new CertificateDao().Delete(id);

@@ -12,6 +12,7 @@ namespace WebCourses.Areas.Admin.Controllers
     public class CourseController : BaseController
     {
         // GET: Admin/Course
+        [HasCredential(RoleID = "VIEW_COURSE")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CourseDao();
@@ -20,6 +21,8 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
+        [HasCredential(RoleID = "ADD_COURSE")]
+
         public ActionResult Create()
         {
             var weekDays = new string[3] { "Cơ Bản", "Thông Thường", "Nâng Cao" };
@@ -35,6 +38,8 @@ namespace WebCourses.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_COURSE")]
+
         public ActionResult Edit(long id)
         {
             var course = new CourseDao().ViewDetail(id);
@@ -54,6 +59,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_COURSE")]
+
         public ActionResult Create(Cours course, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -91,6 +98,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "EDIT_COURSE")]
+
         public ActionResult Edit(Cours course, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -126,6 +135,8 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_COURSE")]
+
         public ActionResult Delete(int id)
         {
             new CourseDao().Delete(id);
@@ -145,6 +156,7 @@ namespace WebCourses.Areas.Admin.Controllers
             }
         }
 
+        [HasCredential(RoleID = "DELETE_COURSE")]
         public ActionResult CommentCourse(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ReviewCourseDao();

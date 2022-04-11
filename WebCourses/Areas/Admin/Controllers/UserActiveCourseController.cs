@@ -11,6 +11,8 @@ namespace WebCourses.Areas.Admin.Controllers
     public class UserActiveCourseController : BaseController
     {
         // GET: Admin/UserActiveCourse
+        [HasCredential(RoleID = "VIEW_USERACTIVE")]
+
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new UserActiveCourseDao();
@@ -19,12 +21,14 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
+        [HasCredential(RoleID = "ADD_USERACTIVE")]
 
         public ActionResult Create()
         {
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_USERACTIVE")]
         public ActionResult Edit(long id)
         {
             var category = new UserActiveCourseDao().ViewDetail(id);
@@ -34,6 +38,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_USERACTIVE")]
+
         public ActionResult Create(UserActiveCourse categoryblog)
         {
             if (ModelState.IsValid)
@@ -63,6 +69,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "EDIT_USERACTIVE")]
+
         public ActionResult Edit(UserActiveCourse categoryblog,long id)
         {
             var category = new UserActiveCourseDao().ViewDetail(id);
@@ -92,6 +100,8 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_USERACTIVE")]
+
         public ActionResult Delete(int id)
         {
             new UserActiveCourseDao().Delete(id);

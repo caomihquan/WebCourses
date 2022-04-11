@@ -11,6 +11,7 @@ namespace WebCourses.Areas.Admin.Controllers
     public class CategoryBlogController : BaseController
     {
         // GET: Admin/CategoryBlog
+        [HasCredential(RoleID = "VIEW_CATEGORYBLOG")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CategoryBlogDao();
@@ -19,12 +20,13 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-
+        [HasCredential(RoleID = "ADD_CATEOGRYBLOG")]
         public ActionResult Create()
         {
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_CATEGORYBLOG")]
         public ActionResult Edit(long id)
         {
             var category = new CategoryBlogDao().ViewDetail(id);
@@ -33,6 +35,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
 
         [HttpPost]
+        [HasCredential(RoleID = "ADD_CATEOGRYBLOG")]
         [ValidateInput(false)]
         public ActionResult Create(CategoryBlog categoryblog)
         {
@@ -54,6 +57,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [HasCredential(RoleID = "EDIT_CATEGORYBLOG")]
         [ValidateInput(false)]
         public ActionResult Edit(CategoryBlog categoryblog)
         {
@@ -75,6 +79,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_CATEGORYBLOG")]
         public ActionResult Delete(int id)
         {
             new CategoryBlogDao().Delete(id);

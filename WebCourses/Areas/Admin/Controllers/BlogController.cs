@@ -13,7 +13,7 @@ namespace WebCourses.Areas.Admin.Controllers
     public class BlogController : BaseController
     {
         // GET: Admin/Blog
-        
+        [HasCredential(RoleID = "VIEW_BLOG")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new BlogDao();
@@ -23,12 +23,14 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [HasCredential(RoleID = "ADD_BLOG")]
         public ActionResult Create()
         {
             SetViewBag();
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_BLOG")]
         public ActionResult Edit(long id)
         {
             var dao = new BlogDao();
@@ -39,6 +41,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "EDIT_BLOG")]
         public ActionResult Edit(Blog model)
         {
             if (ModelState.IsValid)
@@ -63,6 +66,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_BLOG")]
         public ActionResult Create(Blog content)
         {
             if (ModelState.IsValid)
@@ -79,6 +83,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_BLOG")]
         public ActionResult Delete(int id)
         {
             var result = new BlogDao().Delete(id);
@@ -100,7 +105,7 @@ namespace WebCourses.Areas.Admin.Controllers
             ViewBag.CategoryBlogID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
 
-
+        [HasCredential(RoleID = "CHECK_BLOG")]
         public ActionResult DuyetBlog(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new BlogDao();
@@ -118,6 +123,7 @@ namespace WebCourses.Areas.Admin.Controllers
             });
         }
 
+        [HasCredential(RoleID = "VIEW_BLOGCOMMENT")]
         public ActionResult CommentBlog(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ReviewBlogDao();

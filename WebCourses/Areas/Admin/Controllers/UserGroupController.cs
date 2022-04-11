@@ -11,6 +11,8 @@ namespace WebCourses.Areas.Admin.Controllers
     public class UserGroupController : BaseController
     {
         // GET: Admin/UserGroup
+        [HasCredential(RoleID = "VIEW_GROUPUSER")]
+
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new GroupUserDao();
@@ -19,12 +21,15 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
+        [HasCredential(RoleID = "ADD_GROUPUSER")]
 
         public ActionResult Create()
         {
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_GROUPUSER")]
+
         public ActionResult Edit(string id)
         {
             var category = new GroupUserDao().ViewDetail(id);
@@ -34,6 +39,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [HasCredential(RoleID = "ADD_GROUPUSER")]
+
         public ActionResult Create(UserGroup usergroup)
         {
             if (ModelState.IsValid)
@@ -54,6 +61,8 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [HasCredential(RoleID = "EDIT_GROUPUSER")]
+
         public ActionResult Edit(UserGroup userGroup)
         {
             if (ModelState.IsValid)
@@ -74,7 +83,9 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(string id)
+        [HasCredential(RoleID = "DELETE_USERACTIVE")]
+
+        public ActionResult DELETE_GROUPUSER(string id)
         {
             new GroupUserDao().Delete(id);
             return RedirectToAction("Index", "UserGroup");

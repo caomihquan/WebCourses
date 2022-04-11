@@ -10,6 +10,8 @@ namespace WebCourses.Areas.Admin.Controllers
     public class RequireCertificateController : BaseController
     {
         // GET: Admin/RequireCertificate
+        [HasCredential(RoleID = "VIEW_REQUIRECERTIFICATE")]
+
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CertificateDao();
@@ -20,6 +22,7 @@ namespace WebCourses.Areas.Admin.Controllers
 
 
         [HttpDelete]
+        [HasCredential(RoleID = "DELETE_REQUIRECERTIFICATE")]
         public ActionResult Delete(int id)
         {
             new CertificateDao().DeleteRequireCertificate(id);

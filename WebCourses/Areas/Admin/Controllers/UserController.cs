@@ -13,7 +13,7 @@ namespace WebCourses.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         // GET: Admin/User
-        /*[HasCredential(RoleID = "VIEW_USER")]*/
+        [HasCredential(RoleID = "VIEW_USER")]
         public ActionResult Index(string searchString, string sortProperty, string sortOrder, int page = 1, int pageSize = 10)
         {
             var dao = new UserDao();
@@ -22,13 +22,13 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-        /*[HasCredential(RoleID = "ADD_USER")]*/
+        [HasCredential(RoleID = "ADD_USER")]
         public ActionResult Create()
         {
             SetViewBag();
             return View();
         }
-        /*[HasCredential(RoleID = "EDIT_USER")]*/
+        [HasCredential(RoleID = "EDIT_USER")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -39,7 +39,7 @@ namespace WebCourses.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        /*[HasCredential(RoleID = "ADD_USER")]*/
+        [HasCredential(RoleID = "ADD_USER")]
         public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
@@ -66,7 +66,7 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(user);
         }
         [HttpPost]
-       /* [HasCredential(RoleID = "EDIT_USER")]*/
+        [HasCredential(RoleID = "EDIT_USER")]
         public ActionResult Edit(User user)
         {
             if (ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace WebCourses.Areas.Admin.Controllers
             return View(user);
         }
         [HttpDelete]
-        /*[HasCredential(RoleID = "DELETE_USER")]*/
+        [HasCredential(RoleID = "DELETE_USER")]
         public ActionResult Delete(int id)
         {
             new UserDao().Delete(id);
