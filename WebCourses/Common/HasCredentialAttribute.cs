@@ -31,6 +31,7 @@ namespace WebCourses
                 return false;
             }
         }
+        
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             filterContext.Result = new ViewResult

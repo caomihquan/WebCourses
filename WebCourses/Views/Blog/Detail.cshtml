@@ -15,7 +15,27 @@
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6168ecfe9afe107b"></script>
     <script src="~/Assets/Outsite/js/controller/badword.js"></script>
     <script src="~/Assets/Outsite/js/controller/saveBlog.js"></script>
+    <script>
 
+        $(document).ready(function () {
+            $(".btnCancle").each(function (index, value) {
+                $(this).click(function () {
+                    const c = "#form" + value.getAttribute('id').toString();
+                    $(c).addClass("display-none");
+                })
+            })
+            $(".traloi").each(function (index, value) {
+                $(this).click(function (e) {
+                    e.preventDefault();
+                    const a = "#form" + value.getAttribute('id').toString();
+                    $('.answerid').val(value.getAttribute('id'));
+                    $(".abcxyz").addClass("display-none");
+                    $(a).toggleClass("display-none");
+
+                });
+            });
+        });
+    </script>
 }
 
 <nav id="breadcrumbs" class="breadcrumbs">
@@ -36,23 +56,23 @@
                 <span class="far fa-eye"></span> @blog.ViewCount Lượt Xem
             </li>
             <li>
-                    @if (session == null)
+                @if (session == null)
+                {
+                    <a href="/dang-nhap"><i class="far fa-bookmark"></i></a>
+                }
+                else
+                {
+                    var save = new Model.DAO.BlogDao().ViewDetailBlogSave(blog.ID, session.ID);
+                    if (save == null)
                     {
-                        <a href="/dang-nhap"><i class="far fa-bookmark"></i></a>
+                        <a href="#" class="saveblog" data-id="@blog.ID"><i class="far fa-bookmark"></i></a>
                     }
                     else
                     {
-                        var save = new Model.DAO.BlogDao().ViewDetailBlogSave(blog.ID, session.ID);
-                        if (save == null)
-                        {
-                            <a href="#" class="saveblog" data-id="@blog.ID"><i class="far fa-bookmark"></i></a>
-                        }
-                        else
-                        {
-                            var color = (save.Status ? "<i class=\"fas fa-bookmark\"></i>" : "<i class=\"far fa-bookmark\"></i>");
-                            <a href="#" class="saveblog" data-id="@blog.ID">@Html.Raw(color)</a>
-                        }
+                        var color = (save.Status ? "<i class=\"fas fa-bookmark\"></i>" : "<i class=\"far fa-bookmark\"></i>");
+                        <a href="#" class="saveblog" data-id="@blog.ID">@Html.Raw(color)</a>
                     }
+                }
             </li>
 
         </ul>
@@ -140,31 +160,91 @@
 
                         @foreach (var item in review)
                         {
-
+                            var answerid = new Model.DAO.ReviewBlogDao().ListReviewAnswer(item.BlogID.Value, item.ID);
                             <div id="row_@item.ID" style="display:flex">
                                 <div style="width:50px"><img src="~/Assets/undraw_profile.svg" /></div>
                                 <div class="comment_content">
                                     <h4>@item.CreatedBy </h4>
                                     <div>@item.Comment</div>
                                     <div style="font-size:12px;font-weight:300">
-                                        Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span> 
-                                        <div >
-                                        @if (session!=null&& item.UserID == session.ID)
-                                        {
+                                        Đã Bình Luận Vào <span style="font-weight:500">@item.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
+                                        <div style="display:flex">
+                                            @if (session != null)
+                                            {
+                                                <a href="" class="traloi" id="@item.ID">Trả Lời   </a>
+                                                if (item.UserID == session.ID)
+                                                {
 
-                                            @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
-                                                 {
-                                      Confirm = "Bạn có muốn xóa bản ghi này",
-                                      OnComplete = "$('#row_" + @item.ID + "').remove()",
-                                      HttpMethod = "Delete"
-                                                 })
+                                                    @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
+                                                         {
+                                              Confirm = "Bạn có muốn xóa bản ghi này",
+                                              OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                              HttpMethod = "Delete"
+                                                         })
 
-                                        }
-                                        </div>  
+                                                }
+                                            }
+
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
+                            using (Html.BeginForm("SendReview", "Blog", FormMethod.Post, new { @id = "form" + item.ID, @class = "display-none abcxyz" }))
+                            {
+                                <div class="reviews-submit" style="margin:0 10%;">
+                                    <h4>Trả Lời:</h4>
+                                    @Html.AntiForgeryToken()
+
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input id="rating" type="hidden" name="rating" />
+
+                                    <div class="input-group">
+                                        @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan", @style = "height:74px" })
+                                        @Html.TextBoxFor(x => x.BlogID)
+                                        @Html.TextBoxFor(x => x.AnswerID, new { @class = "answerid" })
+                                    </div>
+                                    <div style=" text-align: right; margin-top: 16px;">
+                                        <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
+                                        <div id=@item.ID class="btn btn-light btnCancle" style="width:100px;">Hủy Bỏ</div>
+                                    </div>
+
+                                </div>
+
+                            }
+                            foreach (var answer in answerid)
+                            {
+                                <div id="row_@answer.ID" style="display:flex; margin:8px 10% ;">
+                                    <div style="width: 40px; margin-top: 20px"><img src="~/Assets/undraw_profile.svg" /></div>
+                                    <div class="comment_content">
+                                        <h6>@answer.CreatedBy </h6>
+                                        <div>@answer.Comment</div>
+                                        <div style="font-size:8px;font-weight:300">
+
+                                            Đã Bình Luận Vào <span style="font-weight:500">@answer.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
+
+                                        </div>
+                                        <div style="display:flex">
+                                            <div>
+                                                @if (answer.UserID == session.ID)
+                                                {
+
+                                                    @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = answer.ID }, new AjaxOptions
+                                                         {
+                                              Confirm = "Bạn có muốn xóa bản ghi này",
+                                              OnComplete = "$('#row_" + answer.ID + "').remove()",
+                                              HttpMethod = "Delete"
+                                                         })
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+
                         }
                     </div>
                 </div>

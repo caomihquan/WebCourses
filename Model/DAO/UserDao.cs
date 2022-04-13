@@ -159,7 +159,7 @@ namespace Model.DAO
             {
                 if (isLoginAdmin == true)
                 {
-                    if (result.GroupID == CommonConstants.ADMIN_GROUP || result.GroupID == CommonConstants.MOD_GROUP)
+                    if (result.GroupID != CommonConstants.MEMBER_GROUP)
                     {
                         if (result.Status == false)
                         {

@@ -20,6 +20,7 @@ namespace Model.EF
         public string CreatedBy { get; set; }
 
         public long? UserID { get; set; }
+        public long? AnswerID { get; set; }
 
         public long? BlogID { get; set; }
 

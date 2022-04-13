@@ -12853,8 +12853,6 @@ textarea:focus {
 }
 
 
-
-
 .mega-menu {
     position: absolute;
     top: 100%;
@@ -12879,7 +12877,7 @@ textarea:focus {
     border-top: 1px solid #d8d8d8;
 }
 
-.mega-menu .mega-wrap {
+    .mega-menu .mega-wrap {
         max-width: 1440px;
         margin: 0 auto;
         padding: 35px 30px;
@@ -12944,7 +12942,7 @@ textarea:focus {
             transition: all 0.3s ease;
         }
 
-.mega-menu .mega-item a:hover {
+        .mega-menu .mega-item a:hover {
             padding-left: 25px;
             color: var(--primary-color);
         }
@@ -12962,7 +12960,7 @@ textarea:focus {
         font-size: 16px;
         font-weight: 700;
         line-height: 1.8em;
-        color: var(--text-color);
+        color: #1d1d1d;
         text-transform: uppercase;
     }
 
@@ -12970,25 +12968,6 @@ textarea:focus {
             color: #2AC37D;
         }
 
-.luubaiviet {
-    display: inline-block;
-    float: right;
-    font-size: 24px;
-}
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: var(--breadcrumb-bg);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-}
 @media (max-width: 992px) {
     .mega-menu {
         position: relative;
@@ -13006,6 +12985,7 @@ textarea:focus {
         opacity: 1;
         display: none;
     }
+
         .mega-menu .mega-wrap {
             -webkit-box-lines: multiple;
             -moz-box-lines: multiple;
@@ -13038,15 +13018,16 @@ textarea:focus {
         .mega-menu .mega-item.mega-features li > a {
             font-size: 13px;
         }
-
-    li:hover .mega-menu {
-        -webkit-transform: translateY(0);
-        -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-        -o-transform: translateY(0);
-        transform: translateY(0);
-        visibility: visible;
-        opacity: 1;
-    }
 }
+
+li:hover .mega-menu {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
+}
+
 

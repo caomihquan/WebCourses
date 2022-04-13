@@ -40,9 +40,8 @@ namespace Model.DAO
         {
             try
             {
-                var usergroup = db.UserGroups.SingleOrDefault(x=>x.ID==entity.ID);
+                var usergroup = db.UserGroups.Find(entity.ID);
                 usergroup.Name = entity.Name;
-                usergroup.ID = entity.ID;
                 db.SaveChanges();
                 return true;
             }

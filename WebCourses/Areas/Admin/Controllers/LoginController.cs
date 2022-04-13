@@ -28,7 +28,6 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     var user = dao.GetByID(model.UserName);
                     var userSession = new UserLogin();
-
                     userSession.UserName = user.UserName;
                     userSession.UserID = user.ID;
                     userSession.GroupID = user.GroupID;

@@ -146,7 +146,7 @@ namespace WebCourses.Controllers
             var session = (User)Session[CommonConstants.USER_SESSION];
             review.CreatedDate = DateTime.Now;
             review.UserID = session.ID;
-            review.CreatedBy = session.UserName;
+            review.CreatedBy = session.Name;
             review.Status = true;
             var result = dao.Insert(review);
             if (result > 0)

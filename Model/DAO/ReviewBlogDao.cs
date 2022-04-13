@@ -38,10 +38,15 @@ namespace Model.DAO
             }
 
         }
+        public List<ReviewBlog> ListReviewAnswer(long blogid, long reviewid)
+        {
+            return db.ReviewBlogs.Where(x => x.BlogID == blogid && x.AnswerID == reviewid).OrderByDescending(x => x.CreatedDate).ToList();
+
+        }
 
         public List<ReviewBlog> ListReview(long blogid)
         {
-            return db.ReviewBlogs.Where(x => x.BlogID == blogid).OrderByDescending(x => x.CreatedDate).ToList();
+            return db.ReviewBlogs.Where(x => x.BlogID == blogid&&x.AnswerID==null).OrderByDescending(x => x.CreatedDate).ToList();
         }
 
         public IEnumerable<ReviewBlog> ListCommentBlog(string searchString, int page, int pageSize)
