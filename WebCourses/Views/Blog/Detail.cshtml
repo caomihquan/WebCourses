@@ -202,8 +202,8 @@
 
                                     <div class="input-group">
                                         @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan", @style = "height:74px" })
-                                        @Html.TextBoxFor(x => x.BlogID)
-                                        @Html.TextBoxFor(x => x.AnswerID, new { @class = "answerid" })
+                                        @Html.HiddenFor(x => x.BlogID)
+                                        @Html.HiddenFor(x => x.AnswerID, new { @class = "answerid" })
                                     </div>
                                     <div style=" text-align: right; margin-top: 16px;">
                                         <input id="btnComment" type="submit" value="Bình Luận" class="btn btn-primary" style="width:100px;" />
