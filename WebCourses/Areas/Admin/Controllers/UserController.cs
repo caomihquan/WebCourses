@@ -67,10 +67,10 @@ namespace WebCourses.Areas.Admin.Controllers
         }
         [HttpPost]
         [HasCredential(RoleID = "EDIT_USER")]
-        public ActionResult Edit(User user)
+        public ActionResult Edit(User user,long id)
         {
-            if (ModelState.IsValid)
-            {
+            
+                var userdetail = new UserDao().ViewDetail(id);
                 var dao = new UserDao();
                 if (!string.IsNullOrEmpty(user.Password) && !string.IsNullOrEmpty(user.ConfirmPassword))
                 {
@@ -78,6 +78,11 @@ namespace WebCourses.Areas.Admin.Controllers
                     var encryptedMd5Pass = Encryptor.MD5Hash(user.ConfirmPassword);
                     user.Password = encryptedMd5Pas;
                     user.ConfirmPassword = encryptedMd5Pass;
+                }
+                else
+                {
+                    user.Password = userdetail.Password;
+                    user.ConfirmPassword = userdetail.ConfirmPassword;
                 }
 
                 var result = dao.Update(user);
@@ -90,7 +95,6 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Cập nhật user Không thành công");
                 }
-            }
             SetViewBag(user.GroupID);
             return View(user);
         }

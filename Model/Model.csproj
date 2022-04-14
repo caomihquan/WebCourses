@@ -64,6 +64,7 @@
     <Compile Include="DAO\CategoryBlogDao.cs" />
     <Compile Include="DAO\CategoryDao.cs" />
     <Compile Include="DAO\CertificateDao.cs" />
+    <Compile Include="DAO\RequireActiveCourseDao.cs" />
     <Compile Include="DAO\CourseDao.cs" />
     <Compile Include="DAO\CredentialDao.cs" />
     <Compile Include="DAO\GroupUserDao.cs" />

@@ -1,4 +1,4 @@
-namespace Model.EF
+﻿namespace Model.EF
 {
     using System;
     using System.Collections.Generic;
@@ -12,11 +12,15 @@ namespace Model.EF
         public long ID { get; set; }
 
         [StringLength(250)]
+        [Display(Name = "Tên Chứng Chỉ")]
+        [Required(ErrorMessage = "Yêu cầu nhập")]
         public string Name { get; set; }
-
+        [Required(ErrorMessage = "Yêu cầu nhập")]
+        [Display(Name = "Mã Khóa Học")]
         public long? IDCourse { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Yêu cầu")]
         public string Logo { get; set; }
 
         [StringLength(250)]

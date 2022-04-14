@@ -11,6 +11,7 @@ namespace Model.EF
     public partial class RequireCertificate
     {
         public long ID { get; set; }
+
         public long UserID { get; set; }
         public long CertificateID { get; set; }
 

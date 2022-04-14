@@ -1,4 +1,4 @@
-namespace Model.EF
+﻿namespace Model.EF
 {
     using System;
     using System.Collections.Generic;
@@ -11,8 +11,9 @@ namespace Model.EF
     {
         public long ID { get; set; }
 
+        [Display(Name = "Mã Người Dùng")]
         public long? UserID { get; set; }
-
+        [Display(Name = "Mã Khóa Học")]
         public long? CourseActiveID { get; set; }
     }
 }

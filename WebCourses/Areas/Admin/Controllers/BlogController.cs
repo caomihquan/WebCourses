@@ -61,7 +61,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 }
             }
             SetViewBag(model.CategoryBlogID);
-            return View("Index");
+            return View(model);
         }
 
         [HttpPost]
@@ -79,7 +79,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             SetViewBag();
-            return View("Index");
+            return View(content);
         }
 
         [HttpDelete]

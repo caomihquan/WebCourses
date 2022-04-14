@@ -20,6 +20,6 @@ namespace Model.EF
 
         public long CourseID { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

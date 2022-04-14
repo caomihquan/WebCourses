@@ -1,26 +1,24 @@
-﻿
+﻿@model PagedList.IPagedList<Model.EF.CourseActive>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-
-
-@model PagedList.IPagedList<Model.EF.UserActiveCourse>
-
-@using PagedList.Mvc;
-
 @section header{
-
+    Yêu Cầu Xét Duyệt
 }
+@section jsFooter{
 
+    <script src="~/Assets/Admin/js/controller/changeStatusActiveCourse.js"></script>
+}
 <div class="row">
     <div class="col-lg-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Mở Khóa Khóa Học</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Danh Mục Tin Tức</h6>
             </div>
-            @using (Html.BeginForm("Index", "UserActiveCourse", FormMethod.Get))
+            @using (Html.BeginForm("Index", "RequireActiveCourse", FormMethod.Get))
             {
                 <div class="col-lg-12">
                     <div class="col-md-4">
@@ -37,32 +35,32 @@
                 </div>
             }
             <div class="clear"></div>
-            <div class="col-lg-12">
-                <div class="col-md-4">
-                    <a href="/Admin/UserActiveCourse/Create"><i class="fas fa-plus-circle"></i> Mở Khóa</a>
-                </div>
-            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>MÃ Giao Dịch</th>
                                 <th>ID Người Dùng</th>
                                 <th>ID Khóa Học</th>
+                                <th>Ngày Tạo</th>
+                                <th>Trạng Thái</th>
                                 <th>#</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                var mau = (item.Status ? "btn-success" : "btn-primary");
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
+                                    <td>@item.TransactionID</td>
                                     <td>@item.UserID</td>
-                                    <td>@item.CourseActiveID</td>
+                                    <td>@item.CourseID</td>
+                                    <td>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</td>
+                                    <td><a href="#" class="xetduyetkhoahoc btn @mau" data-id="@item.ID">@(item.Status? "Đã Mở" : "Đang Xử Lý")</a></td>
                                     <td>
-                                        <a href="/Admin/UserActiveCourse/Edit/@item.ID" class="btn btn-primary">Sửa</a>
-
                                         @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
                                    {
                                        Confirm = "Bạn có muốn xóa bản ghi này",
@@ -89,3 +87,5 @@
         </div>
     </div>
 </div>
+
+

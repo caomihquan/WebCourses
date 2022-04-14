@@ -1,4 +1,4 @@
-namespace Model.EF
+﻿namespace Model.EF
 {
     using System;
     using System.Collections.Generic;
@@ -15,13 +15,20 @@ namespace Model.EF
         public string MetaTitle { get; set; }
 
         [StringLength(250)]
+        [Display(Name = "Tên Danh Mục")]
+        [Required(ErrorMessage = "Yêu cầu nhập")]
         public string Name { get; set; }
 
+        [Display(Name = "Mã Danh Mục Cha")]
         public long? ParentsID { get; set; }
 
+        [Display(Name = "Thứ Tự")]
+        [Required(ErrorMessage = "Yêu cầu nhập")]
         public int? DisplayOrder { get; set; }
 
+
         [StringLength(250)]
+        [Display(Name = "Tiêu Đề SEO")]
         public string SeoTitle { get; set; }
 
         public DateTime? CreatedDate { get; set; }

@@ -10,9 +10,11 @@ namespace Model.EF
     public partial class UserGroup
     {
         [StringLength(20)]
+        [Display(Name = "Mã")]
         public string ID { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "Tên")]
         public string Name { get; set; }
     }
 }

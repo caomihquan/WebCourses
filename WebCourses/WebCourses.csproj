@@ -164,6 +164,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LessonController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RequireActiveCourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\RequireCertificateController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserActiveCourseController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -192,6 +193,7 @@
     <Content Include="Assets\Admin\css\sb-admin-2.css" />
     <Content Include="Assets\Admin\css\sb-admin-2.min.css" />
     <Content Include="Assets\Admin\js\controller\changeStatus.js" />
+    <Content Include="Assets\Admin\js\controller\changeStatusActiveCourse.js" />
     <Content Include="Assets\Admin\js\controller\clearFile.js" />
     <Content Include="Assets\Outsite\images\momocaominhquan.png" />
     <Content Include="Assets\Outsite\js\controller\requireCertificate.js" />
@@ -3338,6 +3340,7 @@
     <Content Include="Areas\Admin\Views\UserActiveCourse\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserActiveCourse\Create.cshtml" />
     <Content Include="Areas\Admin\Views\UserActiveCourse\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\RequireActiveCourse\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

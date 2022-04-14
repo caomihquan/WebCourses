@@ -38,9 +38,10 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>UserID</th>
-                                <th>LessonID</th>
-                                <th>Comment</th>
+                                <th>ID Người Dùng</th>
+                                <th>ID Bài Học</th>
+                                <th>ID Trả Lời</th>
+                                <th>Bình Luận</th>
                                 <th>Người Tạo</th>
                                 <th>Ngày Tạo</th>
                                 <th>#</th>
@@ -53,6 +54,7 @@
                                     <td>@item.ID</td>
                                     <td>@item.UserID</td>
                                     <td>@item.LessonID</td>
+                                    <td>@item.AnswerID</td>
                                     <td>@item.Comment</td>
                                     <td>@item.CreatedBy</td>
                                     <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>

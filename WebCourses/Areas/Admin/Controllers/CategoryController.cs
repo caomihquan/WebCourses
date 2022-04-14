@@ -53,7 +53,7 @@ namespace WebCourses.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Thêm Không thành công");
                 }
             }
-            return View("Index");
+            return View(category);
         }
 
         [HttpPost]
@@ -75,7 +75,7 @@ namespace WebCourses.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Update Không thành công");
                 }
             }
-            return View("Index");
+            return View(category);
         }
 
         [HttpDelete]
