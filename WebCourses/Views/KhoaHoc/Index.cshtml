@@ -84,12 +84,12 @@
                                 <div class="course-grid">
                                     <div class="course-img">
                                         <a href="@url">
-                                            <span class="sale">@(item.PriceSale.HasValue?item.PriceSale:null)</span>
+                                            <span class="sale">-@(item.PriceSale.HasValue?item.PriceSale:null)%</span>
                                             <img src="@item.Image" alt="" class="img-fluid">
-                                            @if (item.PriceSale == null || item.Price == 0)
+                                            @if (item.PriceSale == null || item.PriceSale == 0)
                                             {
                                                 <div class="price">
-                                                    <h4>@(item.Price.HasValue ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
+                                                    <h4>@(item.Price.HasValue && item.Price !=0 ? item.Price.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                                 </div>
                                             }
                                             else
@@ -97,7 +97,7 @@
 
                                                 var gia = item.Price - (item.Price * item.PriceSale / 100);
                                                 <div class="price">
-                                                    <h4>@(gia.HasValue ? gia.Value.ToString("0,0đ") :"Miễn Phí")</h4>
+                                                    <h4>@(gia.HasValue && item.Price != 0 ? gia.Value.ToString("0,0đ") :"Miễn Phí")</h4>
                                                 </div>
                                             }
 
