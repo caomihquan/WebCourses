@@ -21,6 +21,10 @@ namespace Model.DAO
         {
             return db.Courses.ToList();
         }
+        public List<Category> ListAllCategoryforcourse()
+        {
+            return db.Categories.Where(x => x.Status == true && x.ParentsID!=null).OrderBy(x => x.DisplayOrder).ToList();
+        }
         public List<Cours> countcourse(long top)
         {
             return db.Courses.Where(x => x.CategoryID == top).ToList();
@@ -99,6 +103,7 @@ namespace Model.DAO
                 courses.Price = entity.Price;
                 courses.SeoTitle = entity.SeoTitle;
                 courses.ModifiedBy = entity.ModifiedBy;
+                courses.PriceSale = entity.PriceSale;
                 courses.ModifiedDate = DateTime.Now;
                 courses.ViewCount = entity.ViewCount;
                 courses.Status = entity.Status;

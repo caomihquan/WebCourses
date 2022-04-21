@@ -13,7 +13,6 @@ namespace WebCourses.Areas.Admin.Controllers
     {
         // GET: Admin/Lesson
         [HasCredential(RoleID = "VIEW_LESSON")]
-
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new LessonDao();
@@ -23,7 +22,6 @@ namespace WebCourses.Areas.Admin.Controllers
         }
         [HttpGet]
         [HasCredential(RoleID = "ADD_LESSON")]
-
         public ActionResult Create()
         {
             return View();

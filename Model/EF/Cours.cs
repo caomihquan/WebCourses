@@ -48,6 +48,9 @@
 
         [Display(Name = "Giá")]
         public decimal? Price { get; set; }
+        [Range(0,100, ErrorMessage = "Chỉ có thể điền từ 0 .. 100")]
+        [Display(Name = "Khuyến Mãi")]
+        public int? PriceSale { get; set; }
 
         [StringLength(250)]
         [Display(Name = "Tiêu Đề SEO")]

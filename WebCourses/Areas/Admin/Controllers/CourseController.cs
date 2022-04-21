@@ -25,16 +25,8 @@ namespace WebCourses.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            var weekDays = new string[3] { "Cơ Bản", "Thông Thường", "Nâng Cao" };
-            var items = weekDays.Select((day, index) =>
-            {
-                return new SelectListItem
-                {
-                    Value = day,
-                    Text = day
-                };
-            }).ToList();
-            ViewBag.list = new SelectList(items, "Text", "Value");
+            SetCourseLevel();
+            SetViewBag();
             return View();
         }
         [HttpGet]
@@ -43,16 +35,8 @@ namespace WebCourses.Areas.Admin.Controllers
         public ActionResult Edit(long id)
         {
             var course = new CourseDao().ViewDetail(id);
-            var weekDays = new string[3] { "Cơ Bản", "Thông Thường", "Nâng Cao" };
-            var items = weekDays.Select((day, index) =>
-            {
-                return new SelectListItem
-                {
-                    Value = day,
-                    Text = day
-                };
-            }).ToList();
-            ViewBag.list = new SelectList(items, "Text", "Value",course.LevelCourse);
+            SetCourseLevel(course.LevelCourse);
+            SetViewBag(course.CategoryID);
             return View(course);
         }
 
@@ -93,6 +77,8 @@ namespace WebCourses.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Thêm Không thành công");
                 }
             }
+            SetCourseLevel();
+            SetViewBag();
             return View(course);
         }
 
@@ -131,6 +117,8 @@ namespace WebCourses.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Update Không thành công");
                 }
             }
+            SetCourseLevel(course.LevelCourse);
+            SetViewBag(course.CategoryID);
             return View(course);
         }
 
@@ -180,5 +168,23 @@ namespace WebCourses.Areas.Admin.Controllers
 
         }
 
+        public void SetViewBag(long? selectedId = null)
+        {
+            var dao = new CourseDao();
+            ViewBag.CategoryID = new SelectList(dao.ListAllCategoryforcourse(), "ID", "Name", selectedId);
+        }
+        public void SetCourseLevel(string select=null)
+        {
+            var weekDays = new string[3] { "Cơ Bản", "Thông Thường", "Nâng Cao" };
+            var items = weekDays.Select((day, index) =>
+            {
+                return new SelectListItem
+                {
+                    Value = day,
+                    Text = day
+                };
+            }).ToList();
+            ViewBag.LevelCourse = new SelectList(items, "Text", "Value",select);
+        }
     }
 }

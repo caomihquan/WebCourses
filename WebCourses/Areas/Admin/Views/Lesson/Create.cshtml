@@ -53,7 +53,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ParentsID, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ParentsID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ParentsID, new { @class = "form-control" } )
             @Html.ValidationMessageFor(model => model.ParentsID, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -81,14 +81,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.CourseID, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.CourseID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.CourseID,  new { @class = "form-control"  })
             @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.DisplayOrder, new { @class = "form-control"  })
             @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
         </div>
     </div>

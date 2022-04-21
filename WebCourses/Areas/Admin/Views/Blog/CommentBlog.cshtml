@@ -75,7 +75,7 @@
                         <div class="dataTables_paginate paging_simple_numbers col-md-4" id="dataTable_paginate">
                             <span>Page</span> @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) <Span>of</Span> @Model.PageCount
 
-                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
+                            @Html.PagedListPager(Model, page => Url.Action("CommentBlog", new { page, @searchString = @ViewBag.SearchString }), new PagedListRenderOptions
                             {
                            LiElementClasses = new List<string> { "page-item", "page-link" }
                             })
