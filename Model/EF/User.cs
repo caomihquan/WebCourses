@@ -16,11 +16,6 @@
         [Required(ErrorMessage = "Yêu cầu nhập tên đăng nhập")]
         public string UserName { get; set; }
 
-        [StringLength(32)]
-        [Display(Name = "Xác Nhận Mật Khẩu")]
-        [Compare("Password", ErrorMessage = "Xác nhận mật khẩu không đúng.")]
-        public string ConfirmPassword { get; set; }
-
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Độ dài mật khẩu ít nhất 6 ký tự.")]
         [Required(ErrorMessage = "Yêu cầu nhập mật khẩu")]
         [Display(Name = "Mật Khẩu")]

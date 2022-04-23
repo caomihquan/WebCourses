@@ -47,10 +47,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 var dao = new UserDao();
 
                 var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
-                user.Password = encryptedMd5Pas;
-                var encryptedMd5Pass = Encryptor.MD5Hash(user.ConfirmPassword);
-
-                user.ConfirmPassword = encryptedMd5Pass;
+                user.Password = encryptedMd5Pas;             
                 long id = dao.Insert(user);
                 if (id > 0)
                 {
@@ -72,17 +69,17 @@ namespace WebCourses.Areas.Admin.Controllers
             
                 var userdetail = new UserDao().ViewDetail(id);
                 var dao = new UserDao();
-                if (!string.IsNullOrEmpty(user.Password) && !string.IsNullOrEmpty(user.ConfirmPassword))
+                if (!string.IsNullOrEmpty(user.Password) )
                 {
                     var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
-                    var encryptedMd5Pass = Encryptor.MD5Hash(user.ConfirmPassword);
+                    
                     user.Password = encryptedMd5Pas;
-                    user.ConfirmPassword = encryptedMd5Pass;
+                   
                 }
                 else
                 {
                     user.Password = userdetail.Password;
-                    user.ConfirmPassword = userdetail.ConfirmPassword;
+                    
                 }
 
                 var result = dao.Update(user);

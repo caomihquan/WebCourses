@@ -116,9 +116,7 @@ namespace Model.EF
                 .Property(e => e.UserName)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<User>()
-                .Property(e => e.ConfirmPassword)
-                .IsUnicode(false);
+            
 
             modelBuilder.Entity<User>()
                 .Property(e => e.Password)

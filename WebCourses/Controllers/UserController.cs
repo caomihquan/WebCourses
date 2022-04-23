@@ -16,6 +16,7 @@ using BotDetect.Web.Mvc;
 using System.Threading.Tasks;
 using System.Web.Security;
 using System.Net.Mail;
+using Model.ViewModel;
 
 namespace WebCourses.Controllers
 {
@@ -292,6 +293,7 @@ namespace WebCourses.Controllers
                     string a = System.IO.File.ReadAllText(Server.MapPath("/Assets/Outsite/Template/NewFeedback.html"));
                     a = a.Replace("{{CustomerName}}", email);
                     a = a.Replace("{{link}}", "https://localhost:44332/resetpassword/" + forgot.Password + "-"+ forgot.ID);
+                    a = a.Replace("{{username}}", forgot.UserName);
                     SendMail(email, "Email Quên Mật Khẩu Mới", a);
                     return RedirectToAction("SuccessEmail");
                 }
@@ -328,39 +330,74 @@ namespace WebCourses.Controllers
         }
 
         public ActionResult ResetPassword(int id)
-        {
-            var model = new UserDao().ViewDetail(id);
-            return View(model);
+        {           
+            return View();
         }
         [HttpPost]
-        public ActionResult ResetPassword(User model)
+        public ActionResult ResetPassword(ChangePassword model,long id)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var dao = new UserDao();
+                var user = dao.ViewDetail(id);
+                if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword))
+                {
+                    var encryptedMd5Pas = Encryptor.MD5Hash(model.NewPassword);
+                    var encryptedMd5Pass = Encryptor.MD5Hash(model.ConfirmPassword);
+                    model.NewPassword = encryptedMd5Pas;
+                    model.ConfirmPassword = encryptedMd5Pass;
+                        
+                        var result = dao.resetpassword(model);
+                        if (result)
+                        {
+                        var userSession = new User();
+                        userSession.UserName = user.UserName;
+                        userSession.ID = user.ID;
+                        userSession.Password = user.Password;
+                        userSession.Name = user.Name;
+                        userSession.Phone = user.Phone;
+                        userSession.Email = user.Email;
+                        userSession.Address = user.Address;
+                        Session.Add(CommonConstants.USER_SESSION, userSession);
+                        return RedirectToAction("Index", "Home");
+                        }
+                }
+            }
+            return View(model);
+        }
+        public ActionResult ChangePassword(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePassword model, long id)
         {
 
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-
-                if (!string.IsNullOrEmpty(model.Password) && !string.IsNullOrEmpty(model.ConfirmPassword))
+                var user = dao.ViewDetail(id);
+                if (!string.IsNullOrEmpty(model.NewPassword) && !string.IsNullOrEmpty(model.ConfirmPassword) && !string.IsNullOrEmpty(model.Password))
                 {
-                    var encryptedMd5Pas = Encryptor.MD5Hash(model.Password);
+                    var encryptedMd5Pas = Encryptor.MD5Hash(model.NewPassword);
                     var encryptedMd5Pass = Encryptor.MD5Hash(model.ConfirmPassword);
-                    model.Password = encryptedMd5Pas;
+
+                    model.NewPassword = encryptedMd5Pas;
                     model.ConfirmPassword = encryptedMd5Pass;
-                    if (encryptedMd5Pas == encryptedMd5Pass)
+                    if(user.Password == Encryptor.MD5Hash(model.Password))
                     {
                         var result = dao.resetpassword(model);
                         if (result)
-                        {
-                            
+                        {                           
                             return RedirectToAction("Index", "Home");
                         }
-                        else
-                        {
-                            ViewBag.Message = "Xác Nhận Mật Khẩu Không Đúng";
-                            ModelState.AddModelError("", "Xác Nhận Mật Khẩu Không Đúng");
-                        }
                     }
-
+                    else
+                    {
+                        ModelState.AddModelError("", "Mật Khẩu Cũ Không Đúng");
+                    }
+                    
                 }
             }
             return View(model);

@@ -225,21 +225,25 @@
                                             Đã Bình Luận Vào <span style="font-weight:500">@answer.CreatedDate.Value.ToString("dd-MM-yyyy")</span>
 
                                         </div>
-                                        <div style="display:flex">
-                                            <div>
-                                                @if (answer.UserID == session.ID)
-                                                {
+                                        @if (session != null)
+                    {
+                                    <div style="display: flex; font-size: 12px; font-weight: 300">
+                                        <div>
+                                            @if (answer.UserID == session.ID)
+                                            {
 
-                                                    @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = answer.ID }, new AjaxOptions
-                                                         {
-                                              Confirm = "Bạn có muốn xóa bản ghi này",
-                                              OnComplete = "$('#row_" + answer.ID + "').remove()",
-                                              HttpMethod = "Delete"
-                                                         })
+                                                @Ajax.ActionLink("Xóa Bình Luận", "Delete", new { @id = answer.ID }, new AjaxOptions
+                                                     {
+                                          Confirm = "Bạn có muốn xóa bản ghi này",
+                                          OnComplete = "$('#row_" + answer.ID + "').remove()",
+                                          HttpMethod = "Delete"
+                                                     })
 
-                                                }
-                                            </div>
+                                            }
                                         </div>
+                                    </div>
+                    }
+                                        
                                     </div>
 
                                 </div>

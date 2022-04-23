@@ -84,7 +84,10 @@
                                 <div class="course-grid">
                                     <div class="course-img">
                                         <a href="@url">
-                                            <span class="sale">-@(item.PriceSale.HasValue?item.PriceSale:null)%</span>
+                                            @if (item.PriceSale.HasValue && item.PriceSale != 0)
+                                            {
+                                                <span class="sale">-@item.PriceSale%</span>
+                                            }
                                             <img src="@item.Image" alt="" class="img-fluid">
                                             @if (item.PriceSale == null || item.PriceSale == 0)
                                             {

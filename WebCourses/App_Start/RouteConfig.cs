@@ -113,6 +113,12 @@ namespace WebCourses
                 namespaces: new[] { "WebCourses.Controllers" }
             );
             routes.MapRoute(
+                name: "ChangePassword",
+                url: "changepassword/{password}-{id}",
+                defaults: new { controller = "User", action = "ChangePassword", id = UrlParameter.Optional },
+                namespaces: new[] { "WebCourses.Controllers" }
+            );
+            routes.MapRoute(
                 name: "Login",
                 url: "dang-nhap",
                 defaults: new { controller = "User", action = "Login", id = UrlParameter.Optional },

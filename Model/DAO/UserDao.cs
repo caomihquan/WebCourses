@@ -1,5 +1,6 @@
 ﻿using Common;
 using Model.EF;
+using Model.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -68,8 +69,7 @@ namespace Model.DAO
                 if (!string.IsNullOrEmpty(entity.Password))
                 {
                     user.Password = entity.Password;
-                }
-                user.ConfirmPassword = entity.ConfirmPassword;
+                }                
                 user.GroupID = entity.GroupID;
                 user.Address = entity.Address;
                 user.Email = entity.Email;
@@ -86,14 +86,15 @@ namespace Model.DAO
             }
 
         }
-        public bool resetpassword(User entity)
+        public bool resetpassword(ChangePassword entity)
         {
             try
             {
                 var user = db.Users.Find(entity.ID);
-                if (!string.IsNullOrEmpty(entity.Password))
+                if (!string.IsNullOrEmpty(entity.NewPassword))
                 {
-                    user.Password = entity.Password;
+                    user.Password = entity.NewPassword;
+                    
                 }
                 db.SaveChanges();
                 return true;
@@ -115,13 +116,12 @@ namespace Model.DAO
         }
         public User GetByID(string userName)
         {
-            return db.Users.SingleOrDefault(x => x.UserName == userName);
+            return db.Users.SingleOrDefault(x => x.UserName == userName ||x.Email==userName);
         }
         public User ViewDetail(long id)
         {
             return db.Users.Find(id);
         }
-
         public User ViewEmail(string email)
         {
             return db.Users.Where(x=>x.Email==email).SingleOrDefault();
@@ -150,7 +150,7 @@ namespace Model.DAO
 
         public int Login(string userName, string passWord, bool isLoginAdmin = false)
         {
-            var result = db.Users.SingleOrDefault(x => x.UserName == userName);
+            var result = db.Users.SingleOrDefault(x => x.UserName == userName ||x.Email==userName);
             if (result == null)
             {
                 return 0;
