@@ -45,19 +45,38 @@ namespace WebCourses.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDao();
-
-                var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
-                user.Password = encryptedMd5Pas;             
-                long id = dao.Insert(user);
-                if (id > 0)
+                if (dao.CheckUserName(user.UserName))
                 {
-                    SetAlert("Thêm Thành Công ", "success");
-                    return RedirectToAction("Index", "User");
+                    ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+                }
+                else if (dao.CheckEmail(user.Email))
+                {
+                    ModelState.AddModelError("", "Email đã tồn tại");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Thêm user Không thành công");
+                    if (user.Password != null)
+                    {
+                        var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                        user.Password = encryptedMd5Pas;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Vui Lòng Nhập Mật Khẩu");
+                    }
+
+                    long id = dao.Insert(user);
+                    if (id > 0)
+                    {
+                        SetAlert("Thêm Thành Công ", "success");
+                        return RedirectToAction("Index", "User");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Thêm user Không thành công");
+                    }
                 }
+               
             }
             SetViewBag();
             return View(user);
@@ -66,32 +85,102 @@ namespace WebCourses.Areas.Admin.Controllers
         [HasCredential(RoleID = "EDIT_USER")]
         public ActionResult Edit(User user,long id)
         {
-            
+            if (ModelState.IsValid)
+            {
                 var userdetail = new UserDao().ViewDetail(id);
                 var dao = new UserDao();
-                if (!string.IsNullOrEmpty(user.Password) )
+                if (userdetail.UserName == user.UserName && userdetail.Email==user.Email)
                 {
-                    var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
-                    
-                    user.Password = encryptedMd5Pas;
-                   
+                    if (!string.IsNullOrEmpty(user.Password))
+                    {
+                        var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                        user.Password = encryptedMd5Pas;
+                    }
+                    else
+                    {
+                        user.Password = userdetail.Password;
+                    }
+                    var result = dao.Update(user);
+                    if (result)
+                    {
+                        SetAlert("Sửa Thành Công ", "success");
+                        return RedirectToAction("Index", "User");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Cập nhật user Không thành công");
+                    }
                 }
                 else
                 {
-                    user.Password = userdetail.Password;
-                    
-                }
+                    if (userdetail.UserName != user.UserName)
+                    {
+                        if (dao.CheckUserName(user.UserName))
+                        {
+                            ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(user.Password))
+                            {
+                                var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                                user.Password = encryptedMd5Pas;
 
-                var result = dao.Update(user);
-                if (result)
-                {
-                    SetAlert("Sửa Thành Công ", "success");
-                    return RedirectToAction("Index", "User");
+                            }
+                            else
+                            {
+                                user.Password = userdetail.Password;
+
+                            }
+                            var result = dao.Update(user);
+                            if (result)
+                            {
+                                SetAlert("Sửa Thành Công ", "success");
+                                return RedirectToAction("Index", "User");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "Cập nhật user Không thành công");
+                            }
+                        }
+                    }
+                    else if (userdetail.Email != user.Email)
+                    {
+                        if (dao.CheckEmail(user.Email))
+                        {
+                            ModelState.AddModelError("", "Email đã tồn tại");
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(user.Password))
+                            {
+                                var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                                user.Password = encryptedMd5Pas;
+
+                            }
+                            else
+                            {
+                                user.Password = userdetail.Password;
+
+                            }
+                            var result = dao.Update(user);
+                            if (result)
+                            {
+                                SetAlert("Sửa Thành Công ", "success");
+                                return RedirectToAction("Index", "User");
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "Cập nhật user Không thành công");
+                            }
+                        }
+                    }
+                    
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Cập nhật user Không thành công");
-                }
+                
+                
+                
+            }
             SetViewBag(user.GroupID);
             return View(user);
         }

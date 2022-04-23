@@ -17,7 +17,7 @@
         public string UserName { get; set; }
 
         [StringLength(32, MinimumLength = 6, ErrorMessage = "Độ dài mật khẩu ít nhất 6 ký tự.")]
-        [Required(ErrorMessage = "Yêu cầu nhập mật khẩu")]
+        
         [Display(Name = "Mật Khẩu")]
         public string Password { get; set; }
 
