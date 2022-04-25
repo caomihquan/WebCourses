@@ -22,6 +22,13 @@ namespace WebCourses.Controllers
             var lesson = new LessonDao().ViewDetailOut(id);
             var course = new CourseDao().ViewDetail(lesson.CourseID.Value);
             var checkactivecourse = new LessonDao().CheckActive(session.ID, course.ID);
+            var chungchi = new CertificateDao().listbycourseid(lesson.CourseID.Value);
+            if (chungchi != null)
+            {
+                var requirecertificate = new CertificateDao().ViewDetailOwned(chungchi.ID, session.ID);
+                ViewBag.ChungChi = requirecertificate;
+            }
+           
             if (session == null)
             {
                 return Redirect("/dang-nhap");
@@ -327,6 +334,7 @@ namespace WebCourses.Controllers
             return View("Index");
         }
 
+      
 
     }
 

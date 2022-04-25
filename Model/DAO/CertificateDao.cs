@@ -123,6 +123,10 @@ namespace Model.DAO
         {
             return db.CertificateOwneds.Where(x=>x.UserID==userid).ToList();
         }
+        public Certificate listbycourseid(long courseid)
+        {
+            return db.Certificates.Where(x => x.IDCourse == courseid).SingleOrDefault();
+        }
         public Certificate ViewDetail(long id)
         {
             return db.Certificates.Find(id);
@@ -130,6 +134,10 @@ namespace Model.DAO
         public CertificateOwned ViewDetailOwn(long id)
         {
             return db.CertificateOwneds.Find(id);
+        }
+        public CertificateOwned ViewDetailOwned(long certificateid,long userid)
+        {
+            return db.CertificateOwneds.Where(x=>x.CertificateID==certificateid &&x.UserID==userid).SingleOrDefault();
         }
     }
 }

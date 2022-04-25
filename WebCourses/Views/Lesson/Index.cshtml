@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
     var lesson = (List<Model.EF.Lesson>)ViewBag.Lesson;
     var childs = 0;
     foreach (var li in lesson)
@@ -19,6 +20,7 @@
     var baihoc = ViewBag.BaiHoc;
     var review = (List<Model.EF.ReviewLesson>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
+    var chungchi = (Model.EF.CertificateOwned)ViewBag.ChungChi;
 
 }
 @section jsFooter{
@@ -96,7 +98,7 @@
 });
     </script>
     
-
+    <script src="~/Assets/Outsite/js/controller/requireCertificate.js"></script>
 }
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
@@ -111,6 +113,17 @@
             <li>
                 <span class="fa fa-eye"></span>@baihoc.ViewCount Lượt Xem Bài Học
             </li>
+            @if (chungchi != null)
+            {
+                <li>
+                    <a style="display: flex; justify-content: center; font-weight: 600; " href="#" class="requirecertificate" data-id="@chungchi.ID">Xin Chứng Chỉ</a>
+                </li>
+            }
+            else
+            {
+                
+            }
+
 
         </ul>
 
