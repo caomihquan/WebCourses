@@ -31,6 +31,7 @@
                             {
                                 var cateogryblog = new Model.DAO.CategoryBlogDao().CategoryCourses(item.CategoryBlogID);
                                 var url = "/blog-chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                                var urlcategory = "/blog/" + cateogryblog.MetaTitle + "-" + cateogryblog.ID;
                                 <div class="col-md-6">
                                     <div class="blog-post">
                                         <div class="blg-img">
@@ -43,13 +44,13 @@
                                             <h5 class="card-title"><a href="@url">@item.Name</a></h5>
                                             <ul class="admin-post">
                                                 <li>
-                                                    <a href="blog-single.html"><span class="fa fa-user-o"></span> @item.CreatedBy</a>
+                                                    <a href="#"><span class="fa fa-user-o"></span> @item.CreatedBy</a>
                                                 </li>
                                                 <li>
                                                     <span class="fa fa-clock-o"></span>@item.CreatedDate.Value.ToString("dd/MM/yyyy")
                                                 </li>
                                                 <li>
-                                                    <a href="blog-single.html"><span class="fa fa-folder-open-o"></span>@cateogryblog.Name</a>
+                                                    <a href="@cateogryblog"><span class="fa fa-folder-open-o"></span>@cateogryblog.Name</a>
                                                 </li>
                                             </ul>
                                             <p class="">@item.Description</p>

@@ -9,16 +9,12 @@
 
 @section jsFooter{
     <script>
-        $('#btnSelectImage').on('click', function (e) {
-            e.preventDefault();
-            var finder = new CKFinder();
-            finder.selectActionFunction = function (url) {
-                $('#txtImage').val(url);
-                $('#imgImages').attr("src", url);
-            };
-            finder.popup();
+        $('#btnSelectImage').on('change', function (e) {
+            const file = e.target.files[0];
+            const img = URL.createObjectURL(file);
+            $('#imgImages').attr("src", img);
+            
         });
-
         var editor = CKEDITOR.replace('txtContent', {
             customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
         });
@@ -45,7 +41,7 @@
                 <div class="blog-posts col-lg-8 pr-lg-0">
                     <div class="row">
 
-                        @using (Html.BeginForm())
+                        @using (Html.BeginForm("Create", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
 
@@ -63,7 +59,7 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.CategoryBlogID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <label class ="control-label col-md-2">Danh Mục</label>
                                 <div class="col-md-10">
                                     @Html.DropDownListFor(model => model.CategoryBlogID, null, new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.CategoryBlogID, "", new { @class = "text-danger" })
@@ -73,9 +69,11 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.HiddenFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
+                                    
                                     <img id="imgImages" style="width:100px;height:100px;" />
-                                    <a id="btnSelectImage" href="#"><i class="fas fa-images"></i> Chọn Ảnh</a>
+                                    
+                                    @Html.TextBox("img", "", new { type = "file", id = "btnSelectImage" })
+                                    <p>(Lưu ý chỉ nhận định dạng là .png, .jpg, .svg)</p>
                                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -97,7 +95,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Đăng Bài Viết" class="btn btn-primary" />
+                                    <input type="submit" value="Đăng Bài Viết" class="btn btn-primary" style="float:right" />
                                 </div>
                             </div>
                         </div>
@@ -132,12 +130,6 @@
 
                         </ul>
                     </aside>
-                    @*                    <aside class="posts p-4">
-                            <h3 class="aside-title">Advertisement</h3>
-                            <a href="blog-single.html">
-                                <img src="assets/images/stat.jpg" alt=" " class="img-fluid img-curve">
-                            </a>
-                        </aside>*@
                 </div>
                 <!-- //right side bar -->
             </div>

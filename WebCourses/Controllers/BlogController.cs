@@ -2,6 +2,7 @@
 using Model.EF;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -95,11 +96,23 @@ namespace WebCourses.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(Blog content)
+        public ActionResult Create(Blog content, HttpPostedFileBase img)
         {
             if (ModelState.IsValid)
             {
-                
+
+                if (img == null)
+                {
+                    content.Image = "/Data/images/Blog/blogcmeducation.png";
+                }
+                else if (CheckFileType(img.FileName))
+                {
+                    string _FileName = Path.GetFileName(img.FileName);
+                    string _path = Path.Combine(Server.MapPath("/Data/Blogs"), _FileName);
+                    var video = _path.Substring(49);
+                    img.SaveAs(_path);
+                    content.Image = video;
+                }
                 var session = (User)Session[CommonConstants.USER_SESSION];
                 content.CreatedBy = session.UserName;
                 content.ViewCount = 0;
@@ -109,6 +122,22 @@ namespace WebCourses.Controllers
             }
             SetViewBag();
             return View("Index");
+        }
+        bool CheckFileType(string fileName)
+        {
+
+            string ext = Path.GetExtension(fileName);
+            switch (ext.ToLower())
+            {
+                case ".png":
+                    return true;
+                case ".jpg":
+                    return true;
+                case ".svg":
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public void SetViewBag(long? selectedId = null)

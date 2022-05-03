@@ -25,7 +25,7 @@ namespace WebCourses.Controllers
 
 
         [ChildActionOnly]
-        //[OutputCache(Duration =3600*24)]
+       
         public ActionResult header()
         {
             var model = new MenuDao().ListByGroupId(1);
