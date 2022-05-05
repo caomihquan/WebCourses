@@ -15,7 +15,7 @@
     <div class="col-lg-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Danh Mục Tin Tức</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Danh Sách Bài Học</h6>
             </div>
             @using (Html.BeginForm("Index", "Lesson", FormMethod.Get))
             {
@@ -52,6 +52,7 @@
                                 <th>Video</th>
                                 <th>Ngày Tạo</th>
                                 <th>Lượt Xem</th>
+                                <th>Bình Luận</th>
                                 <th>Trạng Thái</th>
                                 <th>#</th>
                             </tr>
@@ -60,6 +61,7 @@
                             @foreach (var item in Model)
                             {
                                 var cateogy = new Model.DAO.CourseDao().CategoryLesson(item.CourseID.Value);
+                                var binhluan = new Model.DAO.ReviewLessonDao().ListReview(item.ID);
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
                                     <td>@item.Name</td>
@@ -69,6 +71,7 @@
                                     <td>@item.Video</td>
                                     <td>@item.CreatedDate.Value.ToString("dd-MM-yyyy")</td>
                                     <td>@item.ViewCount</td>
+                                    <td>@binhluan.Count()</td>
                                     <td>@item.Status</td>
                                     <td>
                                         <a href="/Admin/Lesson/Edit/@item.ID" class="btn btn-primary">Sửa</a>

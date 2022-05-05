@@ -19,6 +19,8 @@ namespace WebCourses.Areas.Admin.Controllers
             var dao = new BlogDao();
             var model = dao.ListAllPaging(searchString, page, pageSize);
             ViewBag.SearchString = searchString;
+            var comment = new ReviewBlogDao().ListCommentBlog(searchString, page, pageSize);
+            ViewBag.binhluan = comment.Count();
             return View(model);
         }
 

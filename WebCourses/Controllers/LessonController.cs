@@ -28,14 +28,14 @@ namespace WebCourses.Controllers
                 var requirecertificate = new CertificateDao().ViewDetailOwned(chungchi.ID, session.ID);
                 ViewBag.ChungChi = requirecertificate;
             }
-           
+
             if (session == null)
             {
                 return Redirect("/dang-nhap");
             }
-            else if (course.Price!=null && course.Price!=0)
+            else if (course.Price != null && course.Price != 0)
             {
-                if (checkactivecourse)
+                if (checkactivecourse || session.GroupID=="ADMIN")
                 {
                     ViewBag.Course = course;
                     var lessonAll = new LessonDao().ListLessonByID(lesson.CourseID.Value);

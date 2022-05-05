@@ -53,6 +53,7 @@
                                 <th>ID Danh Mục</th>
                                 <th>Tạo Bởi</th>
                                 <th>Lượt Xem</th>
+                                <th>Bình Luận</th>
                                 <th>Trạng Thái</th>
                                 <th>#</th>
                             </tr>
@@ -60,6 +61,7 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                var binhluan = new Model.DAO.ReviewCourseDao().ListReview(item.ID);
                                 <tr id="row_@item.ID">
                                     <td>@item.ID</td>
                                     <td>@item.Name</td>
@@ -69,6 +71,7 @@
                                     <td>@item.CategoryID</td>
                                     <td>@item.CreatedBy</td>
                                     <td>@item.ViewCount</td>
+                                    <td>@binhluan.Count()</td>
                                     <td>@item.Status</td>
                                     <td>
                                         <a href="/Admin/Course/Edit/@item.ID" class="btn btn-primary">Sửa</a>

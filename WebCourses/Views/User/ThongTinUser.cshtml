@@ -14,7 +14,7 @@
         <div class="header-section">
             <h2 class="mb-2">Hồ Sơ Cá Nhân</h2>
         </div>
-        <a href="/">Home</a> » <span class="breadcrumb_last" aria-current="page">Hồ Sơ</span>
+        <a href="/">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Hồ Sơ</span>
     </div>
 </nav>
 
@@ -37,7 +37,7 @@
                             <div>Địa Chỉ: @(Model.Address!=null ? Model.Address : "Đang Cập Nhập")</div>
                             <div>Số Điện Thoại: @(Model.Phone!=null ? Model.Phone : "Đang Cập Nhập")</div>
                             <hr />
-                            <div><a href="/changepassword/@Model.Password-@Model.ID" class="btn btn-primary">Đổi Mật Khẩu</a></div>
+                            <div><a href="/changepassword/@(Model.Password!=null?Model.Password:" ")-@Model.ID" class="btn btn-primary">Đổi Mật Khẩu</a></div>
                         </div>
                         <div class="col-lg-12" style="border-top:1px solid var(--border-color);margin:10px 0">
                             @if (chungchi.Count > 0)
