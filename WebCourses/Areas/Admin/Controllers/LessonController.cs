@@ -53,7 +53,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     string _FileName = Path.GetFileName(filevideo.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Video"), _FileName);
-                    var video = _path.Substring(49);
+                    var video = _path.Substring(49+9);
                     filevideo.SaveAs(_path);
                     lesson.Video = video;
                 }
@@ -77,7 +77,7 @@ namespace WebCourses.Areas.Admin.Controllers
                         {
                             string files = Path.GetFileName(f.FileName);
                             string _path = Path.Combine(Server.MapPath("/Data/File"), files);
-                            var video = _path.Substring(49);
+                            var video = _path.Substring(49+9);
                             f.SaveAs(_path);
                             chuoi = chuoi + "," + video;
                         }
@@ -122,7 +122,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     string _FileName = Path.GetFileName(filevideo.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Video"), _FileName);
-                    var video = _path.Substring(49);
+                    var video = _path.Substring(49+9);
                     filevideo.SaveAs(_path);
                     lesson.Video = video;
                 }
@@ -146,7 +146,7 @@ namespace WebCourses.Areas.Admin.Controllers
                         {
                             string files = Path.GetFileName(f.FileName);
                             string _path = Path.Combine(Server.MapPath("/Data/File"), files);
-                            var video = _path.Substring(49);
+                            var video = _path.Substring(49+9);
                             f.SaveAs(_path);
                             chuoi = chuoi + "," + video;
                         }

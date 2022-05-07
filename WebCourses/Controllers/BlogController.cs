@@ -86,7 +86,7 @@ namespace WebCourses.Controllers
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult CreateBlog()
         {
             ViewBag.Tags = new BlogDao().ListAllTag();
             SetViewBag();
@@ -96,8 +96,9 @@ namespace WebCourses.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(Blog content, HttpPostedFileBase img)
+        public ActionResult CreateBlog(Blog content, HttpPostedFileBase img)
         {
+            ViewBag.Tags = new BlogDao().ListAllTag();
             if (ModelState.IsValid)
             {
 
@@ -109,7 +110,7 @@ namespace WebCourses.Controllers
                 {
                     string _FileName = Path.GetFileName(img.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Blogs"), _FileName);
-                    var video = _path.Substring(49);
+                    var video = _path.Substring(49+9);
                     img.SaveAs(_path);
                     content.Image = video;
                 }
@@ -121,7 +122,7 @@ namespace WebCourses.Controllers
                 return RedirectToAction("SucceedCreate");
             }
             SetViewBag();
-            return View("Index");
+            return View(content);
         }
         bool CheckFileType(string fileName)
         {

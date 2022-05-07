@@ -3049,6 +3049,7 @@
     <Content Include="Assets\Outsite\js\jquery.magnific-popup.min.js" />
     <Content Include="Assets\Outsite\js\jquery.waypoints.min.js" />
     <Content Include="Assets\Outsite\js\owl.carousel.js" />
+    <Content Include="Assets\Outsite\js\script.js" />
     <Content Include="Assets\Outsite\js\tabui.js" />
     <Content Include="Assets\Outsite\Template\NewFeedback.html" />
     <Content Include="Assets\Outsite\Template\Payment.html" />
@@ -3387,7 +3388,7 @@
     <Content Include="Views\Blog\CategoryBlog.cshtml" />
     <Content Include="Views\Blog\Category.cshtml" />
     <Content Include="Views\Blog\Tag.cshtml" />
-    <Content Include="Views\Blog\Create.cshtml" />
+    <Content Include="Views\Blog\CreateBlog.cshtml" />
     <Content Include="Views\Blog\SucceedCreate.cshtml" />
     <Content Include="Views\Blog\Detail.cshtml" />
     <Content Include="Views\Category\Category.cshtml" />

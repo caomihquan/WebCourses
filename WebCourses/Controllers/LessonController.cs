@@ -1,5 +1,4 @@
-﻿
-using Model.DAO;
+﻿using Model.DAO;
 using Model.EF;
 using System;
 using System.Collections.Generic;
@@ -35,7 +34,7 @@ namespace WebCourses.Controllers
             }
             else if (course.Price != null && course.Price != 0)
             {
-                if (checkactivecourse || session.GroupID=="ADMIN")
+                if (checkactivecourse || session.GroupID == "ADMIN")
                 {
                     ViewBag.Course = course;
                     var lessonAll = new LessonDao().ListLessonByID(lesson.CourseID.Value);
@@ -64,20 +63,19 @@ namespace WebCourses.Controllers
                         new JoinedCoursesDao().Insert(joinedcourse);
 
                     }
-
-                    if (checklesson)
+                    if (lesson.Video.Contains("<iframe") || lesson.Video.Contains("youtube.com") || lesson.Video.Contains("drive.google.com"))
                     {
+                        if (!checklesson)
+                        {
+                            var progresscourse = new ProgressLesson();
+                            progresscourse.CourseID = lesson.CourseID;
+                            progresscourse.LessonID = lesson.ID;
+                            progresscourse.UserID = session.ID;
+                            progresscourse.CreatedDate = DateTime.Now;
+                            new JoinedCoursesDao().InsertProgress(progresscourse);
+                        }
+                    }
 
-                    }
-                    else
-                    {
-                        var progresscourse = new ProgressLesson();
-                        progresscourse.CourseID = lesson.CourseID;
-                        progresscourse.LessonID = lesson.ID;
-                        progresscourse.UserID = session.ID;
-                        progresscourse.CreatedDate = DateTime.Now;
-                        new JoinedCoursesDao().InsertProgress(progresscourse);
-                    }
                     ViewBag.ProgressLesson = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
                     ViewBag.Review = new ReviewLessonDao().ListReview(id);
 
@@ -161,18 +159,17 @@ namespace WebCourses.Controllers
 
                 }
 
-                if (checklesson)
+                if (lesson.Video.Contains("<iframe") || lesson.Video.Contains("youtube.com") || lesson.Video.Contains("drive.google.com"))
                 {
-
-                }
-                else
-                {
-                    var progresscourse = new ProgressLesson();
-                    progresscourse.CourseID = lesson.CourseID;
-                    progresscourse.LessonID = lesson.ID;
-                    progresscourse.UserID = session.ID;
-                    progresscourse.CreatedDate = DateTime.Now;
-                    new JoinedCoursesDao().InsertProgress(progresscourse);
+                    if (!checklesson)
+                    {
+                        var progresscourse = new ProgressLesson();
+                        progresscourse.CourseID = lesson.CourseID;
+                        progresscourse.LessonID = lesson.ID;
+                        progresscourse.UserID = session.ID;
+                        progresscourse.CreatedDate = DateTime.Now;
+                        new JoinedCoursesDao().InsertProgress(progresscourse);
+                    }
                 }
                 ViewBag.ProgressLesson = new ProgressLessonDao().LessonByUser(session.ID, lesson.CourseID.Value);
                 ViewBag.Review = new ReviewLessonDao().ListReview(id);
@@ -334,7 +331,30 @@ namespace WebCourses.Controllers
             return View("Index");
         }
 
-      
+        [HttpPost]
+        public JsonResult AddLesson(long id,float time)
+        {
+            var session = (User)Session[CommonConstants.USER_SESSION];
+            var lesson = new LessonDao().ViewDetailOut(id);
+            var checklesson = new JoinedCoursesDao().CheckLesson(session.ID, lesson.CourseID.Value, lesson.ID);
+            if (time > 90)
+            {
+                if (!checklesson)
+                {
+                    var progresscourse = new ProgressLesson();
+                    progresscourse.CourseID = lesson.CourseID;
+                    progresscourse.LessonID = lesson.ID;
+                    progresscourse.UserID = session.ID;
+                    progresscourse.CreatedDate = DateTime.Now;
+                    new JoinedCoursesDao().InsertProgress(progresscourse);
+                }
+            }
+
+            return Json(new
+            {
+                status = false
+            });
+        }
 
     }
 

@@ -380,8 +380,10 @@
                     <aside>
                         <h3 class="aside-title mb-3">Chi Tiết</h3>
                         @if (ViewBag.Course.PriceSale == null || ViewBag.Course.PriceSale == 0)
+
                         {
-                            <p><i class="fas fa-coins"></i> Giá Khóa Học: <span style="color:red;font-weight:500">@(ViewBag.Course.Price!=0 || ViewBag.Course.Price!=null ? ViewBag.Course.Price.ToString("0,0đ") :"Miễn Phí")</span></p>
+                            var gia = ViewBag.Course.Price - 0;
+                            <p><i class="fas fa-coins"></i> Giá Khóa Học: <span style="color:red;font-weight:500">@(gia > 0 ? gia.ToString("0,0đ") :"Miễn Phí")</span></p>
                         }
                         else
                         {

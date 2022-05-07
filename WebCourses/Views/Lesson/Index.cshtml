@@ -21,7 +21,7 @@
     var review = (List<Model.EF.ReviewLesson>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
     var chungchi = (Model.EF.CertificateOwned)ViewBag.ChungChi;
-
+    var thoigian = 0;
 }
 @section jsFooter{
     <script>
@@ -74,31 +74,149 @@
     <script src="~/Assets/Outsite/js/controller/badword.js"></script>
     <script>
         var vitri = $('#current').position().top;
-        $('.lessons').scrollTop(vitri-85);
+        $('.lessons').scrollTop(vitri - 85);
     </script>
     <script>
 
         $(document).ready(function () {
             $(".btnCancle").each(function (index, value) {
                 $(this).click(function () {
-                const c = "#form" + value.getAttribute('id').toString();
-                $(c).addClass("display-none");
-                })          
+                    const c = "#form" + value.getAttribute('id').toString();
+                    $(c).addClass("display-none");
+                })
             })
-            $(".traloi").each(function (index,value) {
+            $(".traloi").each(function (index, value) {
                 $(this).click(function (e) {
                     e.preventDefault();
                     const a = "#form" + value.getAttribute('id').toString();
                     $('.answerid').val(value.getAttribute('id'));
                     $(".abcxyz").addClass("display-none");
                     $(a).toggleClass("display-none");
-                    
+
                 });
- });
-});
+            });
+        });
     </script>
-    
-    <script src="~/Assets/Outsite/js/controller/requireCertificate.js"></script>
+
+    @*<script src="~/Assets/Outsite/js/controller/requireCertificate.js"></script>*@
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        var player,
+            time_update_interval = 0;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('video-placeholder', {
+                width: 600,
+                height: 400,
+                videoId: '@baihoc.Video',
+                events: {
+                    onReady: initialize
+                }
+            });
+        }
+
+        function initialize() {
+            updateTimerDisplay();
+            updateProgressBar();
+
+            // Clear any old interval.
+            clearInterval(time_update_interval);
+
+            // Start interval to update elapsed time display and
+            // the elapsed part of the progress bar every second.
+            time_update_interval = setInterval(function () {
+                updateTimerDisplay();
+                updateProgressBar();
+                if (((player.getCurrentTime() / player.getDuration()) * 100) > 90) {
+                    var user = {
+            init: function () {
+                user.registerEvents();
+            },
+            registerEvents: function () {
+
+                $(document).ready(function () {
+
+
+                    var id =@baihoc.ID;
+                    var time = (player.getCurrentTime() / player.getDuration()) * 100
+                    
+                        $.ajax({
+                            url: "/Lesson/AddLesson",
+                            data: { id: id ,time:time},
+                            dataType: "json",
+                            type: "POST",
+                            success: function () {
+
+                            }
+                        });
+
+                });
+            }
+        }
+        user.init();
+                }
+
+            }, 5000);
+
+
+
+        }
+
+
+        // This function is called by initialize()
+        function updateTimerDisplay() {
+            // Update current time text display.
+            $('#current-time').text(formatTime(player.getCurrentTime()));
+            $('#duration').text(formatTime(player.getDuration()));
+        }
+
+
+        // This function is called by initialize()
+        function updateProgressBar() {
+            // Update the value of our progress bar accordingly.
+            $('#progress-bar').val((player.getCurrentTime() / player.getDuration()) * 100);
+        }
+
+
+        // Progress bar
+
+        $('#progress-bar').on('mouseup touchend', function (e) {
+
+            // Calculate the new time for the video.
+            // new time in seconds = total duration in seconds * ( value of range input / 100 )
+            var newTime = player.getDuration() * (e.target.value / 100);
+
+            // Skip video to new time.
+            player.seekTo(newTime);
+
+        });
+
+
+
+
+        // Helper Functions
+
+        function formatTime(time) {
+            time = Math.round(time);
+
+            var minutes = Math.floor(time / 60),
+                seconds = time - minutes * 60;
+
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            return minutes + ":" + seconds;
+        }
+
+
+        $('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
+    </script>
 }
 <nav id="breadcrumbs" class="breadcrumbs">
     <div class="container page-wrapper text-center">
@@ -121,7 +239,7 @@
             }
             else
             {
-                
+
             }
 
 
@@ -129,7 +247,6 @@
 
     </div>
 </nav>
-
 
 <section class="w3l-blog">
 
@@ -161,7 +278,6 @@
 
                                         if (baihoc.Video.Contains("<iframe"))
                                         {
-
                                             <div style="display:flex">
                                                 <div style="margin:auto">
                                                     @Html.Raw(baihoc.Video)
@@ -177,19 +293,19 @@
                                         }
                                         else if (baihoc.Video.Contains("drive.google.com"))
                                         {
-                    if (baihoc.Video.Contains("drive.google.com/uc?export=download&id="))
-                    {
-                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
-                    }
-                    else
-                    {
-                                <iframe width="100%" height="500" src="@baihoc.Video" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    }
-                                            
+                                            if (baihoc.Video.Contains("drive.google.com/uc?export=download&id="))
+                                            {
+                                                <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
+                                            }
+                                            else
+                                            {
+                                                <iframe width="100%" height="500" src="@baihoc.Video" title="YouTube video player" style="padding:20px;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            }
+
                                         }
                                         else
                                         {
-                                            <div class="video-responsive"> <video controls> <source type="video/mp4" src="@baihoc.Video"> </video> </div>
+                                             <div id="video-placeholder" style="width: 100%; max-height: 100%;"></div>
                                         }
 
                                     }
@@ -208,7 +324,7 @@
                                     <div class="tab-item">
 
                                         <i class="fas fa-file-signature"></i>
-                                        Bài Tập 
+                                        Bài Tập
                                     </div>
                                     <div class="tab-item">
                                         <i class="fas fa-comment-alt"></i>
@@ -231,7 +347,7 @@
 
                                     </div>
                                     <div class="tab-pane commentoverview">
-                                        @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post, new { @style="padding:8px 8%;" }))
+                                        @using (Html.BeginForm("SendReview", "Lesson", FormMethod.Post, new { @style = "padding:8px 8%;" }))
                                         {
                                             <div class="reviews-submit">
                                                 <h4>Đánh Giá Của Bạn:</h4>
@@ -242,7 +358,7 @@
                                                 <input id="rating" type="hidden" name="rating" />
 
                                                 <div class="input-group">
-                                                    @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan" ,@style="height:74px"})
+                                                    @Html.TextAreaFor(x => x.Comment, new { cols = 20, rows = 5, @id = "reviewbinhluan", @style = "height:74px" })
                                                     @Html.HiddenFor(x => x.LessonID)
                                                 </div>
                                                 <div style=" text-align: right; margin-top: 16px;">
@@ -267,7 +383,7 @@
                                                     </div>
                                                     <div style="display:flex">
                                                         <a href="" class="traloi" id="@item.ID">Trả Lời   </a>
-                                                        
+
                                                         <div>
                                                             @if (item.UserID == session.ID)
                                                             {
@@ -410,7 +526,7 @@
                                         else
                                         {
 
-                                            <a  @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
+                                            <a @style1 href="/bai-hoc/@li.MetaTitle-@li.ID" @parentClass>@li.Name @Html.Raw(style)</a>
                                         }
                                     }
                                     else
@@ -435,7 +551,7 @@
                                             }
                                             else
                                             {
-                                                <li title="@childItem.Name"><a  @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
+                                                <li title="@childItem.Name"><a @stylechild1 href="/bai-hoc/@childItem.MetaTitle-@childItem.ID">@childItem.Name @Html.Raw(stylechild)</a></li>
 
                                             }
 

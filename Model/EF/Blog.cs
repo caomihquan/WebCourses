@@ -28,12 +28,12 @@
 
         [StringLength(500)]
         [Display(Name = "Mô Tả")]
-        [Required(ErrorMessage = "Yêu cầu nhập")]
+        [Required(ErrorMessage = "Yêu cầu nhập mô tả bài viết")]
         public string Description { get; set; }
 
         [Column(TypeName = "ntext")]
         [Display(Name = "Chi Tiết")]
-        [Required(ErrorMessage = "Yêu cầu nhập")]
+        [Required(ErrorMessage = "Yêu cầu nhập nội dung bài viết")]
         public string Detail { get; set; }
 
         [Display(Name = "Ngày Tạo")]

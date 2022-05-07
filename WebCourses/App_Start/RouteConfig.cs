@@ -90,7 +90,7 @@ namespace WebCourses
             routes.MapRoute(
             name: "Create Blog",
             url: "tao-bai-viet",
-            defaults: new { controller = "Blog", action = "Create", id = UrlParameter.Optional },
+            defaults: new { controller = "Blog", action = "CreateBlog", id = UrlParameter.Optional },
             namespaces: new[] { "WebCourses.Controllers" }
         );
 

@@ -54,7 +54,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     string _FileName = Path.GetFileName(file.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Certificate"), _FileName);
-                    var video = _path.Substring(49);
+                    var video = _path.Substring(49 +9);
                     file.SaveAs(_path);
                     categoryblog.Image = video;
                 }
@@ -112,7 +112,7 @@ namespace WebCourses.Areas.Admin.Controllers
                 {
                     string _FileName = Path.GetFileName(file.FileName);
                     string _path = Path.Combine(Server.MapPath("/Data/Certificate"), _FileName);
-                    var video = _path.Substring(49);
+                    var video = _path.Substring(49+9);
                     file.SaveAs(_path);
                     categoryblog.Image = video;
                 }
