@@ -21,7 +21,6 @@
     var review = (List<Model.EF.ReviewLesson>)ViewBag.Review;
     var session = (Model.EF.User)Session[WebCourses.Common.CommonConstants.USER_SESSION];
     var chungchi = (Model.EF.CertificateOwned)ViewBag.ChungChi;
-    var thoigian = 0;
 }
 @section jsFooter{
     <script>
@@ -98,7 +97,7 @@
         });
     </script>
 
-    @*<script src="~/Assets/Outsite/js/controller/requireCertificate.js"></script>*@
+    <script src="~/Assets/Outsite/js/controller/requireCertificate.js"></script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
@@ -161,7 +160,6 @@
                 }
 
             }, 5000);
-
 
 
         }
