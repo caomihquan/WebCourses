@@ -13,7 +13,7 @@ namespace WebCourses.Controllers
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new CategoryDao();
-            var model = dao.ListAllPaging(searchString, page, pageSize);
+            var model = dao.ListAllPagingOut(searchString, page, pageSize);
             ViewBag.SearchString = searchString;
             return View(model);
         }

@@ -96,6 +96,16 @@ namespace Model.DAO
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
 
+        public IEnumerable<Category> ListAllPagingOut(string searchString, int page, int pageSize)
+        {
+            IQueryable<Category> model = db.Categories.Where(x=>x.ParentsID!=null);
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.ID.ToString().Contains(searchString) || x.Name.Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
+        }
+
 
         public bool Delete(int id)
         {

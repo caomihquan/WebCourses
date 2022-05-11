@@ -3404,6 +3404,7 @@
     <Content Include="Views\Lesson\Payment.cshtml" />
     <Content Include="Views\Lesson\ActiveSuccess.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\KhoaHoc\CourseNoRelease.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -144,17 +144,23 @@
                             }
                             else
                             {
-                                if (ViewBag.CheckCourse && coursecurrent!=null)
+                                if (lesson.Count() < 1)
                                 {
                                     <div class="btn-thamgiakhoahoc">
-                                            <a href="/bai-hoc/@coursecurrent.MetaTitle-@coursecurrent.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
+                                        <a href="/KhoaHoc/CourseNoRelease" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
+                                    </div>
+                                }
+                                else if (ViewBag.CheckCourse && coursecurrent != null)
+                                {
+                                    <div class="btn-thamgiakhoahoc">
+                                        <a href="/bai-hoc/@coursecurrent.MetaTitle-@coursecurrent.ID" class="btn btn-primary theme-button mt-3">Học Tiếp</a>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="btn-thamgiakhoahoc">
 
-                                            <a href="/bai-hoc/@thamgia.MetaTitle-@thamgia.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
+                                        <a href="/bai-hoc/@thamgia.MetaTitle-@thamgia.ID" class="btn btn-primary theme-button mt-3">Tham Gia Khóa Học</a>
 
                                     </div>
                                 }

@@ -49,6 +49,10 @@ namespace WebCourses.Controllers
             };
             return View(review);
         }
+        public ActionResult CourseNoRelease()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult SendReview(ReviewCourse review, float rating = 0)
@@ -59,7 +63,7 @@ namespace WebCourses.Controllers
             review.CreatedDate = DateTime.Now;
             review.Rating = rating;
             review.UserID = session.ID;
-            review.CreatedBy = session.UserName;
+            review.CreatedBy = session.Name;
             review.Status = true;
             var result = dao.Insert(review);
             if (result > 0)
