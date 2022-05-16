@@ -369,7 +369,7 @@
                                         @foreach (var item in review)
                                         {
                                             var answerid = new Model.DAO.ReviewLessonDao().ListReviewAnswer(item.LessonID.Value, item.ID);
-                                            <div id="row_@item.ID" style="display: flex; border-top:1px solid var(--border-color)">
+                                            <div class="row_@item.ID" style="display: flex; border-top:1px solid var(--border-color)">
                                                 <div style="width:50px;margin-top:20px"><img src="~/Assets/undraw_profile.svg" /></div>
                                                 <div class="comment_content">
                                                     <h5>@item.CreatedBy </h5>
@@ -389,7 +389,7 @@
                                                                 @Ajax.ActionLink("  Xóa Bình Luận", "Delete", new { @id = item.ID }, new AjaxOptions
                                                                      {
                                                           Confirm = "Bạn có muốn xóa bản ghi này",
-                                                          OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                                          OnComplete = "$('.row_" + @item.ID + "').remove()",
                                                           HttpMethod = "Delete"
                                                                      })
 
@@ -424,7 +424,7 @@
                                             }
                                             foreach (var answer in answerid)
                                             {
-                                                <div id="row_@answer.ID" style="display:flex; margin:8px 10% ;">
+                                                <div id="row_@answer.ID" class="row_@answer.AnswerID" style="display:flex; margin:8px 10% ;">
                                                     <div style="width: 40px; margin-top: 20px"><img src="~/Assets/undraw_profile.svg" /></div>
                                                     <div class="comment_content">
                                                         <h6>@answer.CreatedBy </h6>
